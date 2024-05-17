@@ -1,0 +1,32 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "",
+    "description": "",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC",
+      "url": "https://spdx.org/licenses/ISC.html"
+    },
+    "contact": {
+      "name": "",
+      "url": ""
+    }
+  },
+  "tags": [],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "bearerToken": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

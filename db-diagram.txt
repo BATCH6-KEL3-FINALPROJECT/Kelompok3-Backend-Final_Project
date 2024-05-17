@@ -1,0 +1,139 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Flight {
+  flight_id uuid
+  airline_id uuid
+  flight_duration integer
+  flight_description json //misal limit berat koper, minuman/makanan, classnya ada apa aja
+  flight_status enum //misalnya delayed, canceled, dll
+  departure_airport string
+  arrival_airport string
+  departure_date date
+  departure_time time
+  arrival_date date
+  arrival_time time
+  arrival_airport_id uuid
+  departure_airport_id uuid
+  created_at timestamp 
+}
+
+// Table Class{  class_id uuid
+//   class_name varchar
+//   price integer
+//   flight_id uuid}
+
+Table Seat{
+  seat_id uuid
+  flight_id uuid
+  class enum
+  price integer
+  seat_number varchar
+  is_available bool
+}
+
+Table Ticket{
+  ticket_id uuid
+  flight_id uuid
+  seat_id uuid
+  passenger_id uuid
+  seat_number varchar
+  passenger_name varchar
+  terminal varchar
+  ticket_status enum  // e.g., confirmed, pending, canceled
+  created_at timestamp 
+}
+
+Table Airport{
+  airport_id uuid
+  airport_name varchar
+  city varchar
+  iata_code varchar
+  country varchar
+}
+
+Table Booking{
+  booking_id uuid
+  user_id integer
+  flight_id uuid
+  booking_date date
+  is_round_trip bool
+  no_of_ticket integer //jumlah tiket yang dibeli di satu booking/transaksi
+  status enum //(misalnya 'booked', 'cancelled', 'completed')
+  total_price integer
+  payment_status enum
+}
+
+Table Payment{
+  payment_id uuid
+  total_amount integer
+  payment_method enum // (misalnya 'credit_card', 'paypal')
+  payment_date date
+  payment_status enum
+  user_id uuid
+  booking_id uuid
+  transaction_id varchar 
+}
+
+Table Airline{
+  airline_id uuid
+  airline_name varchar
+  airline_code varchar
+  country varchar
+}
+
+Table Passengers{
+  passenger_id uuid
+  user_id uuid
+  first_name varchar
+  last_name varchar
+  email varchar
+  phone_number varchar
+  passport_no integer
+}
+
+Table Users {
+  id integer [primary key]
+  username varchar
+  role varchar
+  created_at timestamp
+}
+
+Table OTP{
+  otp id
+  user_id uuid
+  expired datetime
+  is_used bool
+}
+
+// Ref: .user_id > Users.id // many-to-one
+Ref: Airport.airport_id < Flight.arrival_airport_id
+
+Ref: Airport.airport_id < Flight.departure_airport_id
+
+Ref: Airline.airline_id < Flight.airline_id
+
+// Ref: Class.class_id - Seat.class_id
+
+Ref: Flight.flight_id - Ticket.flight_id
+
+// Ref: Flight.flight_id < Class.flight_id
+
+Ref: Ticket.seat_id < Seat.seat_id
+
+Ref: Seat.flight_id > Flight.flight_id
+
+Ref: Passengers.passenger_id < Ticket.passenger_id
+
+Ref: Passengers.user_id > Users.id
+
+Ref: Booking.booking_id > Payment.booking_id
+
+Ref: Booking.flight_id > Flight.flight_id
+
+Ref:  Booking.user_id >  Users.id
+
+Ref: Users.id < Payment.user_id
+
+Ref: Users.id - OTP.user_id
+
