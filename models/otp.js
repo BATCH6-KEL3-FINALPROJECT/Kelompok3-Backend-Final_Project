@@ -11,10 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      OTP.belongsTo(models.User, { foreignKey: 'user_id' });
     }
   }
   OTP.init({
-    OTP_code: DataTypes.STRING,
+    OTP_code: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     user_id: DataTypes.STRING,
     expired_in: DataTypes.TIME,
     is_used: DataTypes.BOOLEAN

@@ -2,7 +2,6 @@
 const {
   Model
 } = require('sequelize');
-const airline = sequelize.define()
 module.exports = (sequelize, DataTypes) => {
   class Flight extends Model {
     /**
@@ -12,19 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Flight.belongsTo(models.airport, { foreignKey: 'departure_airport_id', as: 'departure_airport' });
-      Flight.belongsTo(models.airport, { foreignKey: 'arrival_airport_id', as: 'arrival_airport' });
-      Flight.belongsTo(models.airline, { foreignKey: 'airline_id' })
+      Flight.belongsTo(models.Airport, { foreignKey: 'departure_airport_id', as: 'departingAirport' });
+      Flight.belongsTo(models.Airport, { foreignKey: 'arrival_airport_id', as: 'arrivingAirport' });
+      Flight.belongsTo(models.Airline, { foreignKey: 'airline_id' })
 
-      Flight.hasMany(models.seat, { foreignKey: 'seat_id' });
+      Flight.hasMany(models.Seat, { foreignKey: 'flight_id' });
+      Flight.hasMany(models.Booking, { foreignKey: 'flight_id' });
+      Flight.hasMany(models.Ticket, { foreignKey: 'flight_id' })
     }
   }
   Flight.init({
-    flight_id: DataTypes.UUId,
+    flight_id: {
+      primaryKey: true,
+      type: DataTypes.UUID
+    },
     airline_id: DataTypes.UUID,
     flight_duration: DataTypes.INTEGER,
     flight_description: DataTypes.JSON,
     flight_status: DataTypes.STRING,
+    flight_code: DataTypes.STRING,
     plane_type: DataTypes.STRING,
     seats_available: DataTypes.INTEGER,
     departure_airport: DataTypes.STRING,

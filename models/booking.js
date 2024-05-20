@@ -11,12 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Booking.belongsTo(models.Flight, { foreignKey: 'flight_id' })
+      Booking.belongsTo(models.Flight, { foreignKey: 'booking?id' })
+      Booking.belongsTo(models.payment, { foreignKey: 'payment_id' })
+
+      Booking.hasMany(models.Ticket, { foreignKey: 'booking_id' })
     }
   }
   Booking.init({
-    booking_id: DataTypes.UUID,
+    booking_id: {
+      primaryKey: true,
+      type: DataTypes.UUID
+    },
     user_id: DataTypes.UUID,
-    flight_id: DataTypes.STRING,
+    flight_id: DataTypes.UUID,
+    payment_id: DataTypes.UUID,
     booking_date: DataTypes.DATE,
     is_round_trip: DataTypes.BOOLEAN,
     no_of_ticket: DataTypes.INTEGER,

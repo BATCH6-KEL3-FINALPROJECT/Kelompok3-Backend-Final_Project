@@ -22,6 +22,13 @@ module.exports = {
           key: 'flight_id'
         },
       },
+      payment_id: {
+        type: Sequelize.UUID,
+        references: {
+          model: 'Payments',
+          key: 'payment_id'
+        }
+      },
       booking_date: {
         type: Sequelize.DATE
       },
@@ -32,13 +39,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
-        type: Sequelize.ENUM("booked", "pending", "canceled", "completed"),
+        type: Sequelize.ENUM("booked", "pending", "cancelled", "completed"),
         defaultValue: "pending"
       },
       total_price: {
-        type: Sequelize.STRING
-      },
-      payment_status: {
         type: Sequelize.STRING
       },
       createdAt: {
