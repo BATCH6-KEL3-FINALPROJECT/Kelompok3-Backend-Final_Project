@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.ENUM("user", "admin"),
         defaultValue: "user"
       },
+      is_verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

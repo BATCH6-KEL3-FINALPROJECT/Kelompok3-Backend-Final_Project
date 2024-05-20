@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.ENUM("user", "admin"),
       defaultValue: "user"
+    },
+    is_verified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,
