@@ -15,12 +15,19 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   OTP.init({
-    OTP_code: {
+    otp_id: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true
+    },
+    OTP_code: {
+      type: DataTypes.TEXT
+    },
+    email: {
       type: DataTypes.STRING
     },
     user_id: DataTypes.STRING,
-    expired_in: DataTypes.TIME,
+    expired_in: DataTypes.DATE,
     is_used: DataTypes.BOOLEAN
   }, {
     sequelize,
