@@ -20,6 +20,11 @@ module.exports = {
           key: 'user_id'
         },
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
       expired_in: {
         type: Sequelize.DATE
       },
