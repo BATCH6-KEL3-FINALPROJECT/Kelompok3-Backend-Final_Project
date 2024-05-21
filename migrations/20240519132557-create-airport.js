@@ -6,7 +6,7 @@ module.exports = {
       airport_id: {
         type: Sequelize.UUID,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
       airport_name: {
         allowNull: false,
