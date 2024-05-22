@@ -21,8 +21,24 @@ module.exports = {
           airline_id: "87d70109-fabb-4626-a854-2da5e9134420",
           flight_duration: 75, // in minutes
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+              {
+                id: 4,
+                description: "Tidak ada stopkontak/port usb",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "JT-683",
@@ -44,8 +60,20 @@ module.exports = {
           airline_id: "cba794f5-b409-46c0-89c2-55e32aef449d",
           flight_duration: 95,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "QG-719",
@@ -67,8 +95,20 @@ module.exports = {
           airline_id: "bbe24ce4-9188-463c-b8c9-041e865b6412",
           flight_duration: 80,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "IP-245",
@@ -90,8 +130,20 @@ module.exports = {
           airline_id: "20b1d7a6-f38f-408b-aa26-b395cdee5275",
           flight_duration: 65,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "QZ-627",
@@ -113,8 +165,20 @@ module.exports = {
           airline_id: "ab40b7a9-988d-4e7a-b5e7-e3a33616a2f2",
           flight_duration: 110,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "IN-280",
@@ -136,8 +200,20 @@ module.exports = {
           airline_id: "54b90398-00ba-47fb-bea2-3a3aaa4f5241",
           flight_duration: 110,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "IU-740",
@@ -159,8 +235,20 @@ module.exports = {
           airline_id: "aaa6c89c-84fa-485a-8c3f-979b4796743e",
           flight_duration: 140,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "SJ-580",
@@ -182,8 +270,20 @@ module.exports = {
           airline_id: "cba794f5-b409-46c0-89c2-55e32aef449d",
           flight_duration: 105,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "QG-452",
@@ -205,8 +305,20 @@ module.exports = {
           airline_id: "20b1d7a6-f38f-408b-aa26-b395cdee5275",
           flight_duration: 150,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "QZ-328",
@@ -228,8 +340,20 @@ module.exports = {
           airline_id: "678ea24a-005a-4aa6-925f-2edabb51f671",
           flight_duration: 100,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "IW-1804",
@@ -251,8 +375,20 @@ module.exports = {
           airline_id: "8c0b982e-444f-4994-98be-d072a97e2bcc",
           flight_duration: 435,
           flight_description: JSON.stringify({
-            Informasi:
-              " Bagasi Kabin 7Kg \n Bagasi 20Kg \n Tidak ada hiburan di pesawat \n Tidak ada wifi \n",
+            details: [
+              {
+                id: 1,
+                description: "Bagasi kabin 7 kg",
+              },
+              {
+                id: 2,
+                description: "Tidak ada wifi",
+              },
+              {
+                id: 3,
+                description: "Tidak ada hiburan di pesawat",
+              },
+            ],
           }),
           flight_status: "on time",
           flight_code: "3K-250",
