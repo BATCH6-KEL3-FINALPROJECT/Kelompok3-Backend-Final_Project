@@ -10,7 +10,7 @@ const { sentOtp, resendOtp } = require("./OTPController");
 
 const register = async (req, res, next) => {
     try {
-        let { name, email, password, roles, date_of_birth } = req.body;
+        let { name, email, password, roles, date_of_birth, phone_number } = req.body;
         email = email.toLowerCase();
         const userId = uuid.v4();
 
@@ -38,6 +38,7 @@ const register = async (req, res, next) => {
             email,
             password: hashedPassword,
             role: roles,
+            phone_number: phone_number,
             date_of_birth: dob
         });
         const sendingOTP = await sentOtp(email, newUser.user_id, next);
