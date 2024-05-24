@@ -70,7 +70,7 @@ const createFlight = async (req, res, next) => {
             }
         });
     } catch (error) {
-        next(new ApiError(error.message, 500));
+        next(new ApiError(error.message, 400));
     }
 };
 
@@ -175,7 +175,7 @@ const getAllFlights = async (req, res, next) => {
             },
         });
     } catch (error) {
-        next(new ApiError(error.message, 500));
+        next(new ApiError(error.message, 400));
     }
 };
 
@@ -200,6 +200,7 @@ const getFlightById = async (req, res, next) => {
             ]
         });
 
+        //if flight doesnt exist
         if (!flight) {
             return next(new ApiError(`Flight with ID: ${req.params.id} not found`, 404));
         }
@@ -219,6 +220,7 @@ const deleteFlight = async (req, res, next) => {
     try {
         const flight = await Flight.findByPk(req.params.id);
 
+        //if flight doesnt exist
         if (!flight) {
             next(new ApiError(`Flight with this ID : ${req.params.id} not found`, 404));
         }
@@ -238,10 +240,88 @@ const deleteFlight = async (req, res, next) => {
     }
 };
 
+const updateFlight = async (req, res, next) => {
+    const {
+        airline_id,
+        flight_duration,
+        flight_description,
+        flight_status,
+        flight_code,
+        plane_type,
+        seats_available,
+        departure_date,
+        departure_time,
+        arrival_date,
+        arrival_time,
+        departure_airport_id,
+        arrival_airport_id
+    } = req.body;
+
+    try {
+        const flight = await Flight.findByPk(req.params.id)
+
+        //if flight doesnt exist
+        if (!flight) {
+            next(new ApiError(`Flight with this ID : ${req.params.id} not found`, 404));
+        }
+
+        // Check if related entities exist
+        const departingAirport = await Airport.findByPk(departure_airport_id)
+        const arrivingAirport = await Airport.findByPk(arrival_airport_id);
+        const airline = await Airline.findByPk(airline_id);
+
+        if (!departingAirport) {
+            return next(new ApiError("Departing Airport not found", 404));
+        }
+        if (!arrivingAirport) {
+            return next(new ApiError("Arriving Airport not found", 404));
+        }
+        if (!airline) {
+            return next(new ApiError("Airline not found", 404));
+        }
+
+
+        await Flight.update(
+            {
+                airline_id,
+                flight_duration,
+                flight_description,
+                flight_status,
+                flight_code,
+                plane_type,
+                seats_available,
+                departure_airport: departingAirport.airport_name,
+                arrival_airport: arrivingAirport.airport_name,
+                departure_date,
+                departure_time,
+                arrival_date,
+                arrival_time,
+                departure_airport_id,
+                arrival_airport_id
+            },
+            {
+                where: {
+                    flight_id: req.params.id,
+                },
+            }
+        );
+
+        const updatedFlight = await Flight.findByPk(req.params.id);
+
+        res.status(200).json({
+            status: "Success",
+            data: updatedFlight
+        });
+    } catch (err) {
+        next(new ApiError(err.message, 400));
+    }
+};
+
 
 module.exports = {
     createFlight,
     getAllFlights,
     getFlightById,
-    deleteFlight
+    deleteFlight,
+    updateFlight
 };
