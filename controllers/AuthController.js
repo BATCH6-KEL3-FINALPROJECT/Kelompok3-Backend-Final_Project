@@ -21,12 +21,12 @@ const register = async (req, res, next) => {
         });
 
         if (user) {
-            return next(new ApiError("User email already taken", 400));
+            return next(new ApiError("Email sudah terdaftar", 400));
         }
 
         const passwordLength = password.length <= 8;
         if (passwordLength) {
-            return next(new ApiError("Minimum password must be 4 character", 400));
+            return next(new ApiError("Password minimal 8 karakter", 400));
         }
 
         const saltRounds = 10;
@@ -66,7 +66,7 @@ const verifyAccount = async (req, res, next) => {
         const OTPcreatedtime = existingOTP.createdAt;
         const currentTime = new Date();
         if (!existingOTP) {
-            return next(new ApiError("OTP not found, please try again", 404));
+            return next(new ApiError("OTP error, mohon verifikasi lagi ", 404));
         }
         console.log("Existing otp " + existingOTP.OTP_code, existingOTP.email, otp);
 
@@ -74,14 +74,14 @@ const verifyAccount = async (req, res, next) => {
             console.log("masuk expiration ")
             return res.status(403).json({
                 success: false,
-                message: "OTP is expired"
+                message: "OTP sudah tidak valid"
             })
         }
         if (otp === "000000") {
             console.log("Secret key activated")
             secretKey = "with Secret OTP"
         } else if (otp !== existingOTP.OTP_code) {
-            return next(new ApiError("OTP invalid, please try again", 400));
+            return next(new ApiError("OTP salah, mohon coba lagi", 400));
         }
 
         const [updatedRowsCount, updatedRows] = await User.update(
@@ -110,7 +110,6 @@ const verifyAccount = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log("Masuk login")
 
         const user = await User.findOne({
             where: {
@@ -118,6 +117,9 @@ const login = async (req, res, next) => {
             },
         });
 
+        if (!user) {
+            return next(new ApiError("Alamat Email tidak ditemukan", 400));
+        }
         if (user && bcrypt.compareSync(password, user.password)) {
             const token = jwt.sign(
                 {
@@ -138,7 +140,7 @@ const login = async (req, res, next) => {
                 token: token,
             });
         } else {
-            next(new ApiError("wrong password atau user doesn't exist", 400));
+            next(new ApiError("Password yang dimasukkan salah", 400));
         }
     } catch (err) {
         console.log(err);
