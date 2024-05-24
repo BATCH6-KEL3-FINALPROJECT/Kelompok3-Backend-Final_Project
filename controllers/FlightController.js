@@ -309,7 +309,26 @@ const updateFlight = async (req, res, next) => {
             }
         );
 
-        const updatedFlight = await Flight.findByPk(req.params.id);
+        const updatedFlight = await Flight.findByPk(req.params.id,
+            {
+                include: [
+                    {
+                        model: Airport,
+                        as: 'departingAirport',
+                        attributes: ["city", "continent"]
+                    },
+                    {
+                        model: Airport,
+                        as: 'arrivingAirport',
+                        attributes: ["city", "continent"]
+                    },
+                    {
+                        model: Airline,
+                        attributes: ["airline_name", "airline_code"]
+                    },
+                ]
+            }
+        );
 
         res.status(200).json({
             status: "Success",
