@@ -81,6 +81,8 @@ const getAllFlights = async (req, res, next) => {
             arrival_city,
             departure_date,
             arrival_date,
+            departure_time,
+            arrival_time,
             // seat_class,
             flight_duration,
             departure_airport,
@@ -103,6 +105,8 @@ const getAllFlights = async (req, res, next) => {
         if (arrival_airport) whereClause.arrival_airport = arrival_airport;
         if (arrival_date) whereClause.arrival_date = arrival_date;
         if (airline_id) whereClause.airline_id = airline_id;
+        if (departure_time) whereClause.departure_time = departure_time;
+        if (arrival_time) whereClause.arrival_time = arrival_time;
         if (flight_duration) whereClause.flight_duration = flight_duration;
         if (seats_available) whereClause.seats_available = { [Op.gte]: parseInt(seats_available) };
         // if (seat_class) {
@@ -130,6 +134,8 @@ const getAllFlights = async (req, res, next) => {
                 arrival_airport: { [Op.like]: `%${req.query.search}%` },
                 arrival_date: { [Op.like]: `%${req.query.search}%` },
                 airline_id: { [Op.like]: `%${req.query.search}%` },
+                departure_time: { [Op.like]: `%${req.query.search}%` },
+                arrival_time: { [Op.like]: `%${req.query.search}%` },
                 flight_duration: { [Op.like]: `%${req.query.search}%` },
                 seats_available: { [Op.like]: `%${req.query.search}%` },
                 // '$flight_description.seat_class$': { [Op.like]: `%${req.query.search}%` },
