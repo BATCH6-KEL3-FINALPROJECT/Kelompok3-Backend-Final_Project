@@ -11,17 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Passenger.belongsTo(models.User, { foreignKey: 'user_id' })
-
-      Passenger.hasMany(models.Ticket, { foreignKey: 'passenger_id', as: 'passenger_ticket' })
     }
   }
   Passenger.init({
-    passenger_id: {
-      primaryKey: true,
-      type: DataTypes.STRING
-    },
-    user_id: DataTypes.UUID,
+    passenger_id: DataTypes.STRING,
+    user_id: DataTypes.STRING,
     title: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,

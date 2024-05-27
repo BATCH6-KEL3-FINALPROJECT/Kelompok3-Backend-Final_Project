@@ -11,35 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      payment.belongsTo(models.User, { foreignKey: 'user_id' });
-      payment.hasMany(models.Booking, { foreignKey: 'payment_id' });
     }
   }
   payment.init({
-    payment_id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true
-    },
-    total_amount: {
-      type: DataTypes.INTEGER
-    },
-    payment_method: {
-      type: DataTypes.STRING
-    },
-    payment_date: {
-      type: DataTypes.DATE
-    },
-    payment_status: {
-      type: DataTypes.ENUM("completed", "cancelled", "pending", "failed")
-    },
-    user_id: {
-      type: DataTypes.UUID,
-    },
-    booking_id: {
-      type: DataTypes.UUID,
-
-    },
+    payment_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'payment',

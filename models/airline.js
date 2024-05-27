@@ -11,14 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Airline.hasMany(models.Flight, { foreignKey: 'airline_id', })
+      Airline.hasMany(models.flight, { foreignKey: 'airline_id', })
     }
   }
   Airline.init({
-    airline_id: {
-      primaryKey: true,
-      type: DataTypes.UUID
-    },
+    airline_id: DataTypes.uuid,
     airline_name: DataTypes.STRING,
     airline_code: DataTypes.STRING,
     country: DataTypes.STRING

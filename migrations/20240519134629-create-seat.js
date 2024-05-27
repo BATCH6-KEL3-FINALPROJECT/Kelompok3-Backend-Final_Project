@@ -8,7 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING
       },
-      seat_class: {
+      seat: {
+        type: Sequelize.STRING
+      },
+      class: {
         type: Sequelize.ENUM("Economy", "Premium Economy", "Business", "First Class")
       },
       price: {
