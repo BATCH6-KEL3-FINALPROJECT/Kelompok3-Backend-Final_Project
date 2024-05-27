@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       Flight.hasMany(models.Seat, { foreignKey: 'flight_id' });
       Flight.hasMany(models.Booking, { foreignKey: 'flight_id' });
       Flight.hasMany(models.Ticket, { foreignKey: 'flight_id' })
+      Flight.hasMany(models.Price, { foreignKey: 'flight_id' });
     }
   }
   Flight.init({
@@ -34,7 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     flight_code: DataTypes.STRING,
     plane_type: DataTypes.STRING,
-    seats_available: DataTypes.INTEGER,
+    seats_available: {
+      type: DataTypes.INTEGER,
+      default: 189
+    },
+    terminal: DataTypes.JSON,
     departure_airport: DataTypes.STRING,
     arrival_airport: DataTypes.STRING,
     departure_date: DataTypes.DATE,
