@@ -28,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
     airline_id: DataTypes.UUID,
     flight_duration: DataTypes.INTEGER,
     flight_description: DataTypes.JSON,
-    flight_status: DataTypes.STRING,
+    flight_status: {
+      type: DataTypes.ENUM('on time', 'delayed', 'ongoing', 'en-route', 'missing'),
+      defaultValue: "on time"
+    },
     flight_code: DataTypes.STRING,
     plane_type: DataTypes.STRING,
     seats_available: DataTypes.INTEGER,
