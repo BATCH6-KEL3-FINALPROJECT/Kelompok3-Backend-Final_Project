@@ -15,6 +15,9 @@ module.exports = {
       city: {
         type: Sequelize.STRING
       },
+      city_code: {
+        type: Sequelize.STRING
+      },
       continent: {
         type: Sequelize.STRING
       },

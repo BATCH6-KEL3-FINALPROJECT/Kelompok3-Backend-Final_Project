@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     airport_name: DataTypes.STRING,
     city: DataTypes.STRING,
+    city_code: DataTypes.STRING,
     continent: DataTypes.STRING,
     iata_code: DataTypes.STRING,
     country: DataTypes.STRING

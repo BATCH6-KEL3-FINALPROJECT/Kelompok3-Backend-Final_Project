@@ -26,6 +26,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       seats_available: { type: Sequelize.INTEGER },
+      terminal: { type: Sequelize.JSON },
       departure_airport: { type: Sequelize.STRING },
       arrival_airport: { type: Sequelize.STRING },
       departure_date: { type: Sequelize.DATE },

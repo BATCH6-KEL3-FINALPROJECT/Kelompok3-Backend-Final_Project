@@ -11,7 +11,7 @@
     "db-drop": "npx sequelize db:drop",
     "db-migrate": "npx sequelize db:migrate",
     "db-undo-migrate": "npx sequelize db:migrate:undo:all",
-    "db-seed": "npx sequelize db:seed:all",
+    "db-seed": "node ./seeders/masterSeed.js",
     "db-undo-seed": "npx sequelize db:seed:undo:all"
   },
   "keywords": [
