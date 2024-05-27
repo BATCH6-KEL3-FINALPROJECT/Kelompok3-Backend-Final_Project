@@ -24,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     seat_class: DataTypes.ENUM("Economy", "Premium Economy", "Business", "First Class"),
-    price: DataTypes.INTEGER,
     seat_number: DataTypes.STRING,
-    is_available: DataTypes.BOOLEAN,
+    is_available: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
     flight_id: DataTypes.UUID
   }, {
     sequelize,
