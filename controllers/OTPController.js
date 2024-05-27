@@ -38,13 +38,12 @@ const sentOtp = async (email, idUser, next) => {
     } catch (error) {
         console.log(error.message);
         // await transaction.rollback(); 
-        // return next(new ApiError("failed to sent OTP", 400));
+        return next(new ApiError("failed to sent OTP", 400));
     }
 };
 const resendOtp = async (req, res, next) => {
     try {
         const { email } = req.body;
-        // Check if user exists with the provided email
         const user = await User.findOne({
             where: {
                 email,
@@ -52,29 +51,29 @@ const resendOtp = async (req, res, next) => {
         });
 
         if (!user) {
-            // User not found with the provided email
-            return next(new ApiError("User not found", 404));
+            return next(new ApiError("User tidak ditemukan, mohon register terlebih dahulu", 404));
         }
 
-        // Generate a new OTP
+        const existingOTP = await OTP.findOne({ where: { email } })
+        console.log("OTP existing", existingOTP)
+        if (existingOTP) {
+            await existingOTP.destroy()
+        }
+
         const otpId = uuid.v4();
         const otp = generateOTP();
         console.log("New OTP", otp);
-        await OTP.update(
-            { otp: otp },
-            {
-                where: {
-                    id_user: user.id,
-                    email: email,
-                },
-            });
+        const newOTP = await OTP.create({
+            user_id: user.user_id,
+            email: email,
+            OTP_code: otp,
+            expired_in: new Date()
+        });
         const mailResponse = await mailSender(
             email,
             "Verification Email - OTP",
             `<h1>Your new OTP code is: ${otp}</h1>`
         );
-
-        console.log("Resent OTP email successfully", mailResponse);
 
         res.status(200).json({
             status: "Success",
