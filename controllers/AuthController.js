@@ -24,7 +24,7 @@ const register = async (req, res, next) => {
             return next(new ApiError("Email sudah terdaftar", 400));
         }
 
-        const passwordLength = password.length <= 8;
+        const passwordLength = password.length < 8;
         if (passwordLength) {
             return next(new ApiError("Password minimal 8 karakter", 400));
         }
