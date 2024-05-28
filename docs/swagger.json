@@ -1,31 +1,285 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "",
-    "description": "",
+    "title": "SkyPass Swagger Documentation",
+    "description": "The swagger doc for SkyPass API Application",
     "version": "1.0.0",
     "license": {
       "name": "ISC",
       "url": "https://spdx.org/licenses/ISC.html"
     },
     "contact": {
-      "name": "",
-      "url": ""
+      "name": "team1-FSW1",
+      "url": "https://github.com/RizqGyx/TEAM1-API-PERPUSTAKAAN"
     }
   },
-  "tags": [],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "ini API untuk Auth resources"
+    },
+    {
+      "name": "Airport",
+      "description": "ini API untuk Airport resources"
+    },
+    {
+      "name": "Airline",
+      "description": "ini API untuk Airline resources"
+    },
+    {
+      "name": "Flight",
+      "description": "ini API untuk Flight resources"
+    },
+    {
+      "name": "OTP",
+      "description": "ini API untuk OTP resources"
+    }
+  ],
   "servers": [
     {
       "url": "http://localhost:3000/api/v1"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Return hasil hit API login user",
+        "description": "ini API utk login user",
+        "requestBody": {
+          "description": "ini request body utk sukses login user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "fosdhan@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password12"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sukses User login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Success login"
+                    },
+                    "token": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ2YTRhN2Q1LTdjYTgtNGMyZi05YzgyLTA3NWM1N2QyMTQ4ZSIsIm5hbWUiOiJBemthIHpha2kiLCJyb2xlIjoidXNlciIsImVtYWlsIjoiZm9zZGhhbkBnbWFpbC5jb20iLCJpYXQiOjE3MTY1MzE2MjIsImV4cCI6MTcxNjU3NDgyMn0.H6roiYcuZyIB1Ves_8XV2WQKpCJSaHVvr9MzphWTLLU"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email tidak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Alamat Email tidak ditemukan"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Password salah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Password yang dimasukkan salah"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auths"
+        ],
+        "summary": "Return hasil hit API register user",
+        "description": "ini API utk register user",
+        "requestBody": {
+          "description": "ini request body utk sukses register user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Azka zaki"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "fosdhan@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password12"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "example": "081234567890"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses register",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "status": "Success",
+                      "data": {
+                        "email": "fosdhan@gmail.com",
+                        "newUser": {
+                          "role": "user",
+                          "is_verified": false,
+                          "user_id": "e3ba97ac-7e91-4f17-a6e2-667e5b4764ad",
+                          "name": "Azka zaki",
+                          "email": "fosdhan@gmail.com",
+                          "password": "$2b$10$o34Txjgp/j5kVZX8xKA/kO5rpMKKGxXCludgQERvofKNwXzYwJA5y",
+                          "phone_number": "081234567890",
+                          "updatedAt": "2024-05-27T18:10:14.893Z",
+                          "createdAt": "2024-05-27T18:10:14.893Z",
+                          "refresh_token": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "tidak ada nama, email, atau password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "nama, email, dan password harus diisi"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "email sudah terdaftar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "email sudah terdaftar"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
     "securitySchemes": {
       "bearerToken": {
         "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "scheme": "bearer"
       }
     }
   }
