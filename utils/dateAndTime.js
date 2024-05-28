@@ -22,26 +22,28 @@ const flightTimes = [
         arrivalTime: "10:00",
         duration: 150
     },
-    // {
-    //     departureTime: "10:30",
-    //     arrivalTime: "12:15",
-    //     duration: 105
-    // },
+
     {
         departureTime: "12:00",
         arrivalTime: "15:15",
         duration: 195
+    },
+
+    {
+        departureTime: "18:00",
+        arrivalTime: "21:00",
+        duration: 180
     },
     // {
     //     departureTime: "15:45",
     //     arrivalTime: "17:45",
     //     duration: 120
     // },
-    {
-        departureTime: "18:00",
-        arrivalTime: "21:00",
-        duration: 180
-    }
+    // {
+    //     departureTime: "10:30",
+    //     arrivalTime: "12:15",
+    //     duration: 105
+    // },
 ];
 console.log(datesArray);
 console.log(flightTimes);

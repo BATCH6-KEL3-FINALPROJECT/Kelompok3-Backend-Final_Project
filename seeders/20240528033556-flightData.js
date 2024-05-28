@@ -16,14 +16,19 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+    // Total data  = (Number of dates) * (Number of departure airports) * (Number of arrival airports) * (Number of flight times) * (Number of airlines) * (Number of planes)
+    // = 10 * 23 * 23 * 3 * 4 * 4
+    // = 182,160
+
 
     const planesInAsia = [
-      { name: "Airbus A320", totalSeats: 150 },
-      { name: "Boeing 737", totalSeats: 162 },
-      { name: "Airbus A330", totalSeats: 317 },
-      { name: "Boeing 777", totalSeats: 394 },
-      { name: "Boeing 787", totalSeats: 278 }
+      { name: "Embraer E190", totalSeats: 114 },
+      { name: "Bombardier CRJ900", totalSeats: 90 },
+      { name: "Airbus A319", totalSeats: 124 },
+      { name: "Boeing 737 MAX 7", totalSeats: 172 },
+      { name: "Airbus A220", totalSeats: 160 }
     ];
+
     const planeDetails = JSON.stringify({
       details: [
         {
@@ -60,7 +65,7 @@ module.exports = {
                 bulkInsertData.push({
                   flight_id: uuidv4(),
                   airline_id: airline.airline_id,
-                  flight_duration: 180,
+                  flight_duration: time.duration,
                   flight_description: planeDetails,
                   flight_status: "on time",
                   flight_code: flightCode,
@@ -69,9 +74,9 @@ module.exports = {
                   departure_airport: departureAirport.airport_name,
                   arrival_airport: arrivalAirport.airport_name,
                   departure_date: date,
-                  departure_time: '12:00',
+                  departure_time: time.departureTime,
                   arrival_date: date,
-                  arrival_time: '15:00',
+                  arrival_time: time.arrivalTime,
                   departure_airport_id: departureAirport.airport_id,
                   arrival_airport_id: arrivalAirport.airport_id,
                   createdAt: new Date(),
@@ -85,7 +90,8 @@ module.exports = {
       }
       try {
         await Flight.bulkCreate(bulkInsertData);
-        console.log("Bulk insert successful for flight:");
+        console.log("Bulk insert successful for flight:", date);
+        await new Promise(resolve => setTimeout(resolve, 2500));
       } catch (error) {
         console.error("Error inserting data into seats:", error);
       }
