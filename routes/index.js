@@ -4,7 +4,7 @@ const swaggerDocument = require("../docs/swagger.json");
 
 const Auth = require("./authRouter");
 const Flight = require("./flightRouter");
-const Airport = require("./AirportRouter");
+const Airport = require("./airportRouter");
 const Airline = require("./airlineRoutes")
 router.use("/api-docs", swaggerUI.serve);
 router.use("/api-docs", swaggerUI.setup(swaggerDocument));
