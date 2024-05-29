@@ -176,14 +176,7 @@ const getAllFlights = async (req, res, next) => {
                 },
                 attributes: ["price", "price_for_child"]
             });
-        } else {
-            includeClause.push({
-                model: Price,
-                as: 'Prices',
-                attributes: ["price", "price_for_child"]
-            });
         }
-
         const { count, rows: flights } = await Flight.findAndCountAll({
             attributes: ["flight_id", "flight_duration", "flight_description", "flight_status", "flight_code", "plane_type", "terminal", "departure_airport", "arrival_airport", "departure_date", "departure_time", "arrival_date", "arrival_time", "departure_airport_id", "arrival_airport_id"],
             include: includeClause,
