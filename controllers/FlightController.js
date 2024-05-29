@@ -2,7 +2,7 @@ const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
 const { Op } = require('sequelize');
 // const { v4: uuidv4, validate: uuidValidate } = require('uuid');
-const { Flight, Airport, Airline } = require('../models');
+const { Flight, Airport, Airline, Price } = require('../models');
 const { query } = require("express");
 
 const createFlight = async (req, res, next) => {
@@ -84,7 +84,7 @@ const getAllFlights = async (req, res, next) => {
             arrival_date,
             departure_time,
             arrival_time,
-            // seat_class,
+            seat_class,
             flight_duration,
             departure_airport,
             arrival_airport,
@@ -102,6 +102,8 @@ const getAllFlights = async (req, res, next) => {
         const offset = (pageNum - 1) * pageSize;
 
         //filter
+        const includeClause = [];
+
         const whereClause = {};
         if (departure_airport) whereClause.departure_airport = departure_airport;
         if (departure_date) whereClause.departure_date = departure_date;
@@ -129,6 +131,9 @@ const getAllFlights = async (req, res, next) => {
         if (arrival_continent) {
             whereClause['$arrivingAirport.continent$'] = arrival_continent;
         }
+        // if (seat_class) {
+        //     whereClause['$Prices.seat_class$'] = seat_class;
+        // }
 
         if (req.query.search) {
             whereClause[Op.or] = {
@@ -146,25 +151,38 @@ const getAllFlights = async (req, res, next) => {
                 '$departingAirport.continent$': { [Op.like]: `%${req.query.search}%` },
                 '$arrivingAirport.city$': { [Op.like]: `%${req.query.search}%` },
                 '$arrivingAirport.continent$': { [Op.like]: `%${req.query.search}%` },
+                '$Prices.seat_class$': { [Op.like]: `%${req.query.search}%` }
             };
         }
 
         const { count, rows: flights } = await Flight.findAndCountAll({
+            attributes: ["flight_id", "flight_duration", "flight_description", "flight_status", "flight_code", "plane_type", "terminal", "departure_airport", "arrival_airport", "departure_date", "departure_time", "arrival_date", "arrival_time", "departure_airport_id", "arrival_airport_id"],
+
             include: [
                 {
                     model: Airport,
                     as: 'departingAirport',
-                    attributes: ["city", "iata_code", "continent"]
+                    attributes: ["city", "iata_code", "continent"],
+                    where: { city: departure_city } // Filter departing airport by city
                 },
                 {
                     model: Airport,
                     as: 'arrivingAirport',
-                    attributes: ["city", "iata_code", "continent"]
+                    attributes: ["city", "iata_code", "continent"],
+                    where: { city: arrival_city } // Filter arriving airport by city
                 },
                 {
                     model: Airline,
                     attributes: ["airline_name", "airline_code"]
                 },
+                {
+                    model: Price,
+                    as: 'Prices', // Set alias for the Price model
+                    // where: {
+                    //     seat_class: seat_class // Filter prices by seat class
+                    // },
+                    attributes: ["price", "price_for_child"]
+                }
             ],
             where: whereClause,
             offset,
@@ -187,6 +205,7 @@ const getAllFlights = async (req, res, next) => {
             },
         });
     } catch (error) {
+        console.log(error)
         next(new ApiError(error.message, 400));
     }
 };
