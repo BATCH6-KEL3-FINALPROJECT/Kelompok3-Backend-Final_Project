@@ -4,13 +4,9 @@
     "title": "SkyPass Swagger Documentation",
     "description": "The swagger doc for SkyPass API Application",
     "version": "1.0.0",
-    "license": {
-      "name": "ISC",
-      "url": "https://spdx.org/licenses/ISC.html"
-    },
     "contact": {
-      "name": "team1-FSW1",
-      "url": "https://github.com/RizqGyx/TEAM1-API-PERPUSTAKAAN"
+      "name": "C3 SkyPass Application",
+      "url": "https://github.com/BATCH6-KEL3-FINALPROJECT"
     }
   },
   "tags": [
@@ -37,7 +33,7 @@
   ],
   "servers": [
     {
-      "url": "http://localhost:3000/api/v1"
+      "url": "http://airline.azkazk11.my.id/api/v1"
     }
   ],
   "paths": {
@@ -69,7 +65,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Sukses User login",
             "content": {
               "application/json": {
@@ -154,7 +150,7 @@
     "/auth/register": {
       "post": {
         "tags": [
-          "Auths"
+          "Auth"
         ],
         "summary": "Return hasil hit API register user",
         "description": "ini API utk register user",
@@ -221,32 +217,7 @@
               }
             }
           },
-          "400": {
-            "description": "tidak ada nama, email, atau password",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Failed"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "nama, email, dan password harus diisi"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "409": {
+          "401": {
             "description": "email sudah terdaftar",
             "content": {
               "application/json": {
@@ -264,6 +235,1134 @@
                           "type": "string",
                           "example": "email sudah terdaftar"
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "minimal password 8 karakter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Password minimal 8 karakter"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Return hasil hit API verify user",
+        "description": "ini API utk verify user",
+        "requestBody": {
+          "description": "ini request body utk sukses verify user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "@gmail.com"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "example": "aq1lYD"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses register",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "status": "Success",
+                      "message": "User Verified with secret OTP",
+                      "data": {
+                        "email": "fosdhan@gmail.com",
+                        "newUser": {
+                          "user_id": "c99bcf67-8205-4848-b58d-050c91e10938",
+                          "name": "Azka",
+                          "email": "fosdhan@gmail.com",
+                          "phone_number": null,
+                          "password": "$2b$10$X31FpUXE.ufEbvlapk63uuf7pFQK.nX5TUsLaLCzFiUcx.1oPn81q",
+                          "refresh_token": null,
+                          "role": "admin",
+                          "is_verified": true,
+                          "createdAt": "2024-05-21T17:18:21.382Z",
+                          "updatedAt": "2024-05-21T17:18:28.175Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "OTP Errror",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "OTP error, mohon verifikasi lagi"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "OTP sudah tidak valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "OTP sudah tidak valid"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "OTP salah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "OTP salah, mohon coba lagi"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/resend-otp": {
+      "post": {
+        "tags": [
+          "OTP"
+        ],
+        "summary": "Return hasil hit API resend OTP",
+        "description": "ini API utk resend OTP",
+        "requestBody": {
+          "description": "ini request body utk sukses resend OTP",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "fosdhan@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses resend OTP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "status": "Success",
+                      "message": "OTP resent successfully, please check your email"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User tidak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "User tidak ditemukan, mohon register terlebih dahulu"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flight/create": {
+      "post": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API create data flight",
+        "description": "ini API utk create data flight",
+        "requestBody": {
+          "description": "ini request body utk sukses create data flight",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "airline_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "87d70109-fabb-4626-a854-2da5e9134429"
+                  },
+                  "flight_duration": {
+                    "type": "integer",
+                    "example": 75
+                  },
+                  "flight_description": {
+                    "type": "object",
+                    "properties": {
+                      "details": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "Bagasi kabin 7 kg"
+                            }
+                          },
+                          "example": [
+                            {
+                              "id": 1,
+                              "description": "Bagasi kabin 7 kg"
+                            },
+                            {
+                              "id": 2,
+                              "description": "Tidak ada wifi"
+                            },
+                            {
+                              "id": 3,
+                              "description": "Tidak ada hiburan di pesawat"
+                            },
+                            {
+                              "id": 4,
+                              "description": "Tidak ada stopkontak/port usb"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "flight_status": {
+                    "type": "string",
+                    "example": "on time"
+                  },
+                  "flight_code": {
+                    "type": "string",
+                    "example": "JT-683"
+                  },
+                  "plane_type": {
+                    "type": "string",
+                    "example": "Boeing 737-900"
+                  },
+                  "seats_available": {
+                    "type": "integer",
+                    "example": 213
+                  },
+                  "terminal": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  },
+                  "departure_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-11T00:00:00.000Z"
+                  },
+                  "departure_time": {
+                    "type": "string",
+                    "example": "13:35:00"
+                  },
+                  "arrival_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-11T00:00:00.000Z"
+                  },
+                  "arrival_time": {
+                    "type": "string",
+                    "example": "14:50:00"
+                  },
+                  "departure_airport_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f"
+                  },
+                  "arrival_airport_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses create flight data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "flight": {
+                          "flight_id": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f",
+                          "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                          "flight_duration": 75,
+                          "flight_description": {
+                            "details": [
+                              {
+                                "id": 1,
+                                "description": "Bagasi kabin 7 kg"
+                              },
+                              {
+                                "id": 2,
+                                "description": "Tidak ada wifi"
+                              },
+                              {
+                                "id": 3,
+                                "description": "Tidak ada hiburan di pesawat"
+                              },
+                              {
+                                "id": 4,
+                                "description": "Tidak ada stopkontak/port usb"
+                              }
+                            ]
+                          },
+                          "flight_status": "on time",
+                          "flight_code": "JT-683",
+                          "plane_type": "Boeing 737-900",
+                          "seats_available": 213,
+                          "departure_airport": "Bandar Udara Tjilik Riwut",
+                          "arrival_airport": "Bandar Udara Internasional Juanda",
+                          "departure_date": "2024-06-11T00:00:00.000Z",
+                          "departure_time": "13:35:00",
+                          "arrival_date": "2024-06-11T00:00:00.000Z",
+                          "arrival_time": "14:50:00",
+                          "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
+                          "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                          "updatedAt": "2024-05-29T07:25:36.518Z",
+                          "createdAt": "2024-05-29T07:25:36.518Z",
+                          "terminal": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Airport and Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "Failed"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "Departing Airport not found"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "Failed"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "Arriving Airport not found"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "Failed"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "message": {
+                              "type": "string",
+                              "example": "Airline not found"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flight/{id}": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API get flight by id",
+        "description": "API untuk mendapatkan data flight by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f"
+            },
+            "description": "Flight ID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sukses mendapatkan data flight by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "flight": {
+                          "flight_id": "3fdf994e-c84c-4930-a225-f90b784e5e2f",
+                          "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                          "flight_duration": 75,
+                          "flight_description": {
+                            "details": [
+                              {
+                                "id": 1,
+                                "description": "Bagasi kabin 7 kg"
+                              },
+                              {
+                                "id": 2,
+                                "description": "Tidak ada wifi"
+                              },
+                              {
+                                "id": 3,
+                                "description": "Tidak ada hiburan di pesawat"
+                              },
+                              {
+                                "id": 4,
+                                "description": "Tidak ada stopkontak/port usb"
+                              }
+                            ]
+                          },
+                          "flight_status": "on time",
+                          "flight_code": "JT-683",
+                          "plane_type": "Boeing 737-900",
+                          "seats_available": 213,
+                          "terminal": null,
+                          "departure_airport": "Bandar Udara Tjilik Riwut",
+                          "arrival_airport": "Bandar Udara Internasional Juanda",
+                          "departure_date": "2024-06-11T00:00:00.000Z",
+                          "departure_time": "13:35:00",
+                          "arrival_date": "2024-06-11T00:00:00.000Z",
+                          "arrival_time": "14:50:00",
+                          "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
+                          "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                          "createdAt": "2024-05-27T13:26:27.864Z",
+                          "updatedAt": "2024-05-27T13:26:27.864Z",
+                          "departingAirport": {
+                            "city": "Palangkaraya",
+                            "continent": "Asia"
+                          },
+                          "arrivingAirport": {
+                            "city": "Sidoarjo",
+                            "continent": "Asia"
+                          },
+                          "Airline": {
+                            "airline_name": "Lion Air",
+                            "airline_code": "LNI"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Flight not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Flight  with ID: ${req.params.id} not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flight": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API get all data flight",
+        "description": "ini API untuk mendapatkan semua data flight",
+        "parameters": [
+          {
+            "name": "departure_city",
+            "in": "query",
+            "description": "Filter by departure city",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "arrival_city",
+            "in": "query",
+            "description": "Filter by arrival city",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "departure_date",
+            "in": "query",
+            "description": "Filter by departure date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "arrival_date",
+            "in": "query",
+            "description": "Filter by arrival date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "departure_time",
+            "in": "query",
+            "description": "Filter by departure time",
+            "schema": {
+              "type": "string",
+              "format": "time"
+            }
+          },
+          {
+            "name": "arrival_time",
+            "in": "query",
+            "description": "Filter by arrival time",
+            "schema": {
+              "type": "string",
+              "format": "time"
+            }
+          },
+          {
+            "name": "flight_duration",
+            "in": "query",
+            "description": "Filter by flight duration (in minutes)",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "seats_available",
+            "in": "query",
+            "description": "Filter by available seats",
+            "schema": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          {
+            "name": "departure_continent",
+            "in": "query",
+            "description": "Filter by departure continent",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "arrival_continent",
+            "in": "query",
+            "description": "Filter by arrival continent",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "flight_status",
+            "in": "query",
+            "description": "Filter by flight status",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number for pagination (default 1)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of items per page (default 10)",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "flights": [
+                          {
+                            "flight_id": "3fdf994e-c84c-4930-a225-f90b784e5e2f",
+                            "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                            "flight_duration": 75,
+                            "flight_description": {
+                              "details": [
+                                {
+                                  "id": 1,
+                                  "description": "Bagasi kabin 7 kg"
+                                },
+                                {
+                                  "id": 2,
+                                  "description": "Tidak ada wifi"
+                                },
+                                {
+                                  "id": 3,
+                                  "description": "Tidak ada hiburan di pesawat"
+                                },
+                                {
+                                  "id": 4,
+                                  "description": "Tidak ada stopkontak/port usb"
+                                }
+                              ]
+                            },
+                            "flight_status": "on time",
+                            "flight_code": "JT-683",
+                            "plane_type": "Boeing 737-900",
+                            "seats_available": 213,
+                            "terminal": null,
+                            "departure_airport": "Bandar Udara Tjilik Riwut",
+                            "arrival_airport": "Bandar Udara Internasional Juanda",
+                            "departure_date": "2024-06-11T00:00:00.000Z",
+                            "departure_time": "13:35:00",
+                            "arrival_date": "2024-06-11T00:00:00.000Z",
+                            "arrival_time": "14:50:00",
+                            "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
+                            "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                            "createdAt": "2024-05-27T13:26:27.864Z",
+                            "updatedAt": "2024-05-27T13:26:27.864Z",
+                            "departingAirport": {
+                              "city": "Palangkaraya",
+                              "continent": "Asia"
+                            },
+                            "arrivingAirport": {
+                              "city": "Sidoarjo",
+                              "continent": "Asia"
+                            },
+                            "Airline": {
+                              "airline_name": "Lion Air",
+                              "airline_code": "LNI"
+                            }
+                          },
+                          {
+                            "flight_id": "f9069f22-e4af-4a90-a139-d9ea5709d6e8",
+                            "airline_id": "cba794f5-b409-46c0-89c2-55e32aef449d",
+                            "flight_duration": 95,
+                            "flight_description": {
+                              "details": [
+                                {
+                                  "id": 1,
+                                  "description": "Bagasi kabin 7 kg"
+                                },
+                                {
+                                  "id": 2,
+                                  "description": "Tidak ada wifi"
+                                },
+                                {
+                                  "id": 3,
+                                  "description": "Tidak ada hiburan di pesawat"
+                                }
+                              ]
+                            },
+                            "flight_status": "on time",
+                            "flight_code": "QG-719",
+                            "plane_type": "Airbus A320",
+                            "seats_available": 175,
+                            "terminal": null,
+                            "departure_airport": "Bandar Udara Internasional Juanda",
+                            "arrival_airport": "Bandara Internasional Soekarno Hatta",
+                            "departure_date": "2024-06-12T00:00:00.000Z",
+                            "departure_time": "19:40:00",
+                            "arrival_date": "2024-06-12T00:00:00.000Z",
+                            "arrival_time": "21:15:00",
+                            "departure_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                            "arrival_airport_id": "f22c76ea-a5f7-4c1b-b37f-e559826cf2da",
+                            "createdAt": "2024-05-27T13:26:27.865Z",
+                            "updatedAt": "2024-05-27T13:26:27.865Z",
+                            "departingAirport": {
+                              "city": "Sidoarjo",
+                              "continent": "Asia"
+                            },
+                            "arrivingAirport": {
+                              "city": "Jakarta",
+                              "continent": "Asia"
+                            },
+                            "Airline": {
+                              "airline_name": "Citilink",
+                              "airline_code": "CTV"
+                            }
+                          }
+                        ],
+                        "pagination": {
+                          "totalData": 13,
+                          "totalPages": 2,
+                          "pageNum": 1,
+                          "pageSize": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline/create": {
+      "post": {
+        "tags": [
+          "Airline"
+        ],
+        "summary": "Return hasil hit API create data Airline",
+        "description": "ini API utk create data Airline",
+        "requestBody": {
+          "description": "ini request body utk sukses create data Airline",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "airline_name": {
+                    "type": "string",
+                    "example": "Qantas"
+                  },
+                  "airline_code": {
+                    "type": "string",
+                    "example": "QF"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "Australia"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses create airline data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "newAirline": {
+                          "airline_id": "20d850e8-c4ef-4f0d-81a1-d67ea220e08c",
+                          "airline_name": "Qantas",
+                          "airline_code": "QF",
+                          "country": "Australia",
+                          "updatedAt": "2024-05-29T08:57:41.226Z",
+                          "createdAt": "2024-05-29T08:57:41.226Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airline": {
+      "get": {
+        "tags": [
+          "Airline"
+        ],
+        "summary": "Return hasil hit API get all airline",
+        "description": "ini API untuk mendapatkan semua data airline ",
+        "responses": {
+          "201": {
+            "description": "Sukses mengambil semua data airline",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "airlines": [
+                          {
+                            "airline_id": "ef4b4d99-7a6a-4451-ba5e-cff623935d1b",
+                            "airline_name": "Batik Air",
+                            "airline_code": "BTK",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.851Z",
+                            "updatedAt": "2024-05-27T13:26:27.851Z"
+                          },
+                          {
+                            "airline_id": "cba794f5-b409-46c0-89c2-55e32aef449d",
+                            "airline_name": "Citilink",
+                            "airline_code": "CTV",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.851Z",
+                            "updatedAt": "2024-05-27T13:26:27.851Z"
+                          },
+                          {
+                            "airline_id": "ab40b7a9-988d-4e7a-b5e7-e3a33616a2f2",
+                            "airline_name": "Garuda Indonesia",
+                            "airline_code": "GIA",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.851Z",
+                            "updatedAt": "2024-05-27T13:26:27.851Z"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airport/create": {
+      "post": {
+        "tags": [
+          "Airport"
+        ],
+        "summary": "Return hasil hit API create data Airport",
+        "description": "ini API utk create data Airport",
+        "requestBody": {
+          "description": "ini request body utk sukses create data Airport",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "airport_name": {
+                    "type": "string",
+                    "example": "Sydney Kingsford Smith Airport"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Sydney"
+                  },
+                  "city_code": {
+                    "type": "string",
+                    "example": "SYS"
+                  },
+                  "continent": {
+                    "type": "string",
+                    "example": "Australia"
+                  },
+                  "iata_code": {
+                    "type": "string",
+                    "example": "SYD"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "Australia"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses create airline data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "newAirport": {
+                          "airport_id": "13182180-094f-4661-9e6f-2055cc6e0447",
+                          "airport_name": "Sydney Kingsford Smith Airport",
+                          "city": "Sydney",
+                          "continent": "Australia",
+                          "city_code": "SYS",
+                          "iata_code": "SYD",
+                          "country": "Australia",
+                          "updatedAt": "2024-05-29T09:05:17.354Z",
+                          "createdAt": "2024-05-29T09:05:17.354Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/airport": {
+      "get": {
+        "tags": [
+          "Airport"
+        ],
+        "summary": "Return hasil hit API get all airport",
+        "description": "ini API untuk mendapatkan semua data airport ",
+        "responses": {
+          "201": {
+            "description": "Sukses mengambil semua data airport",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "airport": [
+                          {
+                            "airport_id": "83235340-4a91-426d-8e32-a283dc843d21",
+                            "airport_name": "Bandar Udara Internasional Yogyakarta",
+                            "city": "Kulon Progo",
+                            "city_code": null,
+                            "continent": "Asia",
+                            "iata_code": "YIA",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.842Z",
+                            "updatedAt": "2024-05-27T13:26:27.842Z"
+                          },
+                          {
+                            "airport_id": "f919b7f9-8d34-4127-985c-205b8c7dd7bd",
+                            "airport_name": "Bandar Udara Internasional Kertajati",
+                            "city": "Majalengka",
+                            "city_code": null,
+                            "continent": "Asia",
+                            "iata_code": "KJT",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.842Z",
+                            "updatedAt": "2024-05-27T13:26:27.842Z"
+                          },
+                          {
+                            "airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                            "airport_name": "Bandar Udara Internasional Juanda",
+                            "city": "Sidoarjo",
+                            "city_code": null,
+                            "continent": "Asia",
+                            "iata_code": "SUB",
+                            "country": "Indonesia",
+                            "createdAt": "2024-05-27T13:26:27.842Z",
+                            "updatedAt": "2024-05-27T13:26:27.842Z"
+                          }
+                        ]
                       }
                     }
                   }
