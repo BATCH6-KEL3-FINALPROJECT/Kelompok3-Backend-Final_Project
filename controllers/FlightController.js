@@ -114,23 +114,18 @@ const getAllFlights = async (req, res, next) => {
         if (arrival_time) whereClause.arrival_time = arrival_time;
         if (flight_duration) whereClause.flight_duration = flight_duration;
         if (seats_available) whereClause.seats_available = { [Op.gte]: parseInt(seats_available) };
-        // if (seat_class) {
-        //     whereClause.flight_description = {
-        //         [Op.contains]: { seat_class }
-        //     };
+        // if (departure_city) {
+        //     whereClause['$departingAirport.city$'] = departure_city;
         // }
-        if (departure_city) {
-            whereClause['$departingAirport.city$'] = departure_city;
-        }
-        if (arrival_city) {
-            whereClause['$arrivingAirport.city$'] = arrival_city;
-        }
-        if (departure_continent) {
-            whereClause['$departingAirport.continent$'] = departure_continent;
-        }
-        if (arrival_continent) {
-            whereClause['$arrivingAirport.continent$'] = arrival_continent;
-        }
+        // if (arrival_city) {
+        //     whereClause['$arrivingAirport.city$'] = arrival_city;
+        // }
+        // if (departure_continent) {
+        //     whereClause['$departingAirport.continent$'] = departure_continent;
+        // }
+        // if (arrival_continent) {
+        //     whereClause['$arrivingAirport.continent$'] = arrival_continent;
+        // }
         // if (seat_class) {
         //     whereClause['$Prices.seat_class$'] = seat_class;
         // }
@@ -155,35 +150,43 @@ const getAllFlights = async (req, res, next) => {
             };
         }
 
+        includeClause.push(
+            {
+                model: Airport,
+                as: 'departingAirport',
+                attributes: ["city", "iata_code", "continent"]
+            },
+            {
+                model: Airport,
+                as: 'arrivingAirport',
+                attributes: ["city", "iata_code", "continent"]
+            },
+            {
+                model: Airline,
+                attributes: ["airline_name", "airline_code"]
+            }
+        );
+
+        if (seat_class) {
+            includeClause.push({
+                model: Price,
+                as: 'Prices', // Set alias for the Price model
+                where: {
+                    seat_class: seat_class // Filter prices by seat class
+                },
+                attributes: ["price", "price_for_child"]
+            });
+        } else {
+            includeClause.push({
+                model: Price,
+                as: 'Prices',
+                attributes: ["price", "price_for_child"]
+            });
+        }
+
         const { count, rows: flights } = await Flight.findAndCountAll({
             attributes: ["flight_id", "flight_duration", "flight_description", "flight_status", "flight_code", "plane_type", "terminal", "departure_airport", "arrival_airport", "departure_date", "departure_time", "arrival_date", "arrival_time", "departure_airport_id", "arrival_airport_id"],
-
-            include: [
-                {
-                    model: Airport,
-                    as: 'departingAirport',
-                    attributes: ["city", "iata_code", "continent"],
-                    where: { city: departure_city } // Filter departing airport by city
-                },
-                {
-                    model: Airport,
-                    as: 'arrivingAirport',
-                    attributes: ["city", "iata_code", "continent"],
-                    where: { city: arrival_city } // Filter arriving airport by city
-                },
-                {
-                    model: Airline,
-                    attributes: ["airline_name", "airline_code"]
-                },
-                {
-                    model: Price,
-                    as: 'Prices', // Set alias for the Price model
-                    // where: {
-                    //     seat_class: seat_class // Filter prices by seat class
-                    // },
-                    attributes: ["price", "price_for_child"]
-                }
-            ],
+            include: includeClause,
             where: whereClause,
             offset,
             limit: pageSize,
