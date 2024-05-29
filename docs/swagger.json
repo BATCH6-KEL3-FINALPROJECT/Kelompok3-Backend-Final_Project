@@ -12,23 +12,19 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "ini API untuk Auth resources"
+      "description": "API untuk Auth resources"
     },
     {
       "name": "Airport",
-      "description": "ini API untuk Airport resources"
+      "description": "API untuk Airport resources"
     },
     {
       "name": "Airline",
-      "description": "ini API untuk Airline resources"
+      "description": "API untuk Airline resources"
     },
     {
       "name": "Flight",
-      "description": "ini API untuk Flight resources"
-    },
-    {
-      "name": "OTP",
-      "description": "ini API untuk OTP resources"
+      "description": "API untuk Flight resources"
     }
   ],
   "servers": [
@@ -414,7 +410,7 @@
     "/auth/resend-otp": {
       "post": {
         "tags": [
-          "OTP"
+          "Auth"
         ],
         "summary": "Return hasil hit API resend OTP",
         "description": "ini API utk resend OTP",
@@ -661,170 +657,8 @@
               }
             }
           },
-          "404": {
-            "description": "Airport and Airline not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "Failed"
-                        },
-                        "data": {
-                          "type": "object",
-                          "properties": {
-                            "message": {
-                              "type": "string",
-                              "example": "Departing Airport not found"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "Failed"
-                        },
-                        "data": {
-                          "type": "object",
-                          "properties": {
-                            "message": {
-                              "type": "string",
-                              "example": "Arriving Airport not found"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "string",
-                          "example": "Failed"
-                        },
-                        "data": {
-                          "type": "object",
-                          "properties": {
-                            "message": {
-                              "type": "string",
-                              "example": "Airline not found"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/flight/{id}": {
-      "get": {
-        "tags": [
-          "Flight"
-        ],
-        "summary": "Return hasil hit API get flight by id",
-        "description": "API untuk mendapatkan data flight by id",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f"
-            },
-            "description": "Flight ID"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Sukses mendapatkan data flight by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {
-                        "flight": {
-                          "flight_id": "3fdf994e-c84c-4930-a225-f90b784e5e2f",
-                          "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
-                          "flight_duration": 75,
-                          "flight_description": {
-                            "details": [
-                              {
-                                "id": 1,
-                                "description": "Bagasi kabin 7 kg"
-                              },
-                              {
-                                "id": 2,
-                                "description": "Tidak ada wifi"
-                              },
-                              {
-                                "id": 3,
-                                "description": "Tidak ada hiburan di pesawat"
-                              },
-                              {
-                                "id": 4,
-                                "description": "Tidak ada stopkontak/port usb"
-                              }
-                            ]
-                          },
-                          "flight_status": "on time",
-                          "flight_code": "JT-683",
-                          "plane_type": "Boeing 737-900",
-                          "seats_available": 213,
-                          "terminal": null,
-                          "departure_airport": "Bandar Udara Tjilik Riwut",
-                          "arrival_airport": "Bandar Udara Internasional Juanda",
-                          "departure_date": "2024-06-11T00:00:00.000Z",
-                          "departure_time": "13:35:00",
-                          "arrival_date": "2024-06-11T00:00:00.000Z",
-                          "arrival_time": "14:50:00",
-                          "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
-                          "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
-                          "createdAt": "2024-05-27T13:26:27.864Z",
-                          "updatedAt": "2024-05-27T13:26:27.864Z",
-                          "departingAirport": {
-                            "city": "Palangkaraya",
-                            "continent": "Asia"
-                          },
-                          "arrivingAirport": {
-                            "city": "Sidoarjo",
-                            "continent": "Asia"
-                          },
-                          "Airline": {
-                            "airline_name": "Lion Air",
-                            "airline_code": "LNI"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Flight not found",
+          "405": {
+            "description": "Airport not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -839,7 +673,57 @@
                       "properties": {
                         "message": {
                           "type": "string",
-                          "example": "Flight  with ID: ${req.params.id} not found"
+                          "example": "Departing Airport not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Airport not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Arriving Airport not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "407": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Airline not found"
                         }
                       }
                     }
@@ -1094,6 +978,491 @@
                           "totalPages": 2,
                           "pageNum": 1,
                           "pageSize": 10
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/flight/{id}": {
+      "get": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API get flight by id",
+        "description": "API untuk mendapatkan data flight by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f"
+            },
+            "description": "Flight ID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sukses mendapatkan data flight by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "flight": {
+                          "flight_id": "3fdf994e-c84c-4930-a225-f90b784e5e2f",
+                          "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                          "flight_duration": 75,
+                          "flight_description": {
+                            "details": [
+                              {
+                                "id": 1,
+                                "description": "Bagasi kabin 7 kg"
+                              },
+                              {
+                                "id": 2,
+                                "description": "Tidak ada wifi"
+                              },
+                              {
+                                "id": 3,
+                                "description": "Tidak ada hiburan di pesawat"
+                              },
+                              {
+                                "id": 4,
+                                "description": "Tidak ada stopkontak/port usb"
+                              }
+                            ]
+                          },
+                          "flight_status": "on time",
+                          "flight_code": "JT-683",
+                          "plane_type": "Boeing 737-900",
+                          "seats_available": 213,
+                          "terminal": null,
+                          "departure_airport": "Bandar Udara Tjilik Riwut",
+                          "arrival_airport": "Bandar Udara Internasional Juanda",
+                          "departure_date": "2024-06-11T00:00:00.000Z",
+                          "departure_time": "13:35:00",
+                          "arrival_date": "2024-06-11T00:00:00.000Z",
+                          "arrival_time": "14:50:00",
+                          "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
+                          "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                          "createdAt": "2024-05-27T13:26:27.864Z",
+                          "updatedAt": "2024-05-27T13:26:27.864Z",
+                          "departingAirport": {
+                            "city": "Palangkaraya",
+                            "continent": "Asia"
+                          },
+                          "arrivingAirport": {
+                            "city": "Sidoarjo",
+                            "continent": "Asia"
+                          },
+                          "Airline": {
+                            "airline_name": "Lion Air",
+                            "airline_code": "LNI"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Flight not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Flight  with ID: ${req.params.id} not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API update data flight by id",
+        "description": "API untuk update  data flight by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f"
+            },
+            "description": "Flight ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "airline_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "87d70109-fabb-4626-a854-2da5e9134429"
+                  },
+                  "flight_duration": {
+                    "type": "integer",
+                    "example": 75
+                  },
+                  "flight_description": {
+                    "type": "object",
+                    "properties": {
+                      "details": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "Bagasi kabin 7 kg"
+                            }
+                          },
+                          "example": [
+                            {
+                              "id": 1,
+                              "description": "Bagasi kabin 7 kg"
+                            },
+                            {
+                              "id": 2,
+                              "description": "Tidak ada wifi"
+                            },
+                            {
+                              "id": 3,
+                              "description": "Tidak ada hiburan di pesawat"
+                            },
+                            {
+                              "id": 4,
+                              "description": "Tidak ada stopkontak/port usb"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "flight_status": {
+                    "type": "string",
+                    "example": "on time"
+                  },
+                  "flight_code": {
+                    "type": "string",
+                    "example": "JT-683"
+                  },
+                  "plane_type": {
+                    "type": "string",
+                    "example": "Boeing 737-900"
+                  },
+                  "seats_available": {
+                    "type": "integer",
+                    "example": 213
+                  },
+                  "terminal": {
+                    "type": "string",
+                    "nullable": true,
+                    "example": null
+                  },
+                  "departure_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-11T00:00:00.000Z"
+                  },
+                  "departure_time": {
+                    "type": "string",
+                    "example": "13:35:00"
+                  },
+                  "arrival_date": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2024-06-11T00:00:00.000Z"
+                  },
+                  "arrival_time": {
+                    "type": "string",
+                    "example": "14:50:00"
+                  },
+                  "departure_airport_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f"
+                  },
+                  "arrival_airport_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses update flight data by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {
+                        "updatedFlight": {
+                          "flight_id": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f",
+                          "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                          "flight_duration": 75,
+                          "flight_description": {
+                            "details": [
+                              {
+                                "id": 1,
+                                "description": "Bagasi kabin 7 kg"
+                              },
+                              {
+                                "id": 2,
+                                "description": "Tidak ada wifi"
+                              },
+                              {
+                                "id": 3,
+                                "description": "Tidak ada hiburan di pesawat"
+                              },
+                              {
+                                "id": 4,
+                                "description": "Tidak ada stopkontak/port usb"
+                              }
+                            ]
+                          },
+                          "flight_status": "on time",
+                          "flight_code": "JT-683",
+                          "plane_type": "Boeing 737-900",
+                          "seats_available": 213,
+                          "departure_airport": "Bandar Udara Tjilik Riwut",
+                          "arrival_airport": "Bandar Udara Internasional Juanda",
+                          "departure_date": "2024-06-11T00:00:00.000Z",
+                          "departure_time": "13:35:00",
+                          "arrival_date": "2024-06-11T00:00:00.000Z",
+                          "arrival_time": "14:50:00",
+                          "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
+                          "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
+                          "updatedAt": "2024-05-29T07:25:36.518Z",
+                          "createdAt": "2024-05-29T07:25:36.518Z",
+                          "terminal": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Flight not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Flight  with ID: ${req.params.id} not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Airport not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Departing Airport not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Airport not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Arriving Airport not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "407": {
+            "description": "Airline not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Airline not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Flight"
+        ],
+        "summary": "Return hasil hit API delete Flight by id",
+        "description": "ini API untuk menghapus data Flight bedasarkan id ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "7366d63e-3fd9-4886-b14c-fdd58d61dc4f"
+            },
+            "description": "Flight ID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Sukses menghapus data flight berdasarkan id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "successfully deleted flight"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Flight not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Flight  with ID: ${req.params.id} not found"
                         }
                       }
                     }
