@@ -10,9 +10,13 @@ const userSeeder = require('./20240521154439-user');
 const flightSeeder = require('./20240522102745-flight');
 const priceSeeder = require('./20240527104424-price')
 const flightDataSeeder = require('./20240528033556-flightData');
+require("dotenv").config();
 
-const sequelize = new Sequelize('db_finalproject', 'postgres', 'admin', {
-    host: '127.0.0.1',
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
     dialect: 'postgres'
 });
 const queryInterface = sequelize.getQueryInterface();
@@ -28,7 +32,7 @@ async function createSeed(queryInterface, Sequelize) {
         await flightDataSeeder.up(queryInterface, sequelize);
         await userSeeder.up(queryInterface, Sequelize);
         await priceSeeder.up(queryInterface, Sequelize)
-        // await seatSeeder.up(queryInterface, Sequelize);
+        await seatSeeder.up(queryInterface, Sequelize);
         console.log('seeder executed successfully.');
     } catch (error) {
         console.error('Error executing user seeder:', error);

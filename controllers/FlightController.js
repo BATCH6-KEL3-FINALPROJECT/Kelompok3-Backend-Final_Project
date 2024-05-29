@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const { Op } = require('sequelize');
 // const { v4: uuidv4, validate: uuidValidate } = require('uuid');
 const { Flight, Airport, Airline } = require('../models');
+const { query } = require("express");
 
 const createFlight = async (req, res, next) => {
     const {
@@ -93,6 +94,8 @@ const getAllFlights = async (req, res, next) => {
             page,
             limit } = req.query;
 
+        validateQueryParams(req.query)
+
         //pagination
         const pageNum = parseInt(page) || 1;
         const pageSize = parseInt(limit) || 10;
@@ -151,12 +154,12 @@ const getAllFlights = async (req, res, next) => {
                 {
                     model: Airport,
                     as: 'departingAirport',
-                    attributes: ["city", "continent"]
+                    attributes: ["city", "iata_code", "continent"]
                 },
                 {
                     model: Airport,
                     as: 'arrivingAirport',
-                    attributes: ["city", "continent"]
+                    attributes: ["city", "iata_code", "continent"]
                 },
                 {
                     model: Airline,
@@ -346,6 +349,22 @@ const updateFlight = async (req, res, next) => {
 };
 
 
+//code sementara otw refactor 
+const validateQueryParams = (params) => {
+    const {
+        page,
+        limit,
+        seats_available,
+        departure_date,
+        arrival_date
+    } = params;
+
+    if (page && isNaN(parseInt(page))) throw new ApiError('Invalid page number', 400);
+    if (limit && isNaN(parseInt(limit))) throw new ApiError('Invalid limit number', 400);
+    if (seats_available && isNaN(parseInt(seats_available))) throw new ApiError('Invalid seats available', 400);
+    if (departure_date && isNaN(Date.parse(departure_date))) throw new ApiError('Invalid departure date', 400);
+    if (arrival_date && isNaN(Date.parse(arrival_date))) throw new ApiError('Invalid arrival date', 400);
+};
 module.exports = {
     createFlight,
     getAllFlights,

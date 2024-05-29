@@ -5,14 +5,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Airlines', [
-      //   {
-      //   airline_id: "ef4b4d99-7a6a-4451-ba5e-cff623935d1b",
-      //   airline_name: "Batik Air",
-      //   airline_code: "BTK",
-      //   country: "Indonesia",	
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      //  },
       {
         airline_id: "cba794f5-b409-46c0-89c2-55e32aef449d",
         airline_name: "Citilink",
@@ -37,22 +29,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      //   {
-      //   airline_id: "54b90398-00ba-47fb-bea2-3a3aaa4f5241",
-      //   airline_name: "Super Air Jet",
-      //   airline_code: "SJV",
-      //   country: "Indonesia",	
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      //  },
-      //   {
-      //   airline_id: "5727f6e8-bfab-4810-990e-b5b224343ded",
-      //   airline_name: "Pelita Air",
-      //   airline_code: "PAS",
-      //   country: "Indonesia",	
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      //  },
+
       {
         airline_id: "aaa6c89c-84fa-485a-8c3f-979b4796743e",
         airline_name: "Sriwijaya Air",
@@ -85,14 +62,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      //   {
-      //   airline_id: "678ea24a-005a-4aa6-925f-2edabb51f671",
-      //   airline_name: "Wings Air",
-      //   airline_code: "WON",
-      //   country: "Indonesia",	
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      //  },
+
       {
         airline_id: "8c0b982e-444f-4994-98be-d072a97e2bcc",
         airline_name: "Japan Airlines",
@@ -101,14 +71,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      //   {
-      //   airline_id: "d62537f1-a074-4dd0-baaf-d1f51801bdcd",
-      //   airline_name: "AirAsia X",
-      //   airline_code: "XAX",
-      //   country: "Malaysia",	
-      //   createdAt: new Date(),
-      //   updatedAt: new Date(),
-      //  },
+
       {
         airline_id: "7a834295-ded6-474d-9a90-eb81c7f99481",
         airline_name: "Malaysia Airlines",
@@ -149,6 +112,46 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      //   {
+      //   airline_id: "54b90398-00ba-47fb-bea2-3a3aaa4f5241",
+      //   airline_name: "Super Air Jet",
+      //   airline_code: "SJV",
+      //   country: "Indonesia",	
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      //  },
+      //   {
+      //   airline_id: "5727f6e8-bfab-4810-990e-b5b224343ded",
+      //   airline_name: "Pelita Air",
+      //   airline_code: "PAS",
+      //   country: "Indonesia",	
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      //  },
+      //   {
+      //   airline_id: "678ea24a-005a-4aa6-925f-2edabb51f671",
+      //   airline_name: "Wings Air",
+      //   airline_code: "WON",
+      //   country: "Indonesia",	
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      //  },
+      //   {
+      //   airline_id: "d62537f1-a074-4dd0-baaf-d1f51801bdcd",
+      //   airline_name: "AirAsia X",
+      //   airline_code: "XAX",
+      //   country: "Malaysia",	
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      //  },
+      //   {
+      //   airline_id: "ef4b4d99-7a6a-4451-ba5e-cff623935d1b",
+      //   airline_name: "Batik Air",
+      //   airline_code: "BTK",
+      //   country: "Indonesia",	
+      //   createdAt: new Date(),
+      //   updatedAt: new Date(),
+      //  },
       //   {
       //   airline_id: "3f3fadce-15fc-4870-8c74-754c05cdbd8b",
       //   airline_name: "Jeju Air",
