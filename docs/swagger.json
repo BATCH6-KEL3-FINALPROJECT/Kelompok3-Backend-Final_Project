@@ -76,7 +76,7 @@
                       "type": "string",
                       "example": "Success login"
                     },
-                    "token": {
+                    "data": {
                       "type": "object",
                       "properties": {
                         "token": {
@@ -101,14 +101,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Alamat Email tidak ditemukan"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Alamat Email tidak ditemukan"
                     }
                   }
                 }
@@ -126,14 +121,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Password yang dimasukkan salah"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Password yang dimasukkan salah"
                     }
                   }
                 }
@@ -191,8 +181,8 @@
                       "example": "Success"
                     },
                     "data": {
-                      "status": "Success",
-                      "data": {
+                      "type": "object",
+                      "example": {
                         "email": "fosdhan@gmail.com",
                         "newUser": {
                           "role": "user",
@@ -224,14 +214,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "email sudah terdaftar"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Email sudah terdaftar"
                     }
                   }
                 }
@@ -249,14 +234,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Password minimal 8 karakter"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Password minimal 8 karakter"
                     }
                   }
                 }
@@ -295,7 +275,7 @@
         },
         "responses": {
           "201": {
-            "description": "Sukses register",
+            "description": "Sukses verify akun",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,21 +286,23 @@
                       "example": "Success"
                     },
                     "data": {
-                      "status": "Success",
-                      "message": "User Verified with secret OTP",
-                      "data": {
-                        "email": "fosdhan@gmail.com",
-                        "newUser": {
-                          "user_id": "c99bcf67-8205-4848-b58d-050c91e10938",
-                          "name": "Azka",
+                      "type": "object",
+                      "example": {
+                        "message": "User Verified with secret OTP",
+                        "data": {
                           "email": "fosdhan@gmail.com",
-                          "phone_number": null,
-                          "password": "$2b$10$X31FpUXE.ufEbvlapk63uuf7pFQK.nX5TUsLaLCzFiUcx.1oPn81q",
-                          "refresh_token": null,
-                          "role": "admin",
-                          "is_verified": true,
-                          "createdAt": "2024-05-21T17:18:21.382Z",
-                          "updatedAt": "2024-05-21T17:18:28.175Z"
+                          "newUser": {
+                            "user_id": "c99bcf67-8205-4848-b58d-050c91e10938",
+                            "name": "Azka",
+                            "email": "fosdhan@gmail.com",
+                            "phone_number": null,
+                            "password": "$2b$10$X31FpUXE.ufEbvlapk63uuf7pFQK.nX5TUsLaLCzFiUcx.1oPn81q",
+                            "refresh_token": null,
+                            "role": "admin",
+                            "is_verified": true,
+                            "createdAt": "2024-05-21T17:18:21.382Z",
+                            "updatedAt": "2024-05-21T17:18:28.175Z"
+                          }
                         }
                       }
                     }
@@ -340,14 +322,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "OTP error, mohon verifikasi lagi"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "OTP error, mohon verifikasi lagi"
                     }
                   }
                 }
@@ -365,14 +342,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "OTP sudah tidak valid"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "OTP sudah tidak valid"
                     }
                   }
                 }
@@ -390,14 +362,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "OTP salah, mohon coba lagi"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "OTP salah, mohon coba lagi"
                     }
                   }
                 }
@@ -442,9 +409,9 @@
                       "type": "string",
                       "example": "Success"
                     },
-                    "data": {
-                      "status": "Success",
-                      "message": "OTP resent successfully, please check your email"
+                    "message": {
+                      "type": "string",
+                      "example": "OTP resent successfully, please check your email"
                     }
                   }
                 }
@@ -462,14 +429,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "User tidak ditemukan, mohon register terlebih dahulu"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "User tidak ditemukan, mohon register terlebih dahulu"
                     }
                   }
                 }
@@ -668,14 +630,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Departing Airport not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Departing Airport not found"
                     }
                   }
                 }
@@ -693,14 +650,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Arriving Airport not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Arriving Airport not found"
                     }
                   }
                 }
@@ -718,14 +670,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Airline not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Airline not found"
                     }
                   }
                 }
@@ -985,6 +932,106 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid page number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid page number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid limit number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid limit number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid seats available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid seats available"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid departure date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid departure date"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid arrival date",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid arrival date"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1094,14 +1141,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Flight  with ID: ${req.params.id} not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Flight  with ID: ${req.params.id} not found"
                     }
                   }
                 }
@@ -1310,14 +1352,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Flight  with ID: ${req.params.id} not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Flight  with ID: ${req.params.id} not found"
                     }
                   }
                 }
@@ -1335,14 +1372,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Departing Airport not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Departing Airport not found"
                     }
                   }
                 }
@@ -1360,14 +1392,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Arriving Airport not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Arriving Airport not found"
                     }
                   }
                 }
@@ -1385,14 +1412,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Airline not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Airline not found"
                     }
                   }
                 }
@@ -1457,14 +1479,9 @@
                       "type": "string",
                       "example": "Failed"
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Flight  with ID: ${req.params.id} not found"
-                        }
-                      }
+                    "message": {
+                      "type": "string",
+                      "example": "Flight  with ID: ${req.params.id} not found"
                     }
                   }
                 }
