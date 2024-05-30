@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Price.belongsTo(models.Flight, { foreignKey: 'flight_id' });
+      // Price.belongsTo(models.Flight, { foreignKey: 'flight_id', as: 'flightPrice' });
+      Price.belongsTo(models.Flight, { foreignKey: 'flight_id', as: 'flightPrice', targetKey: 'flight_id' }); // Assuming flight_id is the primary key of the Flight model
+
     }
   }
   Price.init({

@@ -104,7 +104,11 @@ const verifyAccount = async (req, res, next) => {
         });
 
     } catch (error) {
-        next(new ApiError(error.message, "500"))
+        if (err instanceof ApiError) {
+            return next(err);
+        } else {
+            return next(new ApiError("Internal Server Error", 500));
+        }
     }
 }
 const login = async (req, res, next) => {
@@ -140,7 +144,7 @@ const login = async (req, res, next) => {
                 token: token,
             });
         } else {
-            next(new ApiError("Password yang dimasukkan salah", 400));
+            next(new ApiError("Password yang dimasukkan salah", 401));
         }
     } catch (err) {
         console.log(err);

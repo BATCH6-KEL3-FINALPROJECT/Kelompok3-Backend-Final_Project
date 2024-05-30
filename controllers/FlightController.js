@@ -2,9 +2,18 @@ const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
 const { Op } = require('sequelize');
 // const { v4: uuidv4, validate: uuidValidate } = require('uuid');
-const { Flight, Airport, Airline } = require('../models');
+const { Flight, Airport, Airline, Price } = require('../models');
 const { query } = require("express");
+const { Sequelize, QueryTypes } = require('sequelize');
+require("dotenv").config();
 
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'postgres'
+});
 const createFlight = async (req, res, next) => {
     const {
         airline_id,
@@ -84,7 +93,7 @@ const getAllFlights = async (req, res, next) => {
             arrival_date,
             departure_time,
             arrival_time,
-            // seat_class,
+            seat_class,
             flight_duration,
             departure_airport,
             arrival_airport,
@@ -94,90 +103,51 @@ const getAllFlights = async (req, res, next) => {
             page,
             limit } = req.query;
 
-        validateQueryParams(req.query)
-
-        //pagination
+        // Pagination
         const pageNum = parseInt(page) || 1;
         const pageSize = parseInt(limit) || 10;
         const offset = (pageNum - 1) * pageSize;
 
-        //filter
-        const whereClause = {};
-        if (departure_airport) whereClause.departure_airport = departure_airport;
-        if (departure_date) whereClause.departure_date = departure_date;
-        if (arrival_airport) whereClause.arrival_airport = arrival_airport;
-        if (arrival_date) whereClause.arrival_date = arrival_date;
-        if (airline_id) whereClause.airline_id = airline_id;
-        if (departure_time) whereClause.departure_time = departure_time;
-        if (arrival_time) whereClause.arrival_time = arrival_time;
-        if (flight_duration) whereClause.flight_duration = flight_duration;
-        if (seats_available) whereClause.seats_available = { [Op.gte]: parseInt(seats_available) };
-        // if (seat_class) {
-        //     whereClause.flight_description = {
-        //         [Op.contains]: { seat_class }
-        //     };
-        // }
-        if (departure_city) {
-            whereClause['$departingAirport.city$'] = departure_city;
-        }
-        if (arrival_city) {
-            whereClause['$arrivingAirport.city$'] = arrival_city;
-        }
-        if (departure_continent) {
-            whereClause['$departingAirport.continent$'] = departure_continent;
-        }
-        if (arrival_continent) {
-            whereClause['$arrivingAirport.continent$'] = arrival_continent;
-        }
+        // Construct the raw SQL query
+        let sqlQuery = `SELECT f.flight_id, f.flight_code, f.flight_duration, f.flight_description, f.flight_status, f.plane_type, f.seats_available, f.terminal, f.departure_airport, f.arrival_airport, f.departure_date, f.departure_time, f.arrival_date, f.arrival_time, f.departure_airport_id, f.arrival_airport_id, 
+            da.airport_id AS departure_airport_id, da.airport_name AS departure_airport_name, da.city AS departure_city, da.iata_code AS departure_iata_code, 
+            aa.airport_id AS arrival_airport_id, aa.airport_name AS arrival_airport_name, aa.city AS arrival_city, aa.city_code AS arrival_city_code, aa.continent AS arrival_continent, aa.iata_code AS arrival_iata_code, aa.country AS arrival_country, 
+            p.price_id, p.seat_class, p.price, p.price_for_child, p.price_for_infant
+            FROM public."Flights" f
+            JOIN public."Airports" da ON f.departure_airport_id = da.airport_id
+            JOIN public."Airports" aa ON f.arrival_airport_id = aa.airport_id
+            JOIN public."Prices" p ON f.flight_id = p.flight_id
+            WHERE 1 = 1`;
 
-        if (req.query.search) {
-            whereClause[Op.or] = {
-                departure_airport: { [Op.like]: `%${req.query.search}%` },
-                departure_date: { [Op.like]: `%${req.query.search}%` },
-                arrival_airport: { [Op.like]: `%${req.query.search}%` },
-                arrival_date: { [Op.like]: `%${req.query.search}%` },
-                airline_id: { [Op.like]: `%${req.query.search}%` },
-                departure_time: { [Op.like]: `%${req.query.search}%` },
-                arrival_time: { [Op.like]: `%${req.query.search}%` },
-                flight_duration: { [Op.like]: `%${req.query.search}%` },
-                seats_available: { [Op.like]: `%${req.query.search}%` },
-                // '$flight_description.seat_class$': { [Op.like]: `%${req.query.search}%` },
-                '$departingAirport.city$': { [Op.like]: `%${req.query.search}%` },
-                '$departingAirport.continent$': { [Op.like]: `%${req.query.search}%` },
-                '$arrivingAirport.city$': { [Op.like]: `%${req.query.search}%` },
-                '$arrivingAirport.continent$': { [Op.like]: `%${req.query.search}%` },
-            };
-        }
+        // Add filter conditions to the SQL query based on query parameters
+        if (departure_airport) sqlQuery += ` AND f.departure_airport = '${departure_airport}'`;
+        if (departure_date) sqlQuery += ` AND f.departure_date = '${departure_date}'`;
+        if (arrival_airport) sqlQuery += ` AND f.arrival_airport = '${arrival_airport}'`;
+        // if (arrival_date) sqlQuery += ` AND f.arrival_date = '${arrival_date}'`;
+        if (airline_id) sqlQuery += ` AND f.airline_id = '${airline_id}'`;
+        if (departure_time) sqlQuery += ` AND f.departure_time = '${departure_time}'`;
+        if (arrival_time) sqlQuery += ` AND f.arrival_time = '${arrival_time}'`;
+        // if (flight_duration) sqlQuery += ` AND f.flight_duration = '${flight_duration}'`;
+        // if (seats_available) sqlQuery += ` AND f.seats_available >= ${seats_available}`;
+        if (seat_class) sqlQuery += ` AND p.seat_class = '${seat_class}'`;
+        if (departure_city) sqlQuery += ` AND da.city = '${departure_city}'`;
+        if (arrival_city) sqlQuery += ` AND aa.city = '${arrival_city}'`;
 
-        const { count, rows: flights } = await Flight.findAndCountAll({
-            include: [
-                {
-                    model: Airport,
-                    as: 'departingAirport',
-                    attributes: ["city", "iata_code", "continent"]
-                },
-                {
-                    model: Airport,
-                    as: 'arrivingAirport',
-                    attributes: ["city", "iata_code", "continent"]
-                },
-                {
-                    model: Airline,
-                    attributes: ["airline_name", "airline_code"]
-                },
-            ],
-            where: whereClause,
-            offset,
-            limit: pageSize,
-        });
+        // Execute the raw SQL query
+        const flights = await sequelize.query(sqlQuery, { type: QueryTypes.SELECT });
 
-        const totalCount = count;
+        // Calculate pagination details
+        const totalCount = flights.length;
         const totalPages = Math.ceil(totalCount / pageSize);
 
+        // Paginate the results
+        const paginatedFlights = flights.slice(offset, offset + pageSize);
+
+        // Send response
         res.status(200).json({
             status: "Success",
             data: {
-                flights,
+                flights: paginatedFlights,
             },
             pagination: {
                 totalData: totalCount,
@@ -187,9 +157,11 @@ const getAllFlights = async (req, res, next) => {
             },
         });
     } catch (error) {
+        console.log(error);
         next(new ApiError(error.message, 400));
     }
 };
+
 
 const getFlightById = async (req, res, next) => {
     try {

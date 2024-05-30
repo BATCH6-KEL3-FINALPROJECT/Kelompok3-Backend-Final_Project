@@ -47,19 +47,21 @@ module.exports = {
     })
     const airports = await Airport.findAll()
     const airlines = await Airline.findAll()
+    const airlinesPerTime = Math.ceil(airlines.length / 3); // Divide airlines data by 3 and round up
+
 
 
     for (const date of datesArray) {
       const bulkInsertData = [];
-      for (const departureAirport of airports) {
-        for (const arrivalAirport of airports) {
-          if (departureAirport.airport_id !== arrivalAirport.airport_id) {
-            for (const time of flightTimes) {
-              let planeCounter = 0
-              for (const airline of airlines) {
-                if (planeCounter === 4) {
-                  planeCounter = 0
-                }
+      flightTimes.forEach(time => {
+        const startingIndex = flightTimes.indexOf(time) * airlinesPerTime;
+        const endingIndex = Math.min((flightTimes.indexOf(time) + 1) * airlinesPerTime, airlines.length);
+
+        for (const departureAirport of airports) {
+          for (const arrivalAirport of airports) {
+            if (departureAirport.airport_id !== arrivalAirport.airport_id) {
+              for (let j = startingIndex; j < endingIndex; j++) {
+                const airline = airlines[j];
                 const randomFlightNumber = Math.floor(Math.random() * 1000) + 100;
                 const flightCode = airline.airline_code + randomFlightNumber;
                 bulkInsertData.push({
@@ -69,8 +71,8 @@ module.exports = {
                   flight_description: planeDetails,
                   flight_status: "on time",
                   flight_code: flightCode,
-                  plane_type: planesInAsia[planeCounter].name,
-                  seats_available: planesInAsia[planeCounter].totalSeats,
+                  plane_type: planesInAsia[j % planesInAsia.length].name,
+                  seats_available: planesInAsia[j % planesInAsia.length].totalSeats,
                   departure_airport: departureAirport.airport_name,
                   arrival_airport: arrivalAirport.airport_name,
                   departure_date: date,
@@ -81,22 +83,21 @@ module.exports = {
                   arrival_airport_id: arrivalAirport.airport_id,
                   createdAt: new Date(),
                   updatedAt: new Date(),
-                })
-                planeCounter += 1;
+                });
               }
             }
           }
         }
-      }
+      });
+
       try {
         await Flight.bulkCreate(bulkInsertData);
         console.log("Bulk insert successful for flight:", date);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 2500));
       } catch (error) {
         console.error("Error inserting data into seats:", error);
       }
     }
-
   },
 
   async down(queryInterface, Sequelize) {
