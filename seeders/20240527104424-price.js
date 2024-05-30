@@ -14,8 +14,12 @@ module.exports = {
      * }], {});
     */
     const seatClass = ["Economy", "Premium Economy", "Business", "First Class"]; //define class di pesawat
-    const prices = [120000, 3000000, 6000000, 12000000,] //define harga per kelas, hanya untuk dummy
-    const flights = await Flight.findAll();
+    const priceRanges = [
+      { min: 900000, max: 1200000 },      // Range for Economy
+      { min: 2000000, max: 4500000 },     // Range for Premium Economy
+      { min: 5000000, max: 7500000 },     // Range for Business
+      { min: 12000000, max: 18000000 },   // Range for First Class
+    ]; const flights = await Flight.findAll();
 
     if (flights.length === 0) {
       console.log("THere is no flight data")
@@ -33,7 +37,8 @@ module.exports = {
       }
       for (let i = 0; i < classCount; i++) {
         const kelas = seatClass[i];
-        const currentPrice = prices[i];
+        const { min, max } = priceRanges[i];
+        const currentPrice = Math.floor(Math.random() * (max - min + 1)) + min;
         try {
           await queryInterface.bulkInsert("Prices", [
             {
