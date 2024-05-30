@@ -91,7 +91,7 @@ module.exports = {
       try {
         await Flight.bulkCreate(bulkInsertData);
         console.log("Bulk insert successful for flight:", date);
-        await new Promise(resolve => setTimeout(resolve, 2500));
+        await new Promise(resolve => setTimeout(resolve, 1000));
       } catch (error) {
         console.error("Error inserting data into seats:", error);
       }

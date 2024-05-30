@@ -29,9 +29,9 @@ module.exports = {
       terminal: { type: Sequelize.JSON },
       departure_airport: { type: Sequelize.STRING },
       arrival_airport: { type: Sequelize.STRING },
-      departure_date: { type: Sequelize.DATE },
+      departure_date: { type: Sequelize.DATEONLY },
       departure_time: { type: Sequelize.TIME },
-      arrival_date: { type: Sequelize.DATE },
+      arrival_date: { type: Sequelize.DATEONLY },
       arrival_time: { type: Sequelize.TIME },
       departure_airport_id: {
         type: Sequelize.UUID,
