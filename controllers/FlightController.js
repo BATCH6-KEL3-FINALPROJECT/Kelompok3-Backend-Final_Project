@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
 });
 const createFlight = async (req, res, next) => {
     const {
-        airline_id,
+        airline_code,
         flight_duration,
         flight_description,
         flight_status,
@@ -27,16 +27,20 @@ const createFlight = async (req, res, next) => {
         departure_time,
         arrival_date,
         arrival_time,
-        departure_airport_id,
-        arrival_airport_id,
+        departure_iata_code,
+        arrival_iata_code,
     } = req.body;
     const flightId = uuid.v4();
 
     try {
         // Check if related entities exist
-        const departingAirport = await Airport.findByPk(departure_airport_id)
-        const arrivingAirport = await Airport.findByPk(arrival_airport_id);
-        const airline = await Airline.findByPk(airline_id);
+        // const departingAirport = await Airport.findByPk(departure_airport_id)
+        // const arrivingAirport = await Airport.findByPk(arrival_airport_id);
+        // const airline = await Airline.findByPk(airline_id);
+
+        const departingAirport = await Airport.findOne({ where: { iata_code: departure_iata_code } });
+        const arrivingAirport = await Airport.findOne({ where: { iata_code: arrival_iata_code } });
+        const airline = await Airline.findOne({ where: { airline_code: airline_code } });
 
         if (!departingAirport) {
             return next(new ApiError("Departing Airport not found", 404));
@@ -137,6 +141,17 @@ const getAllFlights = async (req, res, next) => {
         // Execute the raw SQL query
         const flights = await sequelize.query(sqlQuery, { type: QueryTypes.SELECT });
 
+        console.log("Masuk ke flight", flights)
+        if (flights.length === 0) {
+            res.status(404).json({
+                status: "Not Found",
+                data: {
+
+                },
+                message: "No Flight found for the requested date",
+
+            });
+        }
         // Calculate pagination details
         const totalCount = flights.length;
         const totalPages = Math.ceil(totalCount / pageSize);

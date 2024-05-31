@@ -449,17 +449,12 @@
         "summary": "Return hasil hit API create data flight",
         "description": "ini API utk create data flight",
         "requestBody": {
-          "description": "ini request body utk sukses create data flight",
+          "description": "ini request body untuk sukses create data flight",
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "airline_id": {
-                    "type": "string",
-                    "format": "uuid",
-                    "example": "87d70109-fabb-4626-a854-2da5e9134429"
-                  },
                   "flight_duration": {
                     "type": "integer",
                     "example": 75
@@ -526,8 +521,8 @@
                   },
                   "departure_date": {
                     "type": "string",
-                    "format": "date-time",
-                    "example": "2024-06-11T00:00:00.000Z"
+                    "format": "date",
+                    "example": "2024-06-11"
                   },
                   "departure_time": {
                     "type": "string",
@@ -536,21 +531,24 @@
                   "arrival_date": {
                     "type": "string",
                     "format": "date-time",
-                    "example": "2024-06-11T00:00:00.000Z"
+                    "example": "2024-06-11"
                   },
                   "arrival_time": {
                     "type": "string",
                     "example": "14:50:00"
                   },
-                  "departure_airport_id": {
+                  "airline_code": {
                     "type": "string",
-                    "format": "uuid",
-                    "example": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f"
+                    "example": "SJY"
                   },
-                  "arrival_airport_id": {
+                  "departure_iata_code": {
+                    "type": "string",
+                    "example": "BKK"
+                  },
+                  "arrival_iata_code": {
                     "type": "string",
                     "format": "uuid",
-                    "example": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26"
+                    "example": "DPS"
                   }
                 }
               }
@@ -707,6 +705,14 @@
             }
           },
           {
+            "name": "seat_class",
+            "in": "query",
+            "description": "Filter by Seat Class",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "departure_date",
             "in": "query",
             "description": "Filter by departure date",
@@ -743,44 +749,12 @@
             }
           },
           {
-            "name": "flight_duration",
-            "in": "query",
-            "description": "Filter by flight duration (in minutes)",
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
             "name": "seats_available",
             "in": "query",
             "description": "Filter by available seats",
             "schema": {
               "type": "integer",
               "minimum": 0
-            }
-          },
-          {
-            "name": "departure_continent",
-            "in": "query",
-            "description": "Filter by departure continent",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "arrival_continent",
-            "in": "query",
-            "description": "Filter by arrival continent",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "flight_status",
-            "in": "query",
-            "description": "Filter by flight status",
-            "schema": {
-              "type": "string"
             }
           },
           {
@@ -821,7 +795,7 @@
                         "flights": [
                           {
                             "flight_id": "3fdf994e-c84c-4930-a225-f90b784e5e2f",
-                            "airline_id": "87d70109-fabb-4626-a854-2da5e9134420",
+                            "flight_code": "JT-683",
                             "flight_duration": 75,
                             "flight_description": {
                               "details": [
@@ -844,37 +818,30 @@
                               ]
                             },
                             "flight_status": "on time",
-                            "flight_code": "JT-683",
                             "plane_type": "Boeing 737-900",
                             "seats_available": 213,
                             "terminal": null,
-                            "departure_airport": "Bandar Udara Tjilik Riwut",
-                            "arrival_airport": "Bandar Udara Internasional Juanda",
-                            "departure_date": "2024-06-11T00:00:00.000Z",
+                            "departure_date": "2024-06-11",
                             "departure_time": "13:35:00",
-                            "arrival_date": "2024-06-11T00:00:00.000Z",
+                            "arrival_date": "2024-06-11",
                             "arrival_time": "14:50:00",
-                            "departure_airport_id": "352f9fc8-bd96-48e2-a99a-cc75a4d10e3f",
-                            "arrival_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
-                            "createdAt": "2024-05-27T13:26:27.864Z",
-                            "updatedAt": "2024-05-27T13:26:27.864Z",
-                            "departingAirport": {
-                              "city": "Palangkaraya",
-                              "continent": "Asia"
-                            },
-                            "arrivingAirport": {
-                              "city": "Sidoarjo",
-                              "continent": "Asia"
-                            },
-                            "Airline": {
-                              "airline_name": "Lion Air",
-                              "airline_code": "LNI"
-                            }
+                            "departure_airport_name": "Lisbon Airport",
+                            "departure_airport_city": "Lisbon",
+                            "departure_iata_code": "LOP",
+                            "arrival_airport_name": "Bandar Udara Internasional Sultan Hasanuddin",
+                            "arrival_city": "Makassar",
+                            "arrival_iata_code": "UPG",
+                            "seat_class": "Economy",
+                            "price": 1168088,
+                            "price_for_child": 876066,
+                            "price_for_infant": 116809,
+                            "airline_name": "Lion Air",
+                            "airline_code": "LNI"
                           },
                           {
-                            "flight_id": "f9069f22-e4af-4a90-a139-d9ea5709d6e8",
-                            "airline_id": "cba794f5-b409-46c0-89c2-55e32aef449d",
-                            "flight_duration": 95,
+                            "flight_id": "fd8597fd-8696-45cf-929a-a0e1e7fd2f03",
+                            "flight_code": "CTV770",
+                            "flight_duration": 150,
                             "flight_description": {
                               "details": [
                                 {
@@ -888,36 +855,33 @@
                                 {
                                   "id": 3,
                                   "description": "Tidak ada hiburan di pesawat"
+                                },
+                                {
+                                  "id": 4,
+                                  "description": "Tidak ada stopkontak/port usb"
                                 }
                               ]
                             },
                             "flight_status": "on time",
-                            "flight_code": "QG-719",
-                            "plane_type": "Airbus A320",
-                            "seats_available": 175,
+                            "plane_type": "Embraer E190",
+                            "seats_available": 114,
                             "terminal": null,
-                            "departure_airport": "Bandar Udara Internasional Juanda",
-                            "arrival_airport": "Bandara Internasional Soekarno Hatta",
-                            "departure_date": "2024-06-12T00:00:00.000Z",
-                            "departure_time": "19:40:00",
-                            "arrival_date": "2024-06-12T00:00:00.000Z",
-                            "arrival_time": "21:15:00",
-                            "departure_airport_id": "ebc3ecd6-b01f-418f-8f5d-646d56b17a26",
-                            "arrival_airport_id": "f22c76ea-a5f7-4c1b-b37f-e559826cf2da",
-                            "createdAt": "2024-05-27T13:26:27.865Z",
-                            "updatedAt": "2024-05-27T13:26:27.865Z",
-                            "departingAirport": {
-                              "city": "Sidoarjo",
-                              "continent": "Asia"
-                            },
-                            "arrivingAirport": {
-                              "city": "Jakarta",
-                              "continent": "Asia"
-                            },
-                            "Airline": {
-                              "airline_name": "Citilink",
-                              "airline_code": "CTV"
-                            }
+                            "departure_date": "2024-06-05",
+                            "departure_time": "07:30:00",
+                            "arrival_date": "2024-06-05",
+                            "arrival_time": "10:00:00",
+                            "departure_airport_name": "Narita International Airport",
+                            "departure_city": "Tokyo",
+                            "departure_iata_code": "NRT",
+                            "arrival_airport_name": "Bandara Internasional Soekarno Hatta",
+                            "arrival_city": "Jakarta",
+                            "arrival_iata_code": "CGK",
+                            "seat_class": "Economy",
+                            "price": 1168088,
+                            "price_for_child": 876066,
+                            "price_for_infant": 116809,
+                            "airline_name": "Citilink",
+                            "airline_code": "CTV"
                           }
                         ],
                         "pagination": {
@@ -1007,6 +971,30 @@
                     "message": {
                       "type": "string",
                       "example": "Invalid departure date"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No data found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Not Found"
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": "{}"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No Flight found for the requested Date"
                     }
                   }
                 }
