@@ -109,14 +109,15 @@ const getAllFlights = async (req, res, next) => {
         const offset = (pageNum - 1) * pageSize;
 
         // Construct the raw SQL query
-        let sqlQuery = `SELECT f.flight_id, f.flight_code, f.flight_duration, f.flight_description, f.flight_status, f.plane_type, f.seats_available, f.terminal, f.departure_airport, f.arrival_airport, f.departure_date, f.departure_time, f.arrival_date, f.arrival_time, f.departure_airport_id, f.arrival_airport_id, 
-            da.airport_id AS departure_airport_id, da.airport_name AS departure_airport_name, da.city AS departure_city, da.iata_code AS departure_iata_code, 
-            aa.airport_id AS arrival_airport_id, aa.airport_name AS arrival_airport_name, aa.city AS arrival_city, aa.city_code AS arrival_city_code, aa.continent AS arrival_continent, aa.iata_code AS arrival_iata_code, aa.country AS arrival_country, 
-            p.price_id, p.seat_class, p.price, p.price_for_child, p.price_for_infant
+        let sqlQuery = `SELECT f.flight_id, f.flight_code, f.flight_duration, f.flight_description, f.flight_status, f.plane_type, f.seats_available, f.terminal, f.departure_date, f.departure_time, f.arrival_date, f.arrival_time, 
+             da.airport_name AS departure_airport_name, da.city AS departure_city, da.iata_code AS departure_iata_code, 
+             aa.airport_name AS arrival_airport_name, aa.city AS arrival_city, aa.iata_code AS arrival_iata_code, 
+             p.seat_class, p.price, p.price_for_child, p.price_for_infant, al.airline_name, al.airline_code
             FROM public."Flights" f
             JOIN public."Airports" da ON f.departure_airport_id = da.airport_id
             JOIN public."Airports" aa ON f.arrival_airport_id = aa.airport_id
             JOIN public."Prices" p ON f.flight_id = p.flight_id
+            JOIN public."Airlines" al on f.airline_id = al.airline_id
             WHERE 1 = 1`;
 
         // Add filter conditions to the SQL query based on query parameters
