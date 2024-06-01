@@ -182,7 +182,7 @@ const resetPassword = async (req, res, next) => {
             id: existingUser.user_id
         }
         const token = jwt.sign(payload, secret, { expiresIn: '15m' })
-        const link = `https://skypass.azkazk11.my.id/reset-password/${existingUser.user_id}/${token}`;
+        const link = `https://skypass.azkazk11.my.id/reset-password/?rpkey=${token}`;
         console.log(link);
         const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
 
@@ -196,6 +196,8 @@ const resetPassword = async (req, res, next) => {
     }
 
 }
+
+const ch
 
 
 module.exports = {
