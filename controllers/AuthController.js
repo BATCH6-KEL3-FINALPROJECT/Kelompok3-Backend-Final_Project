@@ -5,7 +5,7 @@ const { User, OTP, sequelize } = require("../models");
 const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
 const { where } = require("sequelize");
-const { sentOtp, resendOtp } = require("./OTPController");
+const { sentOtp, resendOtp, sentResetPassword } = require("./OTPController");
 
 
 const register = async (req, res, next) => {
@@ -147,7 +147,6 @@ const login = async (req, res, next) => {
             next(new ApiError("Password yang dimasukkan salah", 401));
         }
     } catch (err) {
-        console.log(err);
         next(new ApiError(err.message, 500));
     }
 };
@@ -165,6 +164,38 @@ const authenticate = async (req, res) => {
     }
 };
 
+const resetPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        const existingUser = await User.findOne({ where: { email } });
+
+        console.log(existingUser)
+        if (!existingUser) {
+            return next(new ApiError("Alamat Email tidak ditemukan", 400));
+        }
+
+        const secret = process.env.JWT_SECRET + existingUser.password;
+
+        const payload = {
+            email: existingUser.email,
+            id: existingUser.user_id
+        }
+        const token = jwt.sign(payload, secret, { expiresIn: '15m' })
+        const link = `https://skypass.azkazk11.my.id/reset-password/${existingUser.user_id}/${token}`;
+        console.log(link);
+        const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
+
+        res.status(200).json({
+            status: "Success",
+            message: "Reset password sent successfully",
+            token: token,
+        });
+    } catch (err) {
+        next(new ApiError(err.message, 500));
+    }
+
+}
 
 
 module.exports = {
@@ -172,4 +203,5 @@ module.exports = {
     verifyAccount,
     login,
     authenticate,
+    resetPassword,
 };
