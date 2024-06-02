@@ -23,10 +23,9 @@ module.exports = async (req, res, next) => {
       return next(new ApiError("Token invalid", 401));
     }
 
-    const user = await User.findByPk(payload.id, {
-      include: ["Auth"],
-    });
+    const user = await User.findByPk(payload.id);
 
+    console.log(user);
     if (!user) {
       return next(new ApiError("User not found", 404));
     }

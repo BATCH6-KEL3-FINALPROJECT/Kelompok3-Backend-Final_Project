@@ -61,14 +61,12 @@ const verifyAccount = async (req, res, next) => {
         const { email, otp } = req.body;
         let secretKey = "";
 
-        console.log("Verifying account")
         const existingOTP = await OTP.findOne({ where: { email } })
         const OTPcreatedtime = existingOTP.createdAt;
         const currentTime = new Date();
         if (!existingOTP) {
             return next(new ApiError("OTP error, mohon verifikasi lagi ", 404));
         }
-        console.log("Existing otp " + existingOTP.OTP_code, existingOTP.email, otp);
 
         if (currentTime - OTPcreatedtime > 5 * 60 * 1000) {
             console.log("masuk expiration ")
@@ -97,11 +95,13 @@ const verifyAccount = async (req, res, next) => {
         //     console.log('User not found or already verified');
         // }
         await existingOTP.destroy()
+
         return res.status(200).json({
-            status: "Success",
-            message: `User Verified ${secretKey}`,
+            is_success: true,
+            code: 200,
             data: updatedRows,
-        });
+            message: `User Verified ${secretKey}`,
+        })
 
     } catch (error) {
         if (err instanceof ApiError) {
@@ -221,7 +221,38 @@ const verifyResetPassword = async (req, res, next) => {
     } catch (error) {
         next(new ApiError(error.message, 500));
     }
+}
 
+const changePassword = async (req, res, next) => {
+    try {
+        const { rpkey } = req.query;
+        const { password, confPassword } = req.body
+
+        if (password !== confPassword) {
+            return next(new ApiError("Password dan Confirmation password tidak cocok", 400))
+        }
+        let payload = jwt.verify(rpkey, process.env.JWT_SECRET);
+        const user = await User.findByPk(payload.id);
+
+        console.log(payload)
+        if (!user) {
+            return next(new ApiError("User not found", 404));
+        }
+        const hashedPassword = await bcrypt.hash(password, 10); // Adjust cost factor as needed
+
+        await User.update({ password: hashedPassword }, {
+            where: { user_id: user.user_id } // Assuming 'id' is the primary key of the User model
+        });
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: "",
+            message: "Password telah diubah",
+        })
+
+    } catch (error) {
+        next(new ApiError(error.message, 500));
+    }
 }
 
 
@@ -231,5 +262,6 @@ module.exports = {
     login,
     authenticate,
     resetPassword,
-    verifyResetPassword
+    verifyResetPassword,
+    changePassword
 };

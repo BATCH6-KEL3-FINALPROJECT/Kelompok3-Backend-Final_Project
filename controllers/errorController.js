@@ -7,7 +7,9 @@ module.exports = {
     err.message = err.message;
 
     res.status(err.statusCode).send({
-      status: err.status,
+      is_success: false,
+      code: err.statusCode,
+      data: {},
       message: err.message,
     });
   },
