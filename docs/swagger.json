@@ -30,6 +30,9 @@
   "servers": [
     {
       "url": "http://airline.azkazk11.my.id/api/v1"
+    },
+    {
+      "url": "http://localhost:8000/api/v1"
     }
   ],
   "paths": {
@@ -432,6 +435,194 @@
                     "message": {
                       "type": "string",
                       "example": "User tidak ditemukan, mohon register terlebih dahulu"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send Request for reset password",
+        "description": "ini API utk Reset Passowrd OTP",
+        "requestBody": {
+          "description": "ini request body utk Reset Password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "fosdhan@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses Mengirim link reset password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "true"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Reset password Link sent successfully"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRheWxhd3JlbmNlQGJpdHJleC5jb20iLCJpZCI6IjkwNmRkM2U0LTI0MjktNGFmMC1hMTBhLTljMjExNGQzM2NiNSIsImlhdCI6MTcxNzMxOTE2NCwiZXhwIjoxNzE3MzIwMDY0fQ.u6mmTXP47dUKgqy1BneuJj4CePq5UDhGcqA7LGg0bRU"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User tidak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Alamat Email tidak ditemukan"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send Request for reset password",
+        "description": "ini API utk Reset Passowrd OTP",
+        "parameters": [
+          {
+            "name": "rpkey",
+            "in": "query",
+            "description": "Token Reset Password",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Token Reset Password Valid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "true"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token Valid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token Invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token Invalid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token Expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token Expired"
                     }
                   }
                 }

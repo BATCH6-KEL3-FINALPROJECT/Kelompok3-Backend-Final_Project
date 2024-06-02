@@ -188,7 +188,7 @@ const resetPassword = async (req, res, next) => {
             is_success: true,
             code: 201,
             token: token,
-            message: "Reset password sent successfully",
+            message: "Reset password Link sent successfully",
         });
     } catch (err) {
         next(new ApiError(err.message, 500));
