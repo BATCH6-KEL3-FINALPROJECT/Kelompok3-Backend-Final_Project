@@ -5,7 +5,7 @@ const { User, OTP, sequelize } = require("../models");
 const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
 const { where } = require("sequelize");
-const { sentOtp, resendOtp } = require("./OTPController");
+const { sentOtp, resendOtp, sentResetPassword } = require("./OTPController");
 
 
 const register = async (req, res, next) => {
@@ -61,14 +61,12 @@ const verifyAccount = async (req, res, next) => {
         const { email, otp } = req.body;
         let secretKey = "";
 
-        console.log("Verifying account")
         const existingOTP = await OTP.findOne({ where: { email } })
         const OTPcreatedtime = existingOTP.createdAt;
         const currentTime = new Date();
         if (!existingOTP) {
             return next(new ApiError("OTP error, mohon verifikasi lagi ", 404));
         }
-        console.log("Existing otp " + existingOTP.OTP_code, existingOTP.email, otp);
 
         if (currentTime - OTPcreatedtime > 5 * 60 * 1000) {
             console.log("masuk expiration ")
@@ -97,11 +95,13 @@ const verifyAccount = async (req, res, next) => {
         //     console.log('User not found or already verified');
         // }
         await existingOTP.destroy()
+
         return res.status(200).json({
-            status: "Success",
-            message: `User Verified ${secretKey}`,
+            is_success: true,
+            code: 200,
             data: updatedRows,
-        });
+            message: `User Verified ${secretKey}`,
+        })
 
     } catch (error) {
         if (err instanceof ApiError) {
@@ -147,7 +147,6 @@ const login = async (req, res, next) => {
             next(new ApiError("Password yang dimasukkan salah", 401));
         }
     } catch (err) {
-        console.log(err);
         next(new ApiError(err.message, 500));
     }
 };
@@ -165,6 +164,96 @@ const authenticate = async (req, res) => {
     }
 };
 
+const resetPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        const existingUser = await User.findOne({ where: { email } });
+
+        console.log(existingUser)
+        if (!existingUser) {
+            return next(new ApiError("Alamat Email tidak ditemukan", 400));
+        }
+
+        // const secret = process.env.JWT_SECRET + existingUser.password;
+        const payload = {
+            email: existingUser.email,
+            id: existingUser.user_id
+        }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' })
+        const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
+        console.log(link);
+        const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
+
+        res.status(201).json({
+            is_success: true,
+            code: 201,
+            token: token,
+            message: "Reset password Link sent successfully",
+        });
+    } catch (err) {
+        next(new ApiError(err.message, 500));
+    }
+}
+
+const verifyResetPassword = async (req, res, next) => {
+    try {
+        const { rpkey } = req.query;
+
+        if (!rpkey) {
+            return next(new ApiError("Token tidak ada", 400));
+        }
+        let payload;
+        try {
+            payload = jwt.verify(rpkey, process.env.JWT_SECRET);
+        } catch (innerErr) {
+            if (innerErr instanceof jwt.TokenExpiredError) {
+                return next(new ApiError("Token expired", 400));
+            }
+            return next(new ApiError("Token invalid", 401));
+        }
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: "",
+            message: "Token valid",
+        });
+
+    } catch (error) {
+        next(new ApiError(error.message, 500));
+    }
+}
+
+const changePassword = async (req, res, next) => {
+    try {
+        const { rpkey } = req.query;
+        const { password, confPassword } = req.body
+
+        if (password !== confPassword) {
+            return next(new ApiError("Password dan Confirmation password tidak cocok", 400))
+        }
+        let payload = jwt.verify(rpkey, process.env.JWT_SECRET);
+        const user = await User.findByPk(payload.id);
+
+        console.log(payload)
+        if (!user) {
+            return next(new ApiError("User not found", 404));
+        }
+        const hashedPassword = await bcrypt.hash(password, 10); // Adjust cost factor as needed
+
+        await User.update({ password: hashedPassword }, {
+            where: { user_id: user.user_id } // Assuming 'id' is the primary key of the User model
+        });
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: "",
+            message: "Password telah diubah",
+        })
+
+    } catch (error) {
+        next(new ApiError(error.message, 500));
+    }
+}
 
 
 module.exports = {
@@ -172,4 +261,7 @@ module.exports = {
     verifyAccount,
     login,
     authenticate,
+    resetPassword,
+    verifyResetPassword,
+    changePassword
 };

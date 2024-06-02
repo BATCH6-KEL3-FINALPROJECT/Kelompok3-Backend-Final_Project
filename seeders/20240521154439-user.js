@@ -13,19 +13,7 @@ module.exports = {
           email: "adjrafli@gmail.com",
           phone_number: "+6281294703072",
           password:
-            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",
-          role: "admin",
-          is_verified: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          user_id: "57955d45-674f-4e68-9621-22fb1e948fd0",
-          name: "Azka Zaki",
-          email: "azkazaki11@gmail.com",
-          phone_number: "+6281221208714",
-          password:
-            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",
+            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS", //admin123
           role: "admin",
           is_verified: true,
           createdAt: new Date(),
@@ -37,7 +25,7 @@ module.exports = {
           email: "mhdrizky32@gmail.com",
           phone_number: "+6282388013330",
           password:
-            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",
+            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",//admin123
           role: "admin",
           is_verified: true,
           createdAt: new Date(),
@@ -49,7 +37,7 @@ module.exports = {
           email: "hasmy41@gmail.com",
           phone_number: "+6285255311529",
           password:
-            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",
+            "$2a$12$Ry6lgjq/hZ1VGJ9zlpH93uIPeoh0sSZRjV3FlpbwfJq7hwgLll3cS",//admin123
           role: "admin",
           is_verified: true,
           createdAt: new Date(),
@@ -145,9 +133,9 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-  
-    
-     await queryInterface.bulkDelete('Users', null, {});
-     
+
+
+    await queryInterface.bulkDelete('Users', null, {});
+
   },
 };
