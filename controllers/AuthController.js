@@ -167,7 +167,6 @@ const authenticate = async (req, res) => {
 const resetPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
-
         const existingUser = await User.findOne({ where: { email } });
 
         console.log(existingUser)
@@ -175,29 +174,55 @@ const resetPassword = async (req, res, next) => {
             return next(new ApiError("Alamat Email tidak ditemukan", 400));
         }
 
-        const secret = process.env.JWT_SECRET + existingUser.password;
-
+        // const secret = process.env.JWT_SECRET + existingUser.password;
         const payload = {
             email: existingUser.email,
             id: existingUser.user_id
         }
-        const token = jwt.sign(payload, secret, { expiresIn: '15m' })
-        const link = `https://skypass.azkazk11.my.id/reset-password/?rpkey=${token}`;
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' })
+        const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
         console.log(link);
         const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
 
-        res.status(200).json({
-            status: "Success",
-            message: "Reset password sent successfully",
+        res.status(201).json({
+            is_success: true,
+            code: 201,
             token: token,
+            message: "Reset password sent successfully",
         });
     } catch (err) {
         next(new ApiError(err.message, 500));
     }
-
 }
 
-const ch
+const verifyResetPassword = async (req, res, next) => {
+    try {
+        const { rpkey } = req.query;
+
+        if (!rpkey) {
+            return next(new ApiError("Token tidak ada", 400));
+        }
+        let payload;
+        try {
+            payload = jwt.verify(rpkey, process.env.JWT_SECRET);
+        } catch (innerErr) {
+            if (innerErr instanceof jwt.TokenExpiredError) {
+                return next(new ApiError("Token expired", 400));
+            }
+            return next(new ApiError("Token invalid", 401));
+        }
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: "",
+            message: "Token valid",
+        });
+
+    } catch (error) {
+        next(new ApiError(error.message, 500));
+    }
+
+}
 
 
 module.exports = {
@@ -206,4 +231,5 @@ module.exports = {
     login,
     authenticate,
     resetPassword,
+    verifyResetPassword
 };

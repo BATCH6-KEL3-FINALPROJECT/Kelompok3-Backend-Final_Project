@@ -9,5 +9,6 @@ router.post('/login', Auth.login)
 router.post('/resend-otp', OTP.resendOtp)
 router.post('/sent-otp', OTP.resendOtp)
 router.post('/reset-password', Auth.resetPassword)
+router.get('/reset-password', Auth.verifyResetPassword)
 
 module.exports = router;
