@@ -104,8 +104,8 @@ const verifyAccount = async (req, res, next) => {
         })
 
     } catch (error) {
-        if (err instanceof ApiError) {
-            return next(err);
+        if (error instanceof ApiError) {
+            return next(error);
         } else {
             return next(new ApiError("Internal Server Error", 500));
         }
