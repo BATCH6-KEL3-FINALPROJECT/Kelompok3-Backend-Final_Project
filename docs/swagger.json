@@ -29,7 +29,7 @@
   ],
   "servers": [
     {
-      "url": "http://airline.azkazk11.my.id/api/v1"
+      "url": "https://airline.azkazk11.my.id/api/v1"
     },
     {
       "url": "http://localhost:8000/api/v1"
@@ -226,7 +226,7 @@
               }
             }
           },
-          "402": {
+          "400": {
             "description": "minimal password 8 karakter",
             "content": {
               "application/json": {
@@ -525,9 +525,7 @@
             }
           }
         }
-      }
-    },
-    "/auth/reset-password": {
+      },
       "get": {
         "tags": [
           "Auth"
@@ -623,6 +621,185 @@
                     "message": {
                       "type": "string",
                       "example": "Token Expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Send New Password and Confirmation Password",
+        "description": "ini API utk Reset Password",
+        "requestBody": {
+          "description": "ini request body utk Reset Password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  },
+                  "confPassword": {
+                    "type": "string",
+                    "example": "password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "rpkey",
+            "in": "query",
+            "description": "Token Reset Password",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reset Password success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "true"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password telah diubah"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token Invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid Token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token Expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Token Expired"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "minimal password 8 karakter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password minimal 8 karakter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Password And confirmation password dont match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "is_success": {
+                      "type": "bool",
+                      "example": "false"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "data": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Password dan Confirmation password tidak cocok"
                     }
                   }
                 }

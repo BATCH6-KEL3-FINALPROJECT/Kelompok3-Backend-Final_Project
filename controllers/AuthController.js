@@ -228,6 +228,9 @@ const changePassword = async (req, res, next) => {
         const { rpkey } = req.query;
         const { password, confPassword } = req.body
 
+        if (password.length < 8) {
+            return next(new ApiError("Password minimal 8 karakter", 400))
+        }
         if (password !== confPassword) {
             return next(new ApiError("Password dan Confirmation password tidak cocok", 400))
         }
