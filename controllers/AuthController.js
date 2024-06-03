@@ -44,14 +44,15 @@ const register = async (req, res, next) => {
         const sendingOTP = await sentOtp(email, newUser.user_id, next);
 
         res.status(201).json({
-            status: "Success",
+            is_success: true,
+            code: 201,
             data: {
                 email,
                 newUser,
             },
+            message: "Register Berhasil!"
         });
     } catch (err) {
-        console.log(err);
         next(new ApiError(err.message, 500));
     }
 };
@@ -125,23 +126,39 @@ const login = async (req, res, next) => {
             return next(new ApiError("Alamat Email tidak ditemukan", 400));
         }
         if (user && bcrypt.compareSync(password, user.password)) {
-            const token = jwt.sign(
+            const accessToken = jwt.sign(
                 {
                     id: user.user_id,
                     name: user.name,
                     role: user.role,
                     email: user.email,
+                    type: 'access'
                 },
                 process.env.JWT_SECRET,
                 {
                     expiresIn: process.env.JWT_EXPIRED,
                 }
             );
+            const refreshToken = jwt.sign(
+                {
+                    id: user.user_id,
+                    name: user.name,
+                    role: user.role,
+                    email: user.email,
+                    type: 'refresh'
+                },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: process.env.REFRESH_TOKEN_EXPIRED,
+                }
+            );
 
             res.status(200).json({
-                status: "Success",
-                message: "Success login",
-                token: token,
+                is_success: true,
+                code: 200,
+                message: "Login Berhasil!",
+                token: accessToken,
+                refreshToken: refreshToken
             });
         } else {
             next(new ApiError("Password yang dimasukkan salah", 401));
