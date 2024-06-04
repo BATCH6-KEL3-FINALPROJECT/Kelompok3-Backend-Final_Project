@@ -47,16 +47,28 @@ module.exports = {
     })
     const airports = await Airport.findAll()
     const airlines = await Airline.findAll()
+    console.log("length of airlines", airlines.length)
+    console.log("airline divide by 4", airlines.length / 4)
+    const groups = [];
 
-
+    for (let i = 0; i < airlines.length; i += 4) {
+      groups.push(airlines.slice(i, i + 4));
+    }
+    console.log(groups)
     for (const date of datesArray) {
       const bulkInsertData = [];
       for (const departureAirport of airports) {
         for (const arrivalAirport of airports) {
           if (departureAirport.airport_id !== arrivalAirport.airport_id) {
-            for (const time of flightTimes) {
+            for (let timeCounter = 0; timeCounter < flightTimes.length; timeCounter++) {
+              let airlineCounter = groups[0];
+              if (timeCounter == 1) {
+                airlineCounter = groups[1];
+              } else if (timeCounter == 2) {
+                airlineCounter = groups[2];
+              }
               let planeCounter = 0
-              for (const airline of airlines) {
+              for (const airline of airlineCounter) {
                 if (planeCounter === 4) {
                   planeCounter = 0
                 }
@@ -65,7 +77,7 @@ module.exports = {
                 bulkInsertData.push({
                   flight_id: uuidv4(),
                   airline_id: airline.airline_id,
-                  flight_duration: time.duration,
+                  flight_duration: flightTimes[timeCounter].duration,
                   flight_description: planeDetails,
                   flight_status: "on time",
                   flight_code: flightCode,
@@ -74,9 +86,9 @@ module.exports = {
                   departure_airport: departureAirport.airport_name,
                   arrival_airport: arrivalAirport.airport_name,
                   departure_date: date,
-                  departure_time: time.departureTime,
+                  departure_time: flightTimes[timeCounter].departureTime,
                   arrival_date: date,
-                  arrival_time: time.arrivalTime,
+                  arrival_time: flightTimes[timeCounter].arrivalTime,
                   departure_airport_id: departureAirport.airport_id,
                   arrival_airport_id: arrivalAirport.airport_id,
                   createdAt: new Date(),
