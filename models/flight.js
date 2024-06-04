@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       Flight.hasMany(models.Booking, { foreignKey: 'flight_id' });
       Flight.hasMany(models.Ticket, { foreignKey: 'flight_id' })
       Flight.hasMany(models.Price, { foreignKey: 'flight_id' });
+      Flight.hasMany(models.Notification, { foreignKey: 'flight_id' });
+      Flight.hasOne(models.Promotion, { foreignKey: 'flight_id' });
     }
   }
   Flight.init({
@@ -39,7 +41,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       default: 189
     },
-    terminal: DataTypes.JSON,
+    terminal: {
+      type: DataTypes.JSON,
+      defaultValue: false
+    },
+    is_promo: DataTypes.BOOLEAN,
     departure_airport: DataTypes.STRING,
     arrival_airport: DataTypes.STRING,
     departure_date: DataTypes.DATE,
