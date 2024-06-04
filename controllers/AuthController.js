@@ -131,6 +131,7 @@ const login = async (req, res, next) => {
                     name: user.name,
                     role: user.role,
                     email: user.email,
+                    isVerified: user.is_verified,
                     type: 'access'
                 },
                 process.env.JWT_SECRET,
