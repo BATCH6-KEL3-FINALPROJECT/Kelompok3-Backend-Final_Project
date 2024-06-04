@@ -11,17 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Promotion.belongsTo(models.Seat, { foreignKey: 'seat_id' });
+      Promotion.belongsTo(models.Flight, { foreignKey: 'flight_id' });
+
+      Promotion.hasMany(models.Notification, { foreignKey: 'notification_id' });
     }
   }
   Promotion.init({
-    promotion_id: DataTypes.UUID,
-    promotion_code: DataTypes.STRING,
-    discount_amount: DataTypes.INTEGER,
-    validity_start_date: DataTypes.DATE,
-    validity_end_date: DataTypes.DATE,
-    conditions: DataTypes.TEXT,
-    seat_id: DataTypes.STRING
+    promotion_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
+    },
+    flight_id: DataTypes.UUID,
+    promo_message: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    discount_percentage: DataTypes.INTEGER,
+    start_date: DataTypes.DATE,
+    end_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Promotion',

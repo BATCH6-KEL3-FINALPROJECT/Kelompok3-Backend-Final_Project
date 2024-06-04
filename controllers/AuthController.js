@@ -70,7 +70,6 @@ const verifyAccount = async (req, res, next) => {
         }
 
         if (currentTime - OTPcreatedtime > 5 * 60 * 1000) {
-            console.log("masuk expiration ")
             return res.status(403).json({
                 success: false,
                 message: "OTP sudah tidak valid"
@@ -186,7 +185,6 @@ const resetPassword = async (req, res, next) => {
         const { email } = req.body;
         const existingUser = await User.findOne({ where: { email } });
 
-        console.log(existingUser)
         if (!existingUser) {
             return next(new ApiError("Alamat Email tidak ditemukan", 400));
         }
@@ -204,7 +202,7 @@ const resetPassword = async (req, res, next) => {
         res.status(201).json({
             is_success: true,
             code: 201,
-            token: token,
+            data: {},
             message: "Reset password Link sent successfully",
         });
     } catch (err) {
@@ -254,7 +252,6 @@ const changePassword = async (req, res, next) => {
         let payload = jwt.verify(rpkey, process.env.JWT_SECRET);
         const user = await User.findByPk(payload.id);
 
-        console.log(payload)
         if (!user) {
             return next(new ApiError("User not found", 404));
         }

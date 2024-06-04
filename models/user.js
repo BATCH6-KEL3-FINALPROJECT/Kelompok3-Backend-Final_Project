@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Booking, { foreignKey: 'user_id' });
       User.hasMany(models.payment, { foreignKey: 'user_id' });
       User.hasMany(models.Passenger, { foreignKey: 'user_id' });
+      User.hasMany(models.Notification, { foreignKey: 'user_id' });
+
       User.hasOne(models.reset_password_token, { foreignKey: 'user_id' });
       User.hasOne(models.OTP, { foreignKey: 'user_id' });
     }

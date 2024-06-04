@@ -483,13 +483,13 @@
                       "type": "integer",
                       "example": 201
                     },
+                    "data": {
+                      "type": "string",
+                      "example": "{}"
+                    },
                     "message": {
                       "type": "string",
                       "example": "Reset password Link sent successfully"
-                    },
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRheWxhd3JlbmNlQGJpdHJleC5jb20iLCJpZCI6IjkwNmRkM2U0LTI0MjktNGFmMC1hMTBhLTljMjExNGQzM2NiNSIsImlhdCI6MTcxNzMxOTE2NCwiZXhwIjoxNzE3MzIwMDY0fQ.u6mmTXP47dUKgqy1BneuJj4CePq5UDhGcqA7LGg0bRU"
                     }
                   }
                 }

@@ -27,6 +27,8 @@ module.exports = {
       },
       seats_available: { type: Sequelize.INTEGER },
       terminal: { type: Sequelize.JSON },
+      is_promo: { type: Sequelize.BOOLEAN, default: false },
+      is_available: { type: Sequelize.BOOLEAN },
       departure_airport: { type: Sequelize.STRING },
       arrival_airport: { type: Sequelize.STRING },
       departure_date: { type: Sequelize.DATEONLY },
