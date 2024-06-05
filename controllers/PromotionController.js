@@ -61,7 +61,7 @@ const deletePromotion = async (req, res, next) => {
 
         res.status(200).json({
             status: "Success",
-            message: "successfully deleted promotion",
+            message: "successfully deleted Promotion",
         });
     } catch (err) {
         next(new ApiError(err.message, 400));
