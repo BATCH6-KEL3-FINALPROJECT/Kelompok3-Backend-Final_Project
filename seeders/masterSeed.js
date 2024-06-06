@@ -27,13 +27,13 @@ async function createSeed(queryInterface, Sequelize) {
     try {
         console.log("INI")
         // Call the up function of the userSeeder
-        // await airportSeeder.up(queryInterface, Sequelize)
-        // await airlineSeeder.up(queryInterface, Sequelize)
-        // await userSeeder.up(queryInterface, Sequelize);
-        // await passengerSeeder.up(queryInterface, Sequelize);
+        await airportSeeder.up(queryInterface, Sequelize)
+        await airlineSeeder.up(queryInterface, Sequelize)
+        await userSeeder.up(queryInterface, Sequelize);
+        await passengerSeeder.up(queryInterface, Sequelize);
+        await flightDataSeeder.up(queryInterface, sequelize);
         await ticketSeeder.up(queryInterface, Sequelize);
-        // await flightDataSeeder.up(queryInterface, sequelize);
-        // await priceSeeder.up(queryInterface, Sequelize)
+        await priceSeeder.up(queryInterface, Sequelize)
         // await seatSeeder.up(queryInterface, Sequelize);
         // await flightSeeder.up(queryInterface, Sequelize);
         console.log('seeder executed successfully.');
