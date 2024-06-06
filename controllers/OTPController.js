@@ -76,7 +76,7 @@ const resendOtp = async (req, res, next) => {
         );
 
         res.status(200).json({
-            status: "Success",
+            is_success: "Success",
             message: "OTP resent successfully, please check your email",
         });
     } catch (error) {

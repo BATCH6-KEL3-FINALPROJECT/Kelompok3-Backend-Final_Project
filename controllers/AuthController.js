@@ -157,8 +157,11 @@ const login = async (req, res, next) => {
                 is_success: true,
                 code: 200,
                 message: "Login Berhasil!",
-                token: accessToken,
-                refreshToken: refreshToken
+                data: {
+                    token: accessToken,
+                    refreshToken: refreshToken
+                }
+
             });
         } else {
             next(new ApiError("Password yang dimasukkan salah", 401));

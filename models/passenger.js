@@ -19,16 +19,18 @@ module.exports = (sequelize, DataTypes) => {
   Passenger.init({
     passenger_id: {
       primaryKey: true,
-      type: DataTypes.STRING
+      type: DataTypes.UUID
     },
     user_id: DataTypes.UUID,
     title: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
+    date_of_birth: DataTypes.DATEONLY,
     email: DataTypes.STRING,
     phone_number: DataTypes.STRING,
-    passportn_no: DataTypes.STRING,
-    negara_penerbit: DataTypes.STRING,
+    nationality: DataTypes.STRING,
+    passport_no: DataTypes.STRING,
+    issuing_country: DataTypes.STRING,
     valid_until: DataTypes.DATE
   }, {
     sequelize,
