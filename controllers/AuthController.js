@@ -206,7 +206,9 @@ const resetPassword = async (req, res, next) => {
         res.status(201).json({
             is_success: true,
             code: 201,
-            data: {},
+            data: {
+                token: token,
+            },
             message: "Reset password Link sent successfully",
         });
     } catch (err) {
