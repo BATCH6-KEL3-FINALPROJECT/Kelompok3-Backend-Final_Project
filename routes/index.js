@@ -5,6 +5,7 @@ const swaggerDocument = require("../docs/swagger.json");
 const Auth = require("./authRouter");
 const Flight = require("./flightRouter");
 const Airport = require("./airportRouter");
+
 const Airline = require("./airlineRouter");
 const User = require("./userRouter");
 const Passenger = require("./passengerRouter");
