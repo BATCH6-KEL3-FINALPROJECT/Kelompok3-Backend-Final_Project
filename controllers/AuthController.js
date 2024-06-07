@@ -157,8 +157,11 @@ const login = async (req, res, next) => {
                 is_success: true,
                 code: 200,
                 message: "Login Berhasil!",
-                token: accessToken,
-                refreshToken: refreshToken
+                data: {
+                    token: accessToken,
+                    refreshToken: refreshToken
+                }
+
             });
         } else {
             next(new ApiError("Password yang dimasukkan salah", 401));
@@ -196,14 +199,17 @@ const resetPassword = async (req, res, next) => {
             id: existingUser.user_id
         }
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' })
-        const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
+        // const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
+        const link = `https://kelompok3-frontend-final-project-mauve.vercel.app/reset-password?rpkey=${token}`;
         console.log(link);
         const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
 
         res.status(201).json({
             is_success: true,
             code: 201,
-            data: {},
+            data: {
+                token: token,
+            },
             message: "Reset password Link sent successfully",
         });
     } catch (err) {

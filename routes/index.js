@@ -5,16 +5,18 @@ const swaggerDocument = require("../docs/swagger.json");
 const Auth = require("./authRouter");
 const Flight = require("./flightRouter");
 const Airport = require("./airportRouter");
-const Airline = require("./airlineRoutes")
-const Seat = require("./seatRoutes")
 
+const Airline = require("./airlineRouter");
+const User = require("./userRouter");
+const Passenger = require("./passengerRouter");
 router.use("/api-docs", swaggerUI.serve);
 router.use("/api-docs", swaggerUI.setup(swaggerDocument));
 
-router.use("/api/v1/auth", Auth)
-router.use("/api/v1/flight", Flight)
-router.use("/api/v1/airport", Airport)
-router.use("/api/v1/airline", Airline)
-router.use("/api/v1/seat", Seat)
+router.use("/api/v1/auth", Auth);
+router.use("/api/v1/flight", Flight);
+router.use("/api/v1/airport", Airport);
+router.use("/api/v1/airline", Airline);
+router.use("/api/v1/user", User);
+router.use("/api/v1/passenger", Passenger);
 
 module.exports = router;

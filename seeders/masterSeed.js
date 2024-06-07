@@ -9,6 +9,7 @@ const ticketSeeder = require('./20240521154431-ticket');
 const userSeeder = require('./20240521154439-user');
 const flightSeeder = require('./20240522102745-flight');
 const priceSeeder = require('./20240527104424-price')
+const passengerSeeder = require('./20240606155919-passenger')
 const flightDataSeeder = require('./20240528033556-flightData');
 require("dotenv").config();
 
@@ -29,7 +30,9 @@ async function createSeed(queryInterface, Sequelize) {
         await airportSeeder.up(queryInterface, Sequelize)
         await airlineSeeder.up(queryInterface, Sequelize)
         await userSeeder.up(queryInterface, Sequelize);
+        await passengerSeeder.up(queryInterface, Sequelize);
         await flightDataSeeder.up(queryInterface, sequelize);
+        await ticketSeeder.up(queryInterface, Sequelize);
         await priceSeeder.up(queryInterface, Sequelize)
         await seatSeeder.up(queryInterface, Sequelize);
         // await flightSeeder.up(queryInterface, Sequelize);
