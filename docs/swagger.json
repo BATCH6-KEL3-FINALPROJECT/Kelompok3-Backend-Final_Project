@@ -15,6 +15,10 @@
       "description": "API untuk Auth resources"
     },
     {
+      "name": "User",
+      "description": "API untuk User resources"
+    },
+    {
       "name": "Airport",
       "description": "API untuk Airport resources"
     },
@@ -38,9 +42,7 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Return hasil hit API login user",
         "description": "ini API utk login user",
         "requestBody": {
@@ -138,9 +140,7 @@
     },
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Return hasil hit API register user",
         "description": "ini API utk register user",
         "requestBody": {
@@ -251,9 +251,7 @@
     },
     "/auth/verify": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Return hasil hit API verify user",
         "description": "ini API utk verify user",
         "requestBody": {
@@ -379,9 +377,7 @@
     },
     "/auth/resend-otp": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Return hasil hit API resend OTP",
         "description": "ini API utk resend OTP",
         "requestBody": {
@@ -446,9 +442,7 @@
     },
     "/auth/reset-password": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Send Request for reset password",
         "description": "ini API utk Reset Passowrd OTP",
         "requestBody": {
@@ -527,9 +521,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Send Request for reset password",
         "description": "ini API utk Reset Passowrd OTP",
         "parameters": [
@@ -630,9 +622,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Send New Password and Confirmation Password",
         "description": "ini API utk Reset Password",
         "requestBody": {
@@ -809,11 +799,568 @@
         }
       }
     },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Return all user data",
+        "description": "API to get all user data",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Nama pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phone_number",
+            "in": "query",
+            "description": "Nomor telepon pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "description": "Peran pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "is_verified",
+            "in": "query",
+            "description": "Status verifikasi pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Istilah pencarian untuk pengguna",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Nomor halaman untuk paginasi",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Jumlah hasil per halaman",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "user_id": {
+                                "type": "string",
+                                "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Rafli Kharisma Akbar"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "adjrafli@gmail.com"
+                              },
+                              "phone_number": {
+                                "type": "string",
+                                "example": "+6281294703072"
+                              },
+                              "role": {
+                                "type": "string",
+                                "example": "admin"
+                              },
+                              "is_verified": {
+                                "type": "boolean",
+                                "example": true
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-06-06T13:16:55.688Z"
+                              },
+                              "updatedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-06-06T13:16:55.688Z"
+                              }
+                            }
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "totalData": {
+                              "type": "integer",
+                              "example": 10
+                            },
+                            "totalPages": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "pageNum": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "limitData": {
+                              "type": "integer",
+                              "example": 10
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid page number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid page number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid limit number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid limit number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No users found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Not Found"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No users found for the requested page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user by ID",
+        "description": "Retrieve user details by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve",
+            "schema": {
+              "type": "string",
+              "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user_id": {
+                          "type": "string",
+                          "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Rafli Kharisma Akbar"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "adjrafli@gmail.com"
+                        },
+                        "phone_number": {
+                          "type": "string",
+                          "example": "+6281294703072"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "admin"
+                        },
+                        "is_verified": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-06T13:16:55.688Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-06T13:16:55.688Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User with ID: 2b054118-24fc-4c00-8ba2-b1a5e9bb0069 not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update user by ID",
+        "description": "Update the details of a user by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "string",
+              "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "User details to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Rafli Kharisma Akbar"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "example": "+6281294703072"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "adjrafli@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User updated successful"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user_id": {
+                          "type": "string",
+                          "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Rafli Kharisma Akbar"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "adjrafli@gmail.com"
+                        },
+                        "phone_number": {
+                          "type": "string",
+                          "example": "+6281294703072"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "admin"
+                        },
+                        "is_verified": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-06T13:16:55.688Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-06T13:16:55.688Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User with ID: 2b054118-24fc-4c00-8ba2-b1a5e9bb0069 not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete user by ID",
+        "description": "Delete a user by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to delete",
+            "schema": {
+              "type": "string",
+              "example": "2b054118-24fc-4c00-8ba2-b1a5e9bb0069"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully deleted user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User with ID: 2b054118-24fc-4c00-8ba2-b1a5e9bb0069 not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Failed"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/flight/create": {
       "post": {
-        "tags": [
-          "Flight"
-        ],
+        "tags": ["Flight"],
         "summary": "Return hasil hit API create data flight",
         "description": "ini API utk create data flight",
         "requestBody": {
@@ -1050,9 +1597,7 @@
     },
     "/flight": {
       "get": {
-        "tags": [
-          "Flight"
-        ],
+        "tags": ["Flight"],
         "summary": "Return hasil hit API get all data flight",
         "description": "ini API untuk mendapatkan semua data flight",
         "parameters": [
@@ -1326,26 +1871,6 @@
             }
           },
           "404": {
-            "description": "Invalid departure date",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Failed"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Invalid departure date"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
             "description": "No data found",
             "content": {
               "application/json": {
@@ -1394,9 +1919,7 @@
     },
     "/flight/{id}": {
       "get": {
-        "tags": [
-          "Flight"
-        ],
+        "tags": ["Flight"],
         "summary": "Return hasil hit API get flight by id",
         "description": "API untuk mendapatkan data flight by id",
         "parameters": [
@@ -1509,9 +2032,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Flight"
-        ],
+        "tags": ["Flight"],
         "summary": "Return hasil hit API update data flight by id",
         "description": "API untuk update  data flight by id",
         "parameters": [
@@ -1780,9 +2301,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Flight"
-        ],
+        "tags": ["Flight"],
         "summary": "Return hasil hit API delete Flight by id",
         "description": "ini API untuk menghapus data Flight bedasarkan id ",
         "parameters": [
@@ -1849,9 +2368,7 @@
     },
     "/airline/create": {
       "post": {
-        "tags": [
-          "Airline"
-        ],
+        "tags": ["Airline"],
         "summary": "Return hasil hit API create data Airline",
         "description": "ini API utk create data Airline",
         "requestBody": {
@@ -1913,9 +2430,7 @@
     },
     "/airline": {
       "get": {
-        "tags": [
-          "Airline"
-        ],
+        "tags": ["Airline"],
         "summary": "Return hasil hit API get all airline",
         "description": "ini API untuk mendapatkan semua data airline ",
         "responses": {
@@ -1971,9 +2486,7 @@
     },
     "/airport/create": {
       "post": {
-        "tags": [
-          "Airport"
-        ],
+        "tags": ["Airport"],
         "summary": "Return hasil hit API create data Airport",
         "description": "ini API utk create data Airport",
         "requestBody": {
@@ -2050,9 +2563,7 @@
     },
     "/airport": {
       "get": {
-        "tags": [
-          "Airport"
-        ],
+        "tags": ["Airport"],
         "summary": "Return hasil hit API get all airport",
         "description": "ini API untuk mendapatkan semua data airport ",
         "responses": {

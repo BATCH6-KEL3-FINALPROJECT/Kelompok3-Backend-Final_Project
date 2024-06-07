@@ -132,6 +132,7 @@ const createPassenger = async (req, res, next) => {
     next(new ApiError(error.message, 400));
   }
 }
+
 const updatePassenger = async (req, res, next) => {
   const {
     user_id,
