@@ -78,10 +78,12 @@ const createFlight = async (req, res, next) => {
         });
 
         res.status(201).json({
-            status: "Success",
+            is_success: true,
+            code: 201,
             data: {
                 flight,
-            }
+            },
+            message: 'Create flight success'
         });
     } catch (error) {
         next(new ApiError(error.message, 400));
@@ -144,7 +146,8 @@ const getAllFlights = async (req, res, next) => {
         console.log("Masuk ke flight", flights)
         if (flights.length === 0) {
             res.status(404).json({
-                status: "Not Found",
+                is_success: true,
+                code: 404,
                 data: {
 
                 },
@@ -161,16 +164,18 @@ const getAllFlights = async (req, res, next) => {
 
         // Send response
         res.status(200).json({
-            status: "Success",
+            is_success: true,
+            code: 200,
             data: {
                 flights: paginatedFlights,
+                pagination: {
+                    totalData: totalCount,
+                    totalPages,
+                    pageNum,
+                    pageSize,
+                },
             },
-            pagination: {
-                totalData: totalCount,
-                totalPages,
-                pageNum,
-                pageSize,
-            },
+            message: 'get flight data success'
         });
     } catch (error) {
         console.log(error);
@@ -206,10 +211,12 @@ const getFlightById = async (req, res, next) => {
         }
 
         res.status(200).json({
-            status: "Success",
+            is_success: true,
+            code: 200,
             data: {
                 flight,
             },
+            message: 'get flight details success'
         });
     } catch (err) {
         next(new ApiError(err.message, 400));
@@ -232,7 +239,11 @@ const deleteFlight = async (req, res, next) => {
         });
 
         res.status(200).json({
-            status: "Success",
+            is_success: true,
+            code: 200,
+            data: {
+
+            },
             message: "successfully deleted flight",
         });
     } catch (err) {
@@ -328,8 +339,10 @@ const updateFlight = async (req, res, next) => {
         );
 
         res.status(200).json({
-            status: "Success",
-            data: updatedFlight
+            is_success: true,
+            code: 200,
+            data: updatedFlight,
+            message: 'Flights updated successfully'
         });
     } catch (err) {
         next(new ApiError(err.message, 400));
