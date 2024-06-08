@@ -36,13 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.UUID,
     },
-    booking_id: {
-      type: DataTypes.UUID,
-
-    },
   }, {
     sequelize,
     modelName: 'payment',
+    tableName: 'Payments', // Specify the actual table name in the database
   });
   return payment;
 };
