@@ -76,41 +76,52 @@ const getTicketById = async (req, res, next) => {
 };
 
 const updateTicket = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const {
-      ticket_code,
-      flight_id,
-      seat_id,
-      passenger_id,
-      booking_id,
-      seat_number,
-      passenger_name,
-      TERMINAL,
-      ticket_status,
-    } = req.body;
+  const {
+    ticket_code,
+    flight_id,
+    seat_id,
+    passenger_id,
+    booking_id,
+    seat_number,
+    passenger_name,
+    TERMINAL,
+    ticket_status,
+  } = req.body;
 
-    let ticket = await Ticket.findOne({ where: { ticket_id: id } });
+  try {
+    const ticket = await Ticket.findByPk(req.params.id);
 
     if (!ticket) {
-      new ApiError(`Ticket with ID: ${req.params.id} not found`, 404);
+      return next(
+        new ApiError(`Ticket with ID ${req.params.id} not found`, 404)
+      );
     }
 
-    ticket.ticket_code = ticket_code;
-    ticket.flight_id = flight_id;
-    ticket.seat_id = seat_id;
-    ticket.passenger_id = passenger_id;
-    ticket.booking_id = booking_id;
-    ticket.seat_number = seat_number;
-    ticket.passenger_name = passenger_name;
-    ticket.TERMINAL = TERMINAL;
-    ticket.ticket_status = ticket_status;
+    await Ticket.update(
+      {
+        ticket_code,
+        flight_id,
+        seat_id,
+        passenger_id,
+        booking_id,
+        seat_number,
+        passenger_name,
+        TERMINAL,
+        ticket_status,
+      },
+      {
+        where: {
+          ticket_id: req.params.id,
+        },
+      }
+    );
 
-    await ticket.save();
+    const updatedTicket = await Ticket.findByPk(req.params.id);
 
     res.status(200).json({
       status: "Success",
-      message: "Successfully update ticket",
+      message: "Successfully updated ticket",
+      updatedTicket,
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
