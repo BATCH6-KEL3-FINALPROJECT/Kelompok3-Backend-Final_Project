@@ -1,6 +1,7 @@
 const { Passenger } = require("../models");
 const ApiError = require("../utils/apiError");
 const { Op } = require("sequelize");
+const { v4: uuidv4 } = require('uuid');
 
 const findPassengers = async (req, res, next) => {
   try {
@@ -11,7 +12,7 @@ const findPassengers = async (req, res, next) => {
       last_name,
       email,
       phone_number,
-      passportn_no,
+      passport_no,
       negara_penerbit,
       valid_until,
       page,
@@ -30,7 +31,7 @@ const findPassengers = async (req, res, next) => {
     if (email) whereClause.email = { [Op.iLike]: `%${email}%` };
     if (phone_number)
       whereClause.phone_number = { [Op.iLike]: `%${phone_number}%` };
-    if (passportn_no)
+    if (passport_no)
       whereClause.passportn_no = { [Op.iLike]: `%${passportn_no}%` };
     if (negara_penerbit)
       whereClause.negara_penerbit = { [Op.iLike]: `%${negara_penerbit}%` };
@@ -45,7 +46,7 @@ const findPassengers = async (req, res, next) => {
         last_name: { [Op.like]: `%${req.query.search}%` },
         email: { [Op.like]: `%${req.query.search}%` },
         phone_number: { [Op.like]: `%${req.query.search}%` },
-        passportn_no: { [Op.like]: `%${req.query.search}%` },
+        passport_no: { [Op.like]: `%${req.query.search}%` },
         negara_penerbit: { [Op.like]: `%${req.query.search}%` },
         valid_until: { [Op.like]: `%${req.query.search}%` },
       };
@@ -60,16 +61,18 @@ const findPassengers = async (req, res, next) => {
     const totalPages = Math.ceil(count / limitData);
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         passengers,
+        pagination: {
+          totalData: count,
+          totalPages,
+          pageNum,
+          limitData,
+        },
       },
-      pagination: {
-        totalData: count,
-        totalPages,
-        pageNum,
-        limitData,
-      },
+      message: 'Get passenger data success'
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -87,15 +90,48 @@ const findPassengerById = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         passenger,
       },
+      message: 'Get Passenger By id success'
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
   }
 };
+
+const createPassenger = async (req, res, next) => {
+  try {
+    const passengersData = req.body.passengers;
+    console.log(passengersData)
+    console.log(req.user)
+
+    // Create passengers in the database
+    const passengers = await Promise.all(passengersData.map(async passengerData => {
+      const passengerId = uuidv4();
+      const userId = req.user.user_id;
+      console.log(passengerId)
+
+      let newPassengerData = { ...passengerData, passenger_id: passengerId }
+      newPassengerData = { ...newPassengerData, user_id: userId }
+      const passenger = await Passenger.create(newPassengerData);
+      return passenger;
+    }));
+
+    // Send success response with created passengers data
+    res.status(201).json({
+      is_success: true,
+      code: 201,
+      data: passengers,
+      message: "Passenger created successfully"
+
+    });
+  } catch (error) {
+    next(new ApiError(error.message, 400));
+  }
+}
 
 const updatePassenger = async (req, res, next) => {
   const {
@@ -116,6 +152,12 @@ const updatePassenger = async (req, res, next) => {
       return next(
         new ApiError(`Passenger with ID ${req.params.id} not found`, 404)
       );
+    }
+    console.log(req.user)
+
+    if (passenger.user_id !== req.user.user_id) {
+      return next(
+        new ApiError(`Anda tidak bisa mengedit data Passenger ini`, 403));
     }
 
     await Passenger.update(
@@ -140,9 +182,12 @@ const updatePassenger = async (req, res, next) => {
     const updatedPassenger = await Passenger.findByPk(req.params.id);
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
+      data: {
+        updatedPassenger
+      },
       message: "Passenger updated successful",
-      updatedPassenger,
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -157,6 +202,12 @@ const deletePassenger = async (req, res, next) => {
       next(new ApiError(`Passenger with ID ${req.params.id} not found`, 404));
     }
 
+    if (passenger.user_id !== req.user.user_id) {
+      return next(
+        new ApiError(`Anda tidak bisa mengedit data Passenger ini`, 403));
+    }
+
+
     await Passenger.destroy({
       where: {
         passenger_id: req.params.id,
@@ -164,7 +215,9 @@ const deletePassenger = async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
+      data: {},
       message: "Successfully deleted passenger",
     });
   } catch (err) {
@@ -177,4 +230,5 @@ module.exports = {
   findPassengerById,
   updatePassenger,
   deletePassenger,
+  createPassenger
 };

@@ -11,6 +11,20 @@ const findUsers = async (req, res, next) => {
     const limitData = parseInt(limit) || 10;
     const offset = (pageNum - 1) * limitData;
 
+    if (pageNum < 1) {
+      return res.status(400).json({
+        status: "Failed",
+        message: "Invalid page number",
+      });
+    }
+
+    if (limitData < 1 || limitData > 100) {
+      return res.status(401).json({
+        status: "Failed",
+        message: "Invalid limit number",
+      });
+    }
+
     const whereClause = {};
     if (name) whereClause.name = { [Op.iLike]: `%${name}%` };
     if (email) whereClause.email = email;
@@ -36,6 +50,13 @@ const findUsers = async (req, res, next) => {
       limit: limitData,
       attributes: { exclude: ["password", "refresh_token"] },
     });
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        status: "Not Found",
+        message: "No users found for the requested page",
+      });
+    }
 
     const totalPages = Math.ceil(count / limitData);
 
