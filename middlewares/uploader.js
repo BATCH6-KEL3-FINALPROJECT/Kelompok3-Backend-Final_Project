@@ -1,23 +1,20 @@
-const multer = require("multer");
-const ApiError = require("../utils/apiError");
+const multer = require('multer');
 
-const multerFiltering = (req, file, cb) => {
-  if (
-    file.mimetype == "image/png" ||
-    file.mimetype == "image/jpg" ||
-    file.mimetype == "image/jpeg" ||
-    file.mimetype == "image/webp"
-  ) {
-    cb(null, true);
-  } else {
-    return cb(
-      new ApiError("Only Accept Image Type .png .jpg .webp and .jpeg", 400)
-    );
-  }
-};
+const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
 
-const upload = multer({
-  fileFilter: multerFiltering,
+const multerConfig = multer({
+	fileFilter: (req, file, cb) => {
+		if (allowedTypes.includes(file.mimetype)) {
+			cb(null, true);
+		} else {
+			return cb(new Error(`Only ${allowedTypes.join(', ')} are allowed`));
+		}
+	},
+	limits: {
+		fileSize: 2 * 1024 * 1024, // 2MB
+	},
 });
+
+const upload = multerConfig;
 
 module.exports = upload;

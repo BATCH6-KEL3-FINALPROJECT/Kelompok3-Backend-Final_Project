@@ -1,6 +1,8 @@
 const { User } = require("../models");
 const ApiError = require("../utils/apiError");
 const { Op } = require("sequelize");
+const handleUploadImage = require("../utils/handleUploadImage");
+const imageKit = require('../libs/imageKit');
 
 const findUsers = async (req, res, next) => {
   try {
@@ -104,6 +106,19 @@ const updateUser = async (req, res, next) => {
   const { name, phone_number, email } = req.body;
   try {
     const user = await User.findByPk(req.params.id);
+    const files = req.files;
+
+    const images = {
+      imagesUrl: [],
+      imagesId: [],
+    };
+
+    if (files) {
+      const { imagesUrl, imagesId } = await handleUploadImage(files);
+
+      images.imagesUrl = imagesUrl;
+      images.imagesId = imagesId;
+    }
 
     if (!user) {
       return next(new ApiError(`User with ID ${req.params.id} not found`, 404));
@@ -114,6 +129,8 @@ const updateUser = async (req, res, next) => {
         name,
         phone_number,
         email,
+        imageUrl: images.imagesUrl,
+        imageId: images.imagesId,
       },
       {
         where: {
