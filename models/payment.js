@@ -24,6 +24,15 @@ module.exports = (sequelize, DataTypes) => {
     total_amount: {
       type: DataTypes.INTEGER
     },
+    transaction_token: {
+      type: DataTypes.STRING
+    },
+    transaction_id: {
+      type: DataTypes.STRING
+    },
+    payment_callback_data: {
+      type: DataTypes.TEXT
+    },
     payment_method: {
       type: DataTypes.STRING
     },

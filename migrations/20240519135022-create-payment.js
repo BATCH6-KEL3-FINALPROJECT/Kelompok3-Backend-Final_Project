@@ -11,6 +11,15 @@ module.exports = {
       total_amount: {
         type: Sequelize.INTEGER
       },
+      transaction_token: {
+        type: Sequelize.STRING
+      },
+      transaction_id: {
+        type: Sequelize.STRING
+      },
+      payment_callback_data: {
+        type: Sequelize.TEXT
+      },
       payment_method: {
         type: Sequelize.STRING
       },

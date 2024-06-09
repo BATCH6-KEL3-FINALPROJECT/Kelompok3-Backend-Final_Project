@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       seat_class: {
-        type: Sequelize.ENUM("Economy", "Premium Economy", "Business", "First Class")
+        type: Sequelize.ENUM("economy", "premium economy", "business", "first class")
       },
       flight_id: {
         type: Sequelize.UUID,

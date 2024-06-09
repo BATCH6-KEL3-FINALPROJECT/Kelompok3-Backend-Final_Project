@@ -19,7 +19,7 @@ const getAllSeats = async (req, res, next) => {
         const offset = (pageNum - 1) * limitData;
 
         const whereClause = {};
-        if (seat_class) whereClause.seat_class = seat_class;
+        if (seat_class) whereClause.seat_class = { [Op.iLike]: seat_class };
         if (seat_number) whereClause.seat_number = { [Op.iLike]: `%${seat_number}%` };
         if (typeof is_available !== 'undefined') whereClause.is_available = is_available === 'true';
         if (flight_id) whereClause.flight_id = flight_id;
@@ -77,6 +77,37 @@ const getSeatById = async (req, res, next) => {
             },
         });
     } catch (err) {
+        next(new ApiError(err.message, 400));
+    }
+};
+
+const getSeatByFlightId = async (req, res, next) => {
+    try {
+        const flightId = req.params.id;
+        let seats
+        const whereClause = {
+            flight_id: flightId,
+            ...(req.query.seat_class && { seat_class: req.query.seat_class })
+        };
+        seats = await Seat.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'price', 'flight_id'] },
+            where: whereClause
+        });
+        if (seats.length === 0) {
+            return next(new ApiError(`Seat with Flight ID: ${req.params.id} not found`, 404));
+        }
+
+        const totalSeats = seats.length;
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: {
+                seats,
+                totalData: totalSeats
+            },
+        });
+    } catch (err) {
+        console.log(err);
         next(new ApiError(err.message, 400));
     }
 };
@@ -253,5 +284,6 @@ module.exports = {
     getSeatById,
     updateSeat,
     deleteSeat,
-    createSeat
+    createSeat,
+    getSeatByFlightId
 };

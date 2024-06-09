@@ -13,7 +13,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const seatClass = ["Economy", "Premium Economy", "Business", "First Class"]; //define class di pesawat
+    const seatClass = ["economy", "premium economy", "business", "first class"]; //define class di pesawat
     const priceRanges = [
       { min: 900000, max: 1200000 },      // Range for Economy
       { min: 2000000, max: 4500000 },     // Range for Premium Economy
