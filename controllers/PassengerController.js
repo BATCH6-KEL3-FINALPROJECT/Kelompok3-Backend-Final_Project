@@ -105,14 +105,11 @@ const findPassengerById = async (req, res, next) => {
 const createPassenger = async (req, res, next) => {
   try {
     const passengersData = req.body.passengers;
-    console.log(passengersData)
-    console.log(req.user)
 
     // Create passengers in the database
     const passengers = await Promise.all(passengersData.map(async passengerData => {
       const passengerId = uuidv4();
       const userId = req.user.user_id;
-      console.log(passengerId)
 
       let newPassengerData = { ...passengerData, passenger_id: passengerId }
       newPassengerData = { ...newPassengerData, user_id: userId }
@@ -153,7 +150,6 @@ const updatePassenger = async (req, res, next) => {
         new ApiError(`Passenger with ID ${req.params.id} not found`, 404)
       );
     }
-    console.log(req.user)
 
     if (passenger.user_id !== req.user.user_id) {
       return next(

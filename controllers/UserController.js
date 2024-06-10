@@ -115,11 +115,9 @@ const updateUser = async (req, res, next) => {
 
     let imageUrl = "" || user.image_url;
     let imageId = "" || user.image_id;
-    console.log("ini piles", typeof imageUrl)
 
     if (files && files.length > 0) {
       const { imagesUrl, imagesId } = await handleUploadImage(files, 'user');
-      console.log("Loading images", imagesUrl, imagesId)
 
       imageUrl = imagesUrl[0];
       imageId = imagesId[0];

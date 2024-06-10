@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.UUID
     },
+    booking_code: {
+      type: DataTypes.STRING
+    },
     user_id: DataTypes.UUID,
     flight_id: DataTypes.UUID,
     payment_id: DataTypes.UUID,
