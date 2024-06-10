@@ -63,16 +63,19 @@ const findUsers = async (req, res, next) => {
     const totalPages = Math.ceil(count / limitData);
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         users,
+        pagination: {
+          totalData: count,
+          totalPages,
+          pageNum,
+          limitData,
+        },
       },
-      pagination: {
-        totalData: count,
-        totalPages,
-        pageNum,
-        limitData,
-      },
+      message: "Get users success"
+
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -92,10 +95,12 @@ const findUserById = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         user,
       },
+      message: 'get user success'
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -108,16 +113,16 @@ const updateUser = async (req, res, next) => {
     const user = await User.findByPk(req.params.id);
     const files = req.files;
 
-    const images = {
-      imagesUrl: [],
-      imagesId: [],
-    };
+    let imageUrl = "" || user.image_url;
+    let imageId = "" || user.image_id;
+    console.log("ini piles", typeof imageUrl)
 
-    if (files) {
+    if (files && files.length > 0) {
       const { imagesUrl, imagesId } = await handleUploadImage(files, 'user');
+      console.log("Loading images", imagesUrl, imagesId)
 
-      images.imagesUrl = imagesUrl;
-      images.imagesId = imagesId;
+      imageUrl = imagesUrl[0];
+      imageId = imagesId[0];
     }
 
     if (!user) {
@@ -129,8 +134,8 @@ const updateUser = async (req, res, next) => {
         name,
         phone_number,
         email,
-        image_url: images.imagesUrl,
-        image_id: images.imagesId,
+        image_url: imageUrl,
+        image_id: imageId,
       },
       {
         where: {
@@ -142,11 +147,14 @@ const updateUser = async (req, res, next) => {
     const updatedUser = await User.findByPk(req.params.id);
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
+      data: { updatedUser },
       message: "User updated successful",
-      updatedUser,
+
     });
   } catch (err) {
+    console.log(err);
     next(new ApiError(err.message, 400));
   }
 };
@@ -166,7 +174,9 @@ const deleteUser = async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
+      data: {},
       message: "Successfully deleted user",
     });
   } catch (err) {

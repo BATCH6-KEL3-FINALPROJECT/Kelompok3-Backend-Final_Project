@@ -113,6 +113,7 @@ const getAllFlights = async (req, res, next) => {
         const pageNum = parseInt(page) || 1;
         const pageSize = parseInt(limit) || 10;
         const offset = (pageNum - 1) * pageSize;
+        const seatClassLower = seat_class.toLowerCase();
 
         // Construct the raw SQL query
         let sqlQuery = `SELECT f.flight_id, f.flight_code, f.flight_duration, f.flight_description, f.flight_status, f.plane_type, f.seats_available, f.terminal, f.departure_date, f.departure_time, f.arrival_date, f.arrival_time, 
@@ -136,12 +137,15 @@ const getAllFlights = async (req, res, next) => {
         if (arrival_time) sqlQuery += ` AND f.arrival_time = '${arrival_time}'`;
         // if (flight_duration) sqlQuery += ` AND f.flight_duration = '${flight_duration}'`;
         // if (seats_available) sqlQuery += ` AND f.seats_available >= ${seats_available}`;
-        if (seat_class) sqlQuery += ` AND p.seat_class = '${seat_class}'`;
+        if (seatClassLower) sqlQuery += ` AND p.seat_class = '${seatClassLower}'`;
         if (departure_city) sqlQuery += ` AND da.city = '${departure_city}'`;
         if (arrival_city) sqlQuery += ` AND aa.city = '${arrival_city}'`;
 
         // Execute the raw SQL query
         const flights = await sequelize.query(sqlQuery, { type: QueryTypes.SELECT });
+        flights.forEach(flight => {
+            flight.seat_class = flight.seat_class.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        });
 
         console.log("Masuk ke flight", flights)
         if (flights.length === 0) {

@@ -44,8 +44,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM("user", "admin"),
       defaultValue: "user"
     },
-    image_url: DataTypes.ARRAY(DataTypes.TEXT),
-    image_id: DataTypes.ARRAY(DataTypes.TEXT),
+    image_url: DataTypes.TEXT,
+    image_id: DataTypes.TEXT,
     is_verified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
