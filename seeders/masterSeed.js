@@ -32,9 +32,9 @@ async function createSeed(queryInterface, Sequelize) {
         await userSeeder.up(queryInterface, Sequelize);
         await passengerSeeder.up(queryInterface, Sequelize);
         await flightDataSeeder.up(queryInterface, sequelize);
-        await ticketSeeder.up(queryInterface, Sequelize);
         await priceSeeder.up(queryInterface, Sequelize)
         await seatSeeder.up(queryInterface, Sequelize);
+        await ticketSeeder.up(queryInterface, Sequelize);
         // await flightSeeder.up(queryInterface, Sequelize);
         console.log('seeder executed successfully.');
     } catch (error) {

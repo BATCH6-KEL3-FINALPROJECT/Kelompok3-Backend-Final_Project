@@ -23,7 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    seat_class: DataTypes.ENUM("Economy", "Premium Economy", "Business", "First Class"),
+    column: {
+      type: DataTypes.STRING
+    },
+    row: {
+      type: DataTypes.INTEGER
+    },
+    seat_class: DataTypes.ENUM("economy", "premium economy", "business", "first class"),
     seat_number: DataTypes.STRING,
     is_available: {
       type: DataTypes.BOOLEAN,

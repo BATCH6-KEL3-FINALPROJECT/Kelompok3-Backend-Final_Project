@@ -30,16 +30,23 @@ const getAllSeats = async (req, res, next) => {
                 seat_number: { [Op.like]: `%${req.query.search}%` },
                 is_available: { [Op.like]: `%${req.query.search}%` },
                 flight_id: { [Op.like]: `%${req.query.search}%` },
-
             };
         }
-
         const { count, rows: seats } = await Seat.findAndCountAll({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: whereClause,
             offset,
             limit: limitData,
         });
-
+        seats.sort((a, b) => {
+            if (a.row !== b.row) {
+                return a.row - b.row;
+            }
+            return a.seat_number.localeCompare(b.seat_number);
+        });
+        seats.forEach(seat => {
+            seat.is_available = seat.is_available === true ? 'A' : 'U';
+        });
         const totalPages = Math.ceil(count / limitData);
 
         res.status(200).json({
@@ -56,6 +63,7 @@ const getAllSeats = async (req, res, next) => {
             },
         });
     } catch (err) {
+        console.log(err);
         next(new ApiError(err.message, 400));
     }
 };
@@ -98,7 +106,7 @@ const updateSeat = async (req, res, next) => {
         }
 
         //validate if class invalid name
-        const validSeatClasses = ["Economy", "Premium Economy", "Business", "First Class"];
+        const validSeatClasses = ["economy", "premium economy", "business", "first class"];
         if (!validSeatClasses.includes(seat_class)) {
             return next(new ApiError(`Invalid seat class.`, 400));
         }
@@ -195,7 +203,6 @@ const createSeat = async (req, res, next) => {
         return next(new ApiError("Flight not found", 404));
     }
 
-
     // Validate if the seat_class is valid for the given flight_id
     const price = await Price.findOne({
         where: {
@@ -253,5 +260,5 @@ module.exports = {
     getSeatById,
     updateSeat,
     deleteSeat,
-    createSeat
+    createSeat,
 };

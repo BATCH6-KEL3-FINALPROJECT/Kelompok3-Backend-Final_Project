@@ -25,7 +25,6 @@ module.exports = async (req, res, next) => {
 
     const user = await User.findByPk(payload.id);
 
-    console.log(user);
     if (!user) {
       return next(new ApiError("User not found", 404));
     }
