@@ -17,7 +17,6 @@ const createTransactions = async (req, res, next) => {
     try {
         const { totalAmount, flightName, noOfItems } = req.body
 
-        console.log("Masuk create")
         const paymentId = uuidv4();
 
         const bayar = await payment.create({

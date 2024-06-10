@@ -147,7 +147,6 @@ const getAllFlights = async (req, res, next) => {
             flight.seat_class = flight.seat_class.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         });
 
-        console.log("Masuk ke flight", flights)
         if (flights.length === 0) {
             res.status(404).json({
                 is_success: true,
