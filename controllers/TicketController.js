@@ -31,7 +31,8 @@ const createTicket = async (req, res, next) => {
     });
 
     res.status(201).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         newTicket,
       },
@@ -45,7 +46,8 @@ const getAllTickets = async (req, res, next) => {
   try {
     const tickets = await Ticket.findAll();
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         tickets,
       },
@@ -65,7 +67,8 @@ const getTicketById = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       data: {
         ticket,
       },
@@ -119,7 +122,8 @@ const updateTicket = async (req, res, next) => {
     const updatedTicket = await Ticket.findByPk(req.params.id);
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       message: "Successfully updated ticket",
       updatedTicket,
     });
@@ -141,7 +145,8 @@ const deleteTicket = async (req, res, next) => {
     await ticket.destroy();
 
     res.status(200).json({
-      status: "Success",
+      is_success: true,
+      code: 200,
       message: "Successfully deleted Ticket",
     });
   } catch (err) {
