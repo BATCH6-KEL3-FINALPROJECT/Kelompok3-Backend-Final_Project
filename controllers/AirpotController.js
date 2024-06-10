@@ -1,5 +1,6 @@
 const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
+const { Op } = require("sequelize");
 const { Airport } = require('../models');
 
 const createAirport = async (req, res, next) => {
@@ -25,10 +26,12 @@ const createAirport = async (req, res, next) => {
 
 
         res.status(201).json({
-            status: "Success",
+            is_success: true,
+            code: 201,
             data: {
                 newAirport,
-            }
+            },
+            message: 'Airport Berhasil dibikin'
         });
     } catch (error) {
         next(new ApiError(error.message, 500));
@@ -37,14 +40,43 @@ const createAirport = async (req, res, next) => {
 
 const getAllAirport = async (req, res, next) => {
     try {
+        const { search, page, limit } = req.query;
 
-        const airport = await Airport.findAll();
+        const pageNum = parseInt(page) || 1;
+        const limitData = parseInt(limit) || 10;
+        const offset = (pageNum - 1) * limitData;
+
+        const whereClause = {};
+        if (search) {
+            whereClause[Op.or] = {
+                city: { [Op.iLike]: `%${search}%` },
+                country: { [Op.iLike]: `%${search}%` },
+                iata_code: { [Op.iLike]: `%${search}%` }
+            };
+        }
+
+        const { count, rows: airport } = await Airport.findAndCountAll({
+            where: whereClause,
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            offset,
+            limit: limitData
+        });
+
+        const totalPages = Math.ceil(count / limitData);
 
         res.status(200).json({
-            status: "Success",
+            is_success: true,
+            code: 200,
             data: {
-                airport
+                airport,
+                pagination: {
+                    totalData: count,
+                    totalPages: totalPages,
+                    pageNum,
+                    limitData
+                }
             },
+            message: ''
         });
     } catch (err) {
         next(new ApiError(err.message, 400));
