@@ -9,7 +9,7 @@ const upload = require("../middlewares/uploader");
 router.post('/create', authenticate, upload.array('images'), register);
 router.get("/", Users.findUsers);
 router.get("/:id", Users.findUserById);
-router.patch('/:id', authenticate, checkUserId, upload.array('images'), Users.updateUser);
+router.patch('/:id', authenticate, upload.array('images'), Users.updateUser);
 router.delete("/:id", Users.deleteUser);
 
 
