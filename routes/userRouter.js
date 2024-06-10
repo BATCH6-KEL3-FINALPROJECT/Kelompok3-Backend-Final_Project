@@ -2,11 +2,14 @@ const router = require("express").Router();
 
 const { register } = require("../controllers/AuthController");
 const Users = require("../controllers/UserController");
+const authenticate = require("../middlewares/authenticate");
+const { checkUserId } = require("../middlewares/checkUser"); // Fix import
+const upload = require("../middlewares/uploader");
 
-router.post('/create', Authenticate, upload.array('images'), register);
+router.post('/create', authenticate, upload.array('images'), register);
 router.get("/", Users.findUsers);
 router.get("/:id", Users.findUserById);
-router.patch('/:id', Authenticate, upload.array('images'), Users.updateUser);
+router.patch('/:id', authenticate, checkUserId, upload.array('images'), Users.updateUser);
 router.delete("/:id", Users.deleteUser);
 
 

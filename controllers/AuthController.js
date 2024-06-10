@@ -7,7 +7,7 @@ const uuid = require('uuid');
 const { where } = require("sequelize");
 const { sentOtp, resendOtp, sentResetPassword } = require("./OTPController");
 const handleUploadImage = require('../utils/handleUpload');
-const imageKit = require('../libs/imageKit');
+const ImageKit = require("../lib/imagekit");
 
 
 const register = async (req, res, next) => {
@@ -17,16 +17,16 @@ const register = async (req, res, next) => {
         const userId = uuid.v4();
         const files = req.files;
 
-		const images = {
-			imagesUrl: [],
-			imagesId: [],
-		};
+        const images = {
+            imagesUrl: [],
+            imagesId: [],
+        };
 
         if (files.length !== 0) {
-			const { imagesUrl, imagesId } = await handleUploadImage(files);
-			images.imagesUrl = imagesUrl;
-			images.imagesId = imagesId;
-		}
+            const { imagesUrl, imagesId } = await handleUploadImage(files, 'user');
+            images.imagesUrl = imagesUrl;
+            images.imagesId = imagesId;
+        }
 
 
         const user = await User.findOne({
@@ -55,8 +55,8 @@ const register = async (req, res, next) => {
             role: roles,
             phone_number: phone_number,
             date_of_birth: dob,
-            imageUrl: images.imagesUrl,
-			imageId: images.imagesId,
+            image_url: images.imagesUrl,
+            image_id: images.imagesId,
         });
         const sendingOTP = await sentOtp(email, newUser.user_id, next);
 

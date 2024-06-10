@@ -1,6 +1,7 @@
-const imageKit = require('../libs/imageKit');
+// const imagekit = require('../libs/imageKit.js');
+const ImageKit = require("../lib/imagekit");
 
-const handleUploadImage = async (files) => {
+const handleUploadImage = async (files, folder) => {
 	let imagesUrl = [];
 	let imagesId = [];
 
@@ -9,9 +10,10 @@ const handleUploadImage = async (files) => {
 			const split = file.originalname.split('.');
 			const extension = split[split.length - 1];
 
-			const uploadedImage = await imageKit.upload({
+			const uploadedImage = await ImageKit.upload({
 				file: file.buffer,
 				fileName: `user-${Date.now()}.${extension}`,
+				folder: `finalProject/${folder}`
 			});
 
 			imagesUrl.push(uploadedImage.url);

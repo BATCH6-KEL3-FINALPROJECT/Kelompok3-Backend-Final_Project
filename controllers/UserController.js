@@ -1,8 +1,8 @@
 const { User } = require("../models");
 const ApiError = require("../utils/apiError");
 const { Op } = require("sequelize");
-const handleUploadImage = require("../utils/handleUploadImage");
-const imageKit = require('../libs/imageKit');
+const handleUploadImage = require("../utils/handleUpload");
+const ImageKit = require("../lib/imagekit");
 
 const findUsers = async (req, res, next) => {
   try {
@@ -114,7 +114,7 @@ const updateUser = async (req, res, next) => {
     };
 
     if (files) {
-      const { imagesUrl, imagesId } = await handleUploadImage(files);
+      const { imagesUrl, imagesId } = await handleUploadImage(files, 'user');
 
       images.imagesUrl = imagesUrl;
       images.imagesId = imagesId;
@@ -129,8 +129,8 @@ const updateUser = async (req, res, next) => {
         name,
         phone_number,
         email,
-        imageUrl: images.imagesUrl,
-        imageId: images.imagesId,
+        image_url: images.imagesUrl,
+        image_id: images.imagesId,
       },
       {
         where: {
