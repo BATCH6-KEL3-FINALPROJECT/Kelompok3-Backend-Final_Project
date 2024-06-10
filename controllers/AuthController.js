@@ -15,18 +15,18 @@ const register = async (req, res, next) => {
         let { name, email, password, roles, date_of_birth, phone_number } = req.body;
         email = email.toLowerCase();
         const userId = uuid.v4();
-        const files = req.files;
+        // const files = req.files;
 
-        const images = {
-            imagesUrl: [],
-            imagesId: [],
-        };
+        // const images = {
+        //     imagesUrl: [],
+        //     imagesId: [],
+        // };
 
-        if (files.length !== 0) {
-            const { imagesUrl, imagesId } = await handleUploadImage(files, 'user');
-            images.imagesUrl = imagesUrl;
-            images.imagesId = imagesId;
-        }
+        // if (files.length !== 0) {
+        //     const { imagesUrl, imagesId } = await handleUploadImage(files,);
+        //     images.imagesUrl = imagesUrl;
+        //     images.imagesId = imagesId;
+        // }
 
 
         const user = await User.findOne({
@@ -55,8 +55,8 @@ const register = async (req, res, next) => {
             role: roles,
             phone_number: phone_number,
             date_of_birth: dob,
-            image_url: images.imagesUrl,
-            image_id: images.imagesId,
+            // image_url: images.imagesUrl,
+            // image_id: images.imagesId,
         });
         const sendingOTP = await sentOtp(email, newUser.user_id, next);
 
