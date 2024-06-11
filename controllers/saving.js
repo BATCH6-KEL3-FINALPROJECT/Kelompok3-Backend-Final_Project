@@ -7,7 +7,6 @@ const { UUIDV4 } = require("sequelize");
 const { object } = require("joi");
 const { Sequelize, QueryTypes } = require('sequelize');
 const ticket = require("../models/ticket");
-const generateCode = require("../utils/generateTicketCode");
 
 let snap = new midtransClient.Snap({
     // Set to true if you want Production Environment (accept real transaction).
@@ -80,19 +79,15 @@ const createTransactionsWithFlight = async (req, res, next) => {
 
         const paymentId = uuidv4();
         const seatIdsDeparture = Object.values(departureSeats);
-        const seatIdsReturn = returnSeats ? Object.values(returnSeats) : null;
+        const seatIdsReturn = Object.values(returnSeats)
         const departureSeatData = await Seat.findOne({ where: { seat_id: seatIdsDeparture[0] } })
         const returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
         const departureSeatPrice = await Price.findOne({ where: { flight_id: departureSeatData.flight_id, seat_class: departureSeatData.seat_class } })
         let totalPrice = (noOfPassenger * departureSeatPrice.price);
-        const isRound = returnSeatData ? true : false
 
         if (returnSeatData) {
             const returnSeatPrice = await Price.findOne({ where: { flight_id: returnSeatData.flight_id, seat_class: returnSeatData.seat_class } });
             totalPrice += noOfPassenger * returnSeatPrice.price;
-        }
-        if (seatIdsDeparture[0] === seatIdsDeparture[1] || seatIdsReturn[0] === seatIdsReturn[1]) {
-            return next(new apiError("Seat yang dipilih tidak bisa sama", 400));
         }
         if (noOfPassenger !== Object.keys(passengerId).length || noOfPassenger !== Object.keys(departureSeats).length || (returnSeats && noOfPassenger !== Object.keys(returnSeats).length)) {
             return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
@@ -105,12 +100,10 @@ const createTransactionsWithFlight = async (req, res, next) => {
             Object.keys(passengerId).map(async (key, i) => {
                 try {
                     const data = await Passenger.findOne({ where: { passenger_id: passengerId[key] } });
-                    const departureSeat = await Seat.findOne({ where: { seat_id: seatIdsDeparture[i] } });
-                    const returnSeat = await Seat.findOne({ where: { seat_id: seatIdsReturn[i] } }) || null;
+                    const seat = await Seat.findOne({ where: { seat_id: seatIdsDeparture[i] } }); // Adjust this query according to your schema
                     return {
                         passenger: data ? data.dataValues : null,
-                        departureSeat: departureSeat ? departureSeat.dataValues : null,
-                        returnSeat: returnSeat ? returnSeat.dataValues : null
+                        seat: seat ? seat.dataValues : null
                     };
                 } catch (error) {
                     console.error(`Error fetching data for passenger ${key}: ${error.message}`);
@@ -126,24 +119,17 @@ const createTransactionsWithFlight = async (req, res, next) => {
 
         const paymentResult = await createPayment(transaction, paymentId, user_id, totalPrice);
 
-        const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger, isRound);
+        const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger);
         let terminal = "Terminal 2 cicaheum"
 
         for (let i = 0; i < seatIdsDeparture.length; i++) {
-            const ticketData = await createTicket(departureFlightId, seatIdsDeparture[i], passengerData[i].passenger.passenger_id, bookingResult.booking_id, passengerData[i].departureSeat.seat_number, passengerData[i].first_name, terminal, transaction)
-        }
-        let returnBookingResult
-        if (returnSeatData) {
-            returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, totalPrice, noOfPassenger, isRound);
-            for (let i = 0; i < seatIdsReturn.length; i++) {
-                const ticketData = await createTicket(returnFlightId, seatIdsReturn[i], passengerData[i].passenger.passenger_id, returnBookingResult.booking_id, passengerData[i].returnSeat.seat_number, passengerData[i].first_name, terminal, transaction)
-            }
+            const ticketData = await createTicket(departureFlightId, seatIdsDeparture[i], passengerData[i].passenger.passenger_id, bookingResult.booking_id, passengerData[i].seat.seat_number, passengerData[i].first_name, terminal, transaction)
         }
 
         let parameter = {
             "transaction_details": {
                 "order_id": paymentId,
-                "gross_amount": totalPrice
+                "gross_amount": seatPrice.price * noOfPassenger
             },
             "credit_card": {
                 "secure": true
@@ -154,6 +140,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
                 "phone": phone_number
             }
         };
+
         let transactionToken
         // snap.createTransaction(parameter)
         //     .then((transaction) => {
@@ -173,12 +160,12 @@ const createTransactionsWithFlight = async (req, res, next) => {
         //             message: 'Create payment success'
         //         })
         //     })
-
         await transaction.commit();
         res.status(201).json({
             is_success: true,
             code: 201,
-            data: bookingResult, returnBookingResult,
+            data: {
+            },
             message: 'Create payment success'
         })
 
@@ -203,17 +190,15 @@ async function createPayment(transaction, paymentId, user_id, totalPrice) {
     }, { transaction });
 }
 
-async function createBooking(transaction, user_id, paymentId, flightId, totalPrice, noOfPassenger, isRoundTrip) {
-    const paymentIdPrefix = paymentId.substring(0, 3); // Get the first 3 letters of the paymentId
+async function createBooking(transaction, user_id, paymentId, flightId, totalPrice, noOfPassenger) {
     return await Booking.create({
         booking_id: uuidv4(),
-        booking_code: `${paymentIdPrefix}-${Date.now()}`,
         user_id: user_id,
         flight_id: flightId,
         payment_id: paymentId,
         total_price: totalPrice,
         booking_date: Date.now(),
-        is_round_trip: isRoundTrip,
+        is_round_trip: false,
         no_of_ticket: noOfPassenger,
         status: 'pending'
     }, { transaction });
@@ -221,12 +206,8 @@ async function createBooking(transaction, user_id, paymentId, flightId, totalPri
 
 async function createTicket(flightId, seatId, passengerId, bookingId, seatNumber, passengerName, terminal, transaction) {
     console.log('createTicket');
-    const airline = await Flight.findOne({ where: { flight_id: flightId } })
-    const ticketCode = await generateCode(airline.airline_id)
-    console.log("Ticket Code: " + ticketCode)
     return await Ticket.create({
         ticket_id: uuidv4(),
-        ticket_code: ticketCode,
         flight_id: flightId,
         seat_id: seatId,
         passenger_id: passengerId,

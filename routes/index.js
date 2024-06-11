@@ -23,7 +23,7 @@ router.use("/api/v1/airline", Airline);
 router.use("/api/v1/user", User);
 router.use("/api/v1/passenger", Passenger);
 router.use("/api/v1/ticket", Ticket);
-router.use("/api/v1/payment", Transaction);
+router.use("/api/v1/transaction", Transaction);
 router.use("/api/v1/seat", Seat);
 
 module.exports = router;
