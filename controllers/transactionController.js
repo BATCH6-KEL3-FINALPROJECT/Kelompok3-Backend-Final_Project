@@ -107,9 +107,9 @@ const createTransactionsWithFlight = async (req, res, next) => {
             return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
 
-        if (totalAmount !== totalPrice) {
-            return next(new apiError("Total Harga dengan harga Kursi tidak cocok", 400));
-        }
+        // if (totalAmount !== totalPrice) {
+        //     return next(new apiError("Total Harga dengan harga Kursi tidak cocok", 400));
+        // }
         let passengerData = await getPassengerData(passengerId, seatIdsDeparture, seatIdsReturn)
         const paymentResult = await createPayment(transaction, paymentId, user_id, totalPrice);
         const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger, isRoundTrip);
