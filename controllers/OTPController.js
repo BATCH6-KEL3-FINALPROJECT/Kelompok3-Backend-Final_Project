@@ -21,10 +21,8 @@ const sentOtp = async (email, idUser, next) => {
             <h1 style="font-weight: bold;background: #A06ECE;color: white;text-align: center;">${otp}</h1>
             </div>`
         );
-        console.log("OTP", otp);
         const currentTime = new Date();
 
-        console.log("Id user new", idUser)
         const newOTP = await OTP.create({
             user_id: idUser,
             email: email,
@@ -33,11 +31,9 @@ const sentOtp = async (email, idUser, next) => {
         }, { transaction });
 
         await transaction.commit();
-        console.log("email sent successfully");
 
     } catch (error) {
-        console.log(error.message);
-        // await transaction.rollback(); 
+        await transaction.rollback();
         return next(new ApiError("failed to sent OTP", 400));
     }
 };
@@ -55,14 +51,12 @@ const resendOtp = async (req, res, next) => {
         }
 
         const existingOTP = await OTP.findOne({ where: { email } })
-        console.log("OTP existing", existingOTP)
         if (existingOTP) {
             await existingOTP.destroy()
         }
 
         const otpId = uuid.v4();
         const otp = generateOTP();
-        console.log("New OTP", otp);
         const newOTP = await OTP.create({
             user_id: user.user_id,
             email: email,
@@ -76,11 +70,10 @@ const resendOtp = async (req, res, next) => {
         );
 
         res.status(200).json({
-            status: "Success",
+            is_success: "Success",
             message: "OTP resent successfully, please check your email",
         });
     } catch (error) {
-        console.log(error.message);
         next(new ApiError("Failed to resend OTP", 500));
     }
 };
@@ -107,7 +100,6 @@ const sentResetPassword = async (link, email, token, idUser, next) => {
           `
         );
 
-        console.log("Link", link);
         const currentTime = new Date();
         const fifteenMinutesLater = new Date(currentTime.getTime() + 15 * 60000); // 15 minutes in milliseconds
 
@@ -119,7 +111,6 @@ const sentResetPassword = async (link, email, token, idUser, next) => {
         }, { transaction });
 
         await transaction.commit();
-        console.log("email sent successfully");
 
     } catch (error) {
         console.log(error.message);

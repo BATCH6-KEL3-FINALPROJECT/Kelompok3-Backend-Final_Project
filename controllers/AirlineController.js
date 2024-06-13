@@ -21,10 +21,12 @@ const createAirline = async (req, res, next) => {
 
 
         res.status(201).json({
-            status: "Success",
+            is_success: true,
+            code: 201,
             data: {
                 newAirline,
-            }
+            },
+            'message': 'Airline created successfully'
         });
     } catch (error) {
         next(new ApiError(error.message, 500));

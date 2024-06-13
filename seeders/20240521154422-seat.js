@@ -14,13 +14,13 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    const seatClass = ["Economy", "Premium Economy", "Business", "First Class"]; //define class untuk Seats
+    const seatClass = ["economy", "premium economy", "business", "first class"]; //define class untuk Seats
     const alphabet = ["A", "B", "C", "D", "E", "F"]
     const ratioOfSeats = {
-      Economy: 0.5,
-      "Premium Economy": 0.25,
-      Business: 0.15,
-      "First Class": 0.1
+      economy: 0.5,
+      "premium economy": 0.25,
+      business: 0.15,
+      "first class": 0.1
     }; //ratio dari pembagian Seats
     const flights = await Flight.findAll();
 
@@ -29,21 +29,30 @@ module.exports = {
       return
     }
 
+    console.log(flights)
     //looping ke setiap flight
     for (const flight of flights) {
       const totalRows = Math.ceil(flight.seats_available / alphabet.length);
       let remainingSeats = flight.seats_available;
       let seatsByClass = {}
+      let seatRow = totalRows + 1; // Start from the back
 
-      for (const kelas of Object.keys(ratioOfSeats)) {
-        const seats = Math.floor(flight.seats_available * ratioOfSeats[kelas])
-        seatsByClass[kelas] = seats
-        remainingSeats -= seats
+      if (remainingSeats < 100) {
+        seatsByClass['economy'] = remainingSeats
+        seatRow -= 1
+      } else {
+        if (remainingSeats == 172) {
+          seatRow += 1
+        }
+        for (const kelas of Object.keys(ratioOfSeats)) {
+          const seats = Math.ceil(flight.seats_available * ratioOfSeats[kelas])
+          seatsByClass[kelas] = seats
+          remainingSeats -= seats
+        }
+        seatsByClass["economy"] += remainingSeats
       }
-      seatsByClass["Economy"] += remainingSeats
 
       const bulkInsertData = [];
-      let seatRow = totalRows + 1; // Start from the back
       for (const kelas of seatClass) {
         const numOfSeats = seatsByClass[kelas];
         let seatCounter = 1;
@@ -56,6 +65,8 @@ module.exports = {
             seat_id: `${flight.flight_id}-${kelas}-${i}`,
             seat_class: kelas,
             // seat_number: `${kelas.charAt(0)}${i}`,
+            column: alphabet[seatCounter - 1],
+            row: seatRow,
             seat_number: `${seatRow}${alphabet[seatCounter - 1]}`,
             flight_id: flight.flight_id,
             createdAt: new Date(),
@@ -66,8 +77,10 @@ module.exports = {
         seatRow -= 1;
       }
       try {
+        console.log(bulkInsertData)
         await Seat.bulkCreate(bulkInsertData);
         console.log("Bulk insert successful for seats of flight:", flight.flight_id);
+        // await new Promise(resolve => setTimeout(resolve, 4000));
       } catch (error) {
         console.error("Error inserting data into seats:", error);
       }

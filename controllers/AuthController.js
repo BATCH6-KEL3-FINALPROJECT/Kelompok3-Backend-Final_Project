@@ -6,6 +6,8 @@ const ApiError = require("../utils/apiError");
 const uuid = require('uuid');
 const { where } = require("sequelize");
 const { sentOtp, resendOtp, sentResetPassword } = require("./OTPController");
+const handleUploadImage = require('../utils/handleUpload');
+const ImageKit = require("../lib/imagekit");
 
 
 const register = async (req, res, next) => {
@@ -13,6 +15,19 @@ const register = async (req, res, next) => {
         let { name, email, password, roles, date_of_birth, phone_number } = req.body;
         email = email.toLowerCase();
         const userId = uuid.v4();
+        // const files = req.files;
+
+        // const images = {
+        //     imagesUrl: [],
+        //     imagesId: [],
+        // };
+
+        // if (files.length !== 0) {
+        //     const { imagesUrl, imagesId } = await handleUploadImage(files,);
+        //     images.imagesUrl = imagesUrl;
+        //     images.imagesId = imagesId;
+        // }
+
 
         const user = await User.findOne({
             where: {
@@ -39,7 +54,9 @@ const register = async (req, res, next) => {
             password: hashedPassword,
             role: roles,
             phone_number: phone_number,
-            date_of_birth: dob
+            date_of_birth: dob,
+            // image_url: images.imagesUrl,
+            // image_id: images.imagesId,
         });
         const sendingOTP = await sentOtp(email, newUser.user_id, next);
 
@@ -157,8 +174,11 @@ const login = async (req, res, next) => {
                 is_success: true,
                 code: 200,
                 message: "Login Berhasil!",
-                token: accessToken,
-                refreshToken: refreshToken
+                data: {
+                    token: accessToken,
+                    refreshToken: refreshToken
+                }
+
             });
         } else {
             next(new ApiError("Password yang dimasukkan salah", 401));
@@ -196,14 +216,17 @@ const resetPassword = async (req, res, next) => {
             id: existingUser.user_id
         }
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' })
-        const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
+        // const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
+        const link = `https://kelompok3-frontend-final-project-mauve.vercel.app/reset-password?rpkey=${token}`;
         console.log(link);
         const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
 
         res.status(201).json({
             is_success: true,
             code: 201,
-            data: {},
+            data: {
+                token: token,
+            },
             message: "Reset password Link sent successfully",
         });
     } catch (err) {

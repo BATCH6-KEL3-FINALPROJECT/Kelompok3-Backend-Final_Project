@@ -43,7 +43,7 @@ const getNotification = async (req, res, next) => {
       },
     });
   } catch (error) {
-    nexr(new ApiError(error.message));
+    next(new ApiError(error.message));
   }
 };
 

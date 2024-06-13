@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Booking.belongsTo(models.Flight, { foreignKey: 'flight_id' })
-      Booking.belongsTo(models.Flight, { foreignKey: 'booking?id' })
       Booking.belongsTo(models.payment, { foreignKey: 'payment_id' })
 
       Booking.hasMany(models.Ticket, { foreignKey: 'booking_id' })
@@ -24,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.UUID
     },
+    booking_code: {
+      type: DataTypes.STRING
+    },
     user_id: DataTypes.UUID,
     flight_id: DataTypes.UUID,
     payment_id: DataTypes.UUID,
@@ -33,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     status: {
       type: DataTypes.ENUM("booked", "pending", "canceled", "completed"),
       defaultValue: "pending" // Add default value
-    }, total_price: DataTypes.STRING,
-    payment_status: DataTypes.STRING
+    },
+    total_price: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Booking',

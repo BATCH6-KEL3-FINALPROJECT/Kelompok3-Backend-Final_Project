@@ -9,9 +9,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       seat_class: {
-        type: Sequelize.ENUM("Economy", "Premium Economy", "Business", "First Class")
+        type: Sequelize.ENUM("economy", "premium economy", "business", "first class")
       },
       price: {
+        type: Sequelize.INTEGER
+      },
+      column: {
+        type: Sequelize.STRING
+      },
+      row: {
         type: Sequelize.INTEGER
       },
       seat_number: {

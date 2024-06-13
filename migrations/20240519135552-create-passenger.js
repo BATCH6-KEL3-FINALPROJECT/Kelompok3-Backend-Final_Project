@@ -24,16 +24,22 @@ module.exports = {
       last_name: {
         type: Sequelize.STRING
       },
+      date_of_birth: {
+        type: Sequelize.DATEONLY
+      },
       email: {
         type: Sequelize.STRING
       },
       phone_number: {
         type: Sequelize.STRING
       },
+      nationality: {
+        type: Sequelize.STRING
+      },
       passport_no: {
         type: Sequelize.STRING
       },
-      negara_penerbit: {
+      issuing_country: {
         type: Sequelize.STRING
       },
       valid_until: {
