@@ -47,10 +47,10 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           run: git pull 
           
-    - name: List NPM and pm2 version
+    - name: NPM install 
       run: npm install
     
-    - name: List NPM and pm2 version
+    - name: Restart PM2 
       run: pm2 restart finalprojectBE
 
 
