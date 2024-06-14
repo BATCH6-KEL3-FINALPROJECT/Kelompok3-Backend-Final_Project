@@ -29,4 +29,4 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
-          script: git pull; npm install;pm2 restart finalprojectBE;      
+          script: cd/home/backend-final-project; git pull; npm install;pm2 restart finalprojectBE;      
