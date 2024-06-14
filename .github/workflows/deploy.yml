@@ -35,9 +35,6 @@ jobs:
     - name: List Files in Directory
       run: ls
 
-    - name: List NPM version
-      run: pm2 -v
-
     - name: SSH into VPS and deploy 
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -45,7 +42,7 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
-          run: git pull 
+          script: export PATH=$PATH:/root/.nvm/versions/node/v18.17.1/bin pm2 list 
           
     - name: NPM install 
       run: npm install
