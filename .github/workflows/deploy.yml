@@ -32,6 +32,9 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
+    - name: List Files in Directory
+      run: ls
+
     - name: SSH into VPS and deploy 
       uses: appleboy/ssh-action@v1.0.3
       with:
