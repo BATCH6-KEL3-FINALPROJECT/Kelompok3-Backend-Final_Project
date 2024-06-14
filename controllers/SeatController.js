@@ -44,6 +44,8 @@ const getAllSeats = async (req, res, next) => {
             }
             return a.seat_number.localeCompare(b.seat_number);
         });
+
+        //seat availaible = /, seaT Number = kosong,
         seats.forEach(seat => {
             seat.is_available = seat.is_available === true ? 'A' : 'U';
         });
