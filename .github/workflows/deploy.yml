@@ -18,6 +18,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+        # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+      # Setup Node for Installing Dependencies
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+         node-version: '16'
+
     # Runs a single command using the runners shell
     - name: Checkout Code
       uses: actions/checkout@v2
