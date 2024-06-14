@@ -31,10 +31,6 @@ jobs:
     # Runs a single command using the runners shell
     - name: Checkout Code
       uses: actions/checkout@v2
-
-    - name: List Files in Directory
-      run: ls
-
     - name: NPM install 
       run: npm install
     - name: SSH into VPS and deploy 
