@@ -44,6 +44,6 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
-          script: export PATH=$PATH:/root/.nvm/versions/node/v18.17.1/bin pm2 list; pm2 restart finalprojectBE
+          script: export PATH=$PATH:/root/.nvm/versions/node/v18.17.1/bin pm2 restart finalprojectBE;
           
 
