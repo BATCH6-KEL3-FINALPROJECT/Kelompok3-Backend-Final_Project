@@ -35,8 +35,11 @@ jobs:
     - name: List Files in Directory
       run: ls
 
-    - name: List NPM and pm2 version
+    - name: List NPM version
       run: npm -v
+      
+    - name: List NPM version
+      run: pm2 -v
 
     - name: SSH into VPS and deploy 
       uses: appleboy/ssh-action@v1.0.3
