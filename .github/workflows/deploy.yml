@@ -36,9 +36,6 @@ jobs:
       run: ls
 
     - name: List NPM version
-      run: npm -v
-      
-    - name: List NPM version
       run: pm2 -v
 
     - name: SSH into VPS and deploy 
