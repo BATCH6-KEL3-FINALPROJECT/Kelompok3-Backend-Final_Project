@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const fs = require('fs');
 
 const mailSender = async (email, title, body) => {
     try {
@@ -26,6 +27,52 @@ const mailSender = async (email, title, body) => {
         console.log(error.message);
     }
 }
+
+const printTicket = async (email, title, body) => {
+    try {
+        const fs = require('fs');
+        const path = require('path');
+        const filePath = path.join(__dirname, 'E_Ticket.pdf'); // Assuming E_Ticket.pdf is in the same directory as this script
+
+        // Check if the file exists
+        if (!fs.existsSync(filePath)) {
+            throw new Error(`File not found: ${filePath}`);
+        }
+
+        // Read the file content
+        const ticketFile = fs.readFileSync(filePath);
+
+        let transporter = nodemailer.createTransport({
+            host: process.env.MAIL_HOST,
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASS,
+            },
+        });
+
+        // Send email with attachment
+        let info = await transporter.sendMail({
+            from: 'www.ProjectAirlines.com',
+            to: `${email}`,
+            subject: `${title}`,
+            html: `${body}`,
+            attachments: [
+                {
+                    filename: 'E_Ticket.pdf',
+                    content: ticketFile
+                }
+            ]
+        });
+
+        console.log('Email sent:', info.messageId);
+        return info;
+
+    } catch (error) {
+        console.error('Error in printTicket:', error.message);
+        throw error; // Throw error to handle it in the calling function
+    }
+};
+
 async function sendVerificationEmail(email, otp) {
     // Send the email using our custom mailSender Function
     try {
@@ -42,4 +89,4 @@ async function sendVerificationEmail(email, otp) {
         throw error;
     }
 }
-module.exports = mailSender;
+module.exports = { mailSender, printTicket };

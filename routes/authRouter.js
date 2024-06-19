@@ -14,5 +14,6 @@ router.get("/reset-password", Auth.verifyResetPassword);
 router.put("/reset-password", Auth.changePassword);
 router.post("/resend-otp", OTP.resendOtp);
 router.post("/sent-otp", OTP.resendOtp);
+router.post("/print-ticket", OTP.sentTicket);
 
 module.exports = router;

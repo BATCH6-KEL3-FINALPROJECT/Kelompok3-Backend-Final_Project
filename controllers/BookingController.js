@@ -14,63 +14,7 @@ let snap = new midtransClient.Snap({
     isProduction: false,
     serverKey: process.env.MIDTRANS_SERVER_KEY
 });
-const createTransactions = async (req, res, next) => {
-    try {
-        const { totalAmount, flightName, noOfItems } = req.body
-
-        const paymentId = uuidv4();
-
-        const bayar = await Payment.create({
-            payment_id: paymentId,
-            total_amount: totalAmount * noOfItems,
-            payment_method: 'gopay',
-            payment_date: Date.now(),
-            payment_status: 'pending',
-        })
-        let parameter = {
-            "transaction_details": {
-                "order_id": paymentId,
-                "gross_amount": totalAmount * noOfItems
-            },
-            "credit_card": {
-                "secure": true
-            },
-            "customer_details": {
-                "first_name": "budi",
-                "last_name": "pratama",
-                "email": "budi.pra@example.com",
-                "phone": "08111222333"
-            }
-        };
-
-        let transactionToken
-        snap.createTransaction(parameter)
-            .then((transaction) => {
-                // transaction token
-                transactionToken = transaction.token;
-                console.log('transactionToken:', transactionToken);
-                const redirectUrl = transaction.redirect_url;
-                console.log('redirectUrl:', redirectUrl);
-                res.status(200).json({
-                    is_success: true,
-                    code: 201,
-                    data: {
-                        bayar,
-                        token: transactionToken,
-                        url: redirectUrl,
-
-                    },
-                    message: 'Create payment success'
-                })
-            })
-
-    } catch (error) {
-        console.log(error);
-        next(new apiError(error.message, 400));
-    }
-}
-
-const getAllBookings = async (req, res, next) => {
+const getBookings = async (req, res, next) => {
     try {
         const {
             booking_code,
@@ -142,12 +86,46 @@ const getAllBookings = async (req, res, next) => {
         next(new apiError(err.message, 400));
     }
 };
+const getAllBooking = async (req, res, next) => {
+    try {
+        const bookings = await Booking.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            include: [{
+                model: Flight,
+                attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
+                include: [{
+                    model: Airport,
+                    as: 'departingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }, {
+                    model: Airport,
+                    as: 'arrivingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }]
+            },
+            {
+                model: Ticket,
+                attributes: ['seat_number'],
+                include: [{
+                    model: Seat,
+                    attributes: ['seat_class']
+                }]
+            }]
+        });
 
-
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            bookings,
+            message: 'get All Bookings success'
+        });
+    } catch (err) {
+        next(new ApiError(err.message, 400));
+    }
+};
 const getUserBooking = async (req, res, next) => {
     try {
         const { user_id } = req.user;
-        console.log('masuk user')
 
         const bookings = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -189,8 +167,36 @@ const getUserBooking = async (req, res, next) => {
 }
 const getBookingById = async (req, res, next) => {
     try {
-        const booking = await Booking.findByPk(req.params.id);
+        const { user_id } = req.user;
 
+        const booking = await Booking.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            where: { user_id: user_id },
+            include: [{
+                model: Flight,
+                attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
+                include: [{
+                    model: Airport,
+                    as: 'departingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }, {
+                    model: Airport,
+                    as: 'arrivingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }]
+            },
+            {
+                model: Ticket,
+                attributes: ['seat_number'],
+                include: [{
+                    model: Seat,
+                    attributes: ['seat_class']
+                }, {
+                    model: Passenger,
+                    attributes: ['first_name', 'last_name']
+                }]
+            }]
+        });
         //if booking doesnt exist
         if (!booking) {
             return next(new apiError(`Booking with ID: ${req.params.id} not found`, 404));
@@ -307,7 +313,6 @@ const updateBooking = async (req, res, next) => {
 
     try {
 
-
         //validate if flight not found
         const flight = await Flight.findByPk(flight_id);
         if (!flight) {
@@ -359,7 +364,7 @@ const updateBooking = async (req, res, next) => {
     }
 };
 module.exports = {
-    getAllBookings,
+    getAllBooking,
     getBookingById,
     deleteBooking,
     createBooking,

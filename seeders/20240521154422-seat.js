@@ -41,8 +41,8 @@ module.exports = {
         seatsByClass['economy'] = remainingSeats
         seatRow -= 1
       } else {
-        if (remainingSeats == 172) {
-          seatRow += 1
+        if (remainingSeats == 120) {
+          seatRow -= 1
         }
         for (const kelas of Object.keys(ratioOfSeats)) {
           const seats = Math.ceil(flight.seats_available * ratioOfSeats[kelas])

@@ -22,11 +22,11 @@ module.exports = {
 
 
     const planesInAsia = [
-      { name: "Embraer E190", totalSeats: 114 },
+      { name: "Embraer E190", totalSeats: 120 }, // bisa dibagi 6
+      { name: "Airbus A220", totalSeats: 168 },// bisa dibagi 6
+      { name: "Boeing 737 MAX 7", totalSeats: 180 }, //bisa dibagi 6
       { name: "Bombardier CRJ900", totalSeats: 90 },
-      { name: "Airbus A319", totalSeats: 124 },
-      { name: "Boeing 737 MAX 7", totalSeats: 172 },
-      { name: "Airbus A220", totalSeats: 160 }
+      // { name: "Airbus A319", totalSeats: 124 },
     ];
 
     const planeDetails = {

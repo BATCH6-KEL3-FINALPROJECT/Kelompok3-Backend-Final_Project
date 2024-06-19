@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
+      booking_code: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       user_id: {
         type: Sequelize.UUID,
         references: {

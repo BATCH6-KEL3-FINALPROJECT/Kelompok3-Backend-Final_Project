@@ -1,7 +1,7 @@
 const { User, OTP, sequelize, reset_password_token } = require("../models");
 const ApiError = require("../utils/apiError");
 const otpGenerator = require("otp-generator");
-const mailSender = require("../utils/mailSender");
+const { mailSender, printTicket } = require("../utils/mailSender");
 const uuid = require('uuid');
 const crypto = require('crypto');
 
@@ -16,10 +16,14 @@ const sentOtp = async (email, idUser, next) => {
             email,
             "Verification Email",
             `<div style="font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; padding: 20px;">
-            <h1 style="color: #333; text-align: center;">warning this OTP only valid for 5 minutes. </h1>
-            <p style="color: #333; text-align: center;">Here is your OTP code: </p>
-            <h1 style="font-weight: bold;background: #A06ECE;color: white;text-align: center;">${otp}</h1>
-            </div>`
+  <img src="https://ik.imagekit.io/ib9lfahbz/finalProject/logo%20skypass%202.png?updatedAt=1717246290829" alt="Logo" style="max-width: 40%; height: auto; margin-bottom: 20px;" />
+  <h1 style="color: #333; font-size: 2rem; margin-bottom: 20px;">Halo</h1>
+  <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 20px;">Ini adalah kode OTP untuk email ${email}.</h2>
+  <h1 style="font-size: 1.5rem;font-weight: bold;background: #A06ECE;color: white;text-align: center;">${otp}</h1>
+  <h5 style="color: #333; margin-top: 20px;">perhatian OTP ini hanya valid selama 5 menit sejak email ini dikirim.</h5>
+  <h5 style="color: #333;">Jika ada pertanyaan mohon reply ke email ini</h5>
+</div>
+`
         );
         const currentTime = new Date();
 
@@ -49,6 +53,9 @@ const resendOtp = async (req, res, next) => {
         if (!user) {
             return next(new ApiError("User tidak ditemukan, mohon register terlebih dahulu", 404));
         }
+        if (user.is_verified === true) {
+            return next(new ApiError("User sudah diverifikasi", 404));
+        }
 
         const existingOTP = await OTP.findOne({ where: { email } })
         if (existingOTP) {
@@ -66,12 +73,23 @@ const resendOtp = async (req, res, next) => {
         const mailResponse = await mailSender(
             email,
             "Verification Email - OTP",
-            `<h1>Your new OTP code is: ${otp}</h1>`
+            `<div style="font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; padding: 20px;">
+  <img src="https://ik.imagekit.io/ib9lfahbz/finalProject/logo%20skypass%202.png?updatedAt=1717246290829" alt="Logo" style="max-width: 40%; height: auto; margin-bottom: 20px;" />
+  <h1 style="color: #333; font-size: 2rem; margin-bottom: 20px;">Halo</h1>
+  <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 20px;">Ini adalah kode OTP baru untuk email ${email}.</h2>
+  <h1 style="font-size: 1.5rem;font-weight: bold;background: #A06ECE;color: white;text-align: center;">${otp}</h1>
+  <h5 style="color: #333; margin-top: 20px;">perhatian OTP ini hanya valid selama 5 menit sejak email ini dikirim.</h5>
+  <h5 style="color: #333;">Jika ada pertanyaan mohon reply ke email ini</h5>
+</div>
+`
         );
 
         res.status(200).json({
-            is_success: "Success",
+            is_success: true,
+            code: 200,
+            data: {},
             message: "OTP resent successfully, please check your email",
+
         });
     } catch (error) {
         next(new ApiError("Failed to resend OTP", 500));
@@ -118,6 +136,35 @@ const sentResetPassword = async (link, email, token, idUser, next) => {
         return next(new ApiError("failed to sent OTP", 400));
     }
 };
+const sentTicket = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        const mailResponse = await printTicket(
+            email,
+            "Your Ticket ",
+            `<div style="font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; padding: 20px;">
+            <img src="https://ik.imagekit.io/ib9lfahbz/finalProject/logo%20skypass%202.png?updatedAt=1717246290829" alt="Logo" style="max-width: 40%; height: auto; margin-bottom: 20px;">
+            <h1 style="color: #333; font-size: 2rem; margin-bottom: 20px;">Halo</h1>
+            <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 20px;">Server kami menerima permintaan cetak tiket akun dengan email ${email}.</h2>
+            <h2 style="color: #333; font-size: 1.rem; margin-bottom: 20px;">Jika anda tidak merasa melakukan request ini mohon abaikan email ini.</h2>
+            <p style="color: #333; margin-bottom: 20px;">perhatian: link ini hanya valid untuk 15 menit.</p>
+          </div>
+          `
+        );
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: {},
+            message: "Ticket sent successfully, please check your email",
+
+        });
+    } catch (error) {
+        console.log(error.message);
+        // await transaction.rollback(); 
+        return next(new ApiError("failed to sent OTP", 400));
+    }
+};
 module.exports = {
-    sentOtp, resendOtp, sentResetPassword
+    sentOtp, resendOtp, sentResetPassword, sentTicket
 }
