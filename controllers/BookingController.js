@@ -1,7 +1,7 @@
 const apiError = require("../utils/apiError");
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
-const { Flight, User, Price, Booking, Payment, Seat, Ticket, Passenger, sequelize } = require('../models');
+const { Flight, User, Price, Booking, Payment, Seat, Ticket, Passenger, Airport, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
 const { UUIDV4 } = require("sequelize");
 const { object } = require("joi");
@@ -143,6 +143,50 @@ const getAllBookings = async (req, res, next) => {
     }
 };
 
+
+const getUserBooking = async (req, res, next) => {
+    try {
+        const { user_id } = req.user;
+        console.log('masuk user')
+
+        const bookings = await Booking.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            where: { user_id: user_id },
+            include: [{
+                model: Flight,
+                attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
+                include: [{
+                    model: Airport,
+                    as: 'departingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }, {
+                    model: Airport,
+                    as: 'arrivingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }]
+            },
+            {
+                model: Ticket,
+                attributes: ['seat_number'],
+                include: [{
+                    model: Seat,
+                    attributes: ['seat_class']
+                }]
+            }]
+        });
+        console.log(bookings);
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: bookings,
+            message: "data booking"
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+}
 const getBookingById = async (req, res, next) => {
     try {
         const booking = await Booking.findByPk(req.params.id);
@@ -319,7 +363,8 @@ module.exports = {
     getBookingById,
     deleteBooking,
     createBooking,
-    updateBooking
+    updateBooking,
+    getUserBooking
 }
 
 

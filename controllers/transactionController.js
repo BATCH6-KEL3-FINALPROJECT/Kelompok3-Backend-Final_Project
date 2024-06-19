@@ -77,7 +77,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
 
         console.log('data passenger', req.body)
 
-        let passengerId = [];
+        let passengersId = [];
         const passengers = await Promise.all(passengersData.map(async passengerData => {
             const passengerId = uuidv4();
             const userId = user_id;
@@ -85,16 +85,10 @@ const createTransactionsWithFlight = async (req, res, next) => {
             let newPassengerData = { ...passengerData, passenger_id: passengerId }
             newPassengerData = { ...newPassengerData, user_id: userId }
             const passenger = await Passenger.create(newPassengerData);
+            passengersId.push(passengerId)
             return passenger;
-            passengerId.push(passenger)
         }));
 
-        res.status(201).json({
-            is_success: true,
-            code: 201,
-            data: passengerId,
-            message: 'Create payment success'
-        })
 
         const paymentId = uuidv4();
         const seatIdsDeparture = Object.values(departureSeats);
@@ -122,9 +116,9 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (seatIdsDeparture[0] === seatIdsDeparture[1] || (seatIdsReturn && seatIdsReturn[0] === seatIdsReturn[1])) {
             return next(new apiError("Seat yang dipilih tidak bisa sama", 400));
         }
-        if (noOfPassenger !== Object.keys(passengerId).length || noOfPassenger !== Object.keys(departureSeats).length || (returnSeats && noOfPassenger !== Object.keys(returnSeats).length)) {
-            return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
-        }
+        // if (noOfPassenger !== Object.keys(passengerId).length || noOfPassenger !== Object.keys(departureSeats).length || (returnSeats && noOfPassenger !== Object.keys(returnSeats).length)) {
+        //     return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
+        // }
         if (departureFlightId !== departureSeatData.flight_id || (seatIdsReturn && returnFlightId !== returnSeatData.flight_id)) {
             return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
@@ -132,7 +126,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
         // if (totalAmount !== totalPrice) {
         //     return next(new apiError("Total Harga dengan harga Kursi tidak cocok", 400));
         // }
-        let passengerData = await getPassengerData(passengerId, seatIdsDeparture, seatIdsReturn)
+        let passengerData = await getPassengerData(passengersId, seatIdsDeparture, seatIdsReturn)
         const paymentResult = await createPayment(transaction, paymentId, user_id, totalPrice);
         const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger, isRoundTrip);
         const updatedFlight = await updateFlightCapacity(departureFlightId, noOfPassenger, transaction)
@@ -162,36 +156,36 @@ const createTransactionsWithFlight = async (req, res, next) => {
             "customer_details": {
                 "first_name": fullName,
                 "email": email,
-                "phone": phone_number
+                // "phone": phone_number
             }
         };
-        let transactionToken
-        // snap.createTransaction(parameter)
-        //     .then((transaction) => {
-        //         // transaction token
-        //         transactionToken = transaction.token;
-        //         console.log('transactionToken:', transactionToken);
-        //         const redirectUrl = transaction.redirect_url;
-        //         res.status(200).json({
-        //             is_success: true,
-        //             code: 201,
-        //             data: {
-        //                 paymentResult,
-        //                 token: transactionToken,
-        //                 url: redirectUrl,
-
-        //             },
-        //             message: 'Create payment success'
-        //         })
-        //     })
-
         await transaction.commit();
-        res.status(201).json({
-            is_success: true,
-            code: 201,
-            data: bookingResult, returnBookingResult,
-            message: 'Create payment success'
-        })
+        let transactionToken
+        snap.createTransaction(parameter)
+            .then((transaction) => {
+                // transaction token
+                transactionToken = transaction.token;
+                console.log('transactionToken:', transactionToken);
+                const redirectUrl = transaction.redirect_url;
+                res.status(200).json({
+                    is_success: true,
+                    code: 201,
+                    data: {
+                        paymentResult,
+                        token: transactionToken,
+                        url: redirectUrl,
+
+                    },
+                    message: 'Create payment success'
+                })
+            })
+
+        // res.status(201).json({
+        //     is_success: true,
+        //     code: 201,
+        //     data: bookingResult, returnBookingResult,
+        //     message: 'Create payment success'
+        // })
 
     } catch (error) {
         if (transaction) await transaction.rollback(); // Rollback transaction if any step fails
