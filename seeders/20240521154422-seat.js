@@ -22,7 +22,7 @@ module.exports = {
       business: 0.15,
       "first class": 0.1
     }; //ratio dari pembagian Seats
-    const flights = await Flight.findAll();
+    const flights = await Flight.findAll({ limit: 10 });
 
     if (flights.length === 0) {
       console.log("There is no flight Data");
@@ -41,8 +41,8 @@ module.exports = {
         seatsByClass['economy'] = remainingSeats
         seatRow -= 1
       } else {
-        if (remainingSeats == 172) {
-          seatRow += 1
+        if (remainingSeats == 120) {
+          seatRow -= 1
         }
         for (const kelas of Object.keys(ratioOfSeats)) {
           const seats = Math.ceil(flight.seats_available * ratioOfSeats[kelas])

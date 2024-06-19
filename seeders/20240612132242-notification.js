@@ -8,7 +8,7 @@ module.exports = {
       [
         {
           notification_id: "c152329f-b41c-4049-bf77-fd504f5d019e",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
@@ -20,7 +20,7 @@ module.exports = {
         },
         {
           notification_id: "e7407fc4-02c0-4942-b58c-d08171103d8b",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
@@ -32,7 +32,7 @@ module.exports = {
         },
         {
           notification_id: "f937d376-6071-4987-adce-bc0997dec52e",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
@@ -44,7 +44,7 @@ module.exports = {
         },
         {
           notification_id: "8f822a9b-a6b1-4423-8615-109031439175",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
@@ -56,7 +56,7 @@ module.exports = {
         },
         {
           notification_id: "d29f94b6-1275-4526-9321-f2d4f7b68185",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
@@ -68,7 +68,7 @@ module.exports = {
         },
         {
           notification_id: "6e498fd0-2c81-4f7f-847b-5164049f1564",
-          user_id: null,
+          user_id: '2b054118-24fc-4c00-8ba2-b1a5e9bb0069',
           flight_id: null,
           booking_id: null,
           promotion_id: null,
