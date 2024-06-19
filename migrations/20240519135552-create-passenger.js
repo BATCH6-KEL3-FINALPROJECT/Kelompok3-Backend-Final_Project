@@ -33,6 +33,9 @@ module.exports = {
       phone_number: {
         type: Sequelize.STRING
       },
+      passenger_type: {
+        type: Sequelize.ENUM('adult', 'child', 'baby')
+      },
       nationality: {
         type: Sequelize.STRING
       },

@@ -33,6 +33,9 @@ module.exports = {
           key: 'passenger_id'
         },
       },
+      passenger_type: {
+        type: Sequelize.ENUM('adult', 'child', 'baby')
+      },
       booking_id: {
         type: Sequelize.UUID,
         references: {

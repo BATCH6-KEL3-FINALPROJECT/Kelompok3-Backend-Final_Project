@@ -1,5 +1,6 @@
 'use strict';
 const { Airport, Airline, Flight, Seat } = require('../models');
+const passenger = require('../models/passenger');
 const generateCode = require('../utils/generateTicketCode');
 
 /** @type {import('sequelize-cli').Migration} */
@@ -44,6 +45,7 @@ module.exports = {
         booking_id: '5f01aee8-c265-47a5-a034-6f94ed0ec694',
         seat_number: seats[0].seat_number,
         passenger_name: 'Mr John Doe',
+        passenger_type: 'adult',
         TERMINAL: 'T1',
         ticket_status: 'confirmed'
         , createdAt: new Date(),
@@ -58,6 +60,7 @@ module.exports = {
         booking_id: '5f01aee8-c265-47a5-a034-6f94ed0ec694',
         seat_number: seats[0].seat_number,
         passenger_name: 'Dr Michael Johnson',
+        passenger_type: 'adult',
         TERMINAL: 'T2',
         ticket_status: 'confirmed',
         createdAt: new Date(),
@@ -72,6 +75,7 @@ module.exports = {
         booking_id: '2439e8e8-e31c-4031-85c6-8721d97c7c16',
         seat_number: seats[1].seat_number,
         passenger_name: 'Mr John Doe',
+        passenger_type: 'adult',
         TERMINAL: 'T2',
         ticket_status: 'confirmed',
         createdAt: new Date(),
@@ -86,6 +90,7 @@ module.exports = {
         booking_id: '2439e8e8-e31c-4031-85c6-8721d97c7c16',
         seat_number: seats[1].seat_number,
         passenger_name: 'Dr Michael Johnson',
+        passenger_type: 'adult',
         TERMINAL: 'T2',
         ticket_status: 'confirmed',
         createdAt: new Date(),
@@ -100,6 +105,7 @@ module.exports = {
         booking_id: '92d4ade9-f7e8-464f-a2dc-4579d169c0f9',
         seat_number: seats[2].seat_number,
         passenger_name: 'Dr Michael Johnson',
+        passenger_type: 'adult',
         TERMINAL: 'T2',
         ticket_status: 'confirmed',
         createdAt: new Date(),
@@ -113,7 +119,8 @@ module.exports = {
         passenger_id: '1a3055a1-8cf5-4f2b-b7e3-60586ab48c41',
         booking_id: '818e5301-0c2e-42cc-a876-524a8f286ba5',
         seat_number: seats[3].seat_number,
-        passenger_name: 'Alice Johnson',
+        passenger_name: 'Emily Brown',
+        passenger_type: 'child',
         TERMINAL: 'T3',
         ticket_status: 'confirmed',
         createdAt: new Date(),
@@ -128,6 +135,7 @@ module.exports = {
         booking_id: 'a0d22290-6a63-49ca-8399-2ec9c573b6a7',
         seat_number: seats[4].seat_number,
         passenger_name: 'Eve Wilson',
+        passenger_type: 'adult',
         TERMINAL: 'T5',
         ticket_status: 'pending',
         createdAt: new Date(),
@@ -142,6 +150,7 @@ module.exports = {
         booking_id: '715ca8d2-d8d7-42bf-b025-58867a49ea46',
         seat_number: seats[4].seat_number,
         passenger_name: 'Ms Alice Smith',
+        passenger_type: 'adult',
         TERMINAL: 'T5',
         ticket_status: 'cancelled',
         createdAt: new Date(),

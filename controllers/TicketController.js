@@ -1,6 +1,8 @@
 const { Ticket, Booking, Flight, Airport, Seat } = require("../models"); // Adjust the path to your models folder
 const ApiError = require("../utils/apiError");
 const { v4: uuidv4 } = require("uuid");
+const fs = require('fs');
+const path = require('path');
 
 const createTicket = async (req, res, next) => {
   try {
@@ -56,59 +58,7 @@ const getAllTickets = async (req, res, next) => {
     next(new ApiError(err.message, 400));
   }
 };
-const getAllBooking = async (req, res, next) => {
-  try {
-    const bookings = await Booking.findAll({
-      attributes: { exclude: ['createdAt', 'updatedAt'] },
-      include: [{
-        model: Flight,
-        attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
-        include: [{
-          model: Airport,
-          as: 'departingAirport', // Alias defined in Flight model association
-          attributes: ['city'] // Specify the attributes you want to include from Airport model
-        }, {
-          model: Airport,
-          as: 'arrivingAirport', // Alias defined in Flight model association
-          attributes: ['city'] // Specify the attributes you want to include from Airport model
-        }]
-      },
-      {
-        model: Ticket,
-        attributes: ['seat_number'],
-        include: [{
-          model: Seat,
-          attributes: ['seat_class']
-        }]
-      }]
-    });
 
-    console.log("Masuk booking", typeof bookings)
-    const data = [];
-
-    // for (const booking of bookings) {
-    //   const flight = await Flight.findOne({
-    //     where: {
-    //       flight_id: booking.flight_id,
-    //     },
-    //     attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'created_at', 'updated_at'] },
-    //   });
-    //   data.push({
-    //     booking,
-    //     flight
-    //   });
-    // }
-
-    res.status(200).json({
-      is_success: true,
-      code: 200,
-      bookings,
-      message: 'get All Bookings success'
-    });
-  } catch (err) {
-    next(new ApiError(err.message, 400));
-  }
-};
 const deleteBooking = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -138,7 +88,7 @@ const getTicketById = async (req, res, next) => {
     const ticket = await Ticket.findOne({ where: { ticket_id: id } });
 
     if (!ticket) {
-      new ApiError(`Ticket with ID: ${req.params.id} not found`, 404);
+      return next(new ApiError(`Ticket with ID: ${req.params.id} not found`, 404));
     }
 
     res.status(200).json({
@@ -147,7 +97,7 @@ const getTicketById = async (req, res, next) => {
       data: {
         ticket,
       },
-      message: 'Success update ticket'
+      message: 'Success get Ticket by Id'
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -231,12 +181,34 @@ const deleteTicket = async (req, res, next) => {
   }
 };
 
+const downloadTicket = async (req, res, next) => {
+  try {
+    console.log("Downloading Ticket");
+    const filePath = path.join(__dirname, '..', 'E_Ticket.pdf');
+
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        console.error('File not found:', err);
+        return res.status(404).send('File not found.');
+      }
+
+      res.download(filePath, 'E_Ticket.pdf', (err) => {
+        if (err) {
+          console.error('Error downloading file:', err);
+          return res.status(500).send('Error downloading file.');
+        }
+      });
+    });
+  } catch (err) {
+    console.error('Error in downloadTicket:', err);
+    return res.status(500).send('Internal server error.');
+  }
+}
 module.exports = {
   createTicket,
   getAllTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
-  getAllBooking,
-  deleteBooking
+  downloadTicket
 };

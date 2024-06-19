@@ -22,7 +22,7 @@ module.exports = {
       business: 0.15,
       "first class": 0.1
     }; //ratio dari pembagian Seats
-    const flights = await Flight.findAll({ limit: 10 });
+    const flights = await Flight.findAll();
 
     if (flights.length === 0) {
       console.log("There is no flight Data");

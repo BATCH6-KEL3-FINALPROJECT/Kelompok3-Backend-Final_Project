@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
     date_of_birth: DataTypes.DATEONLY,
     email: DataTypes.STRING,
     phone_number: DataTypes.STRING,
+    passenger_type: {
+      type: DataTypes.ENUM('adult', 'child', 'baby')
+    },
     nationality: DataTypes.STRING,
     passport_no: DataTypes.STRING,
     issuing_country: DataTypes.STRING,

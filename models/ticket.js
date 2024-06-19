@@ -24,6 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       flight_id: DataTypes.UUID,
       seat_id: DataTypes.STRING,
       passenger_id: DataTypes.UUID,
+      passenger_type: {
+        type: DataTypes.ENUM('adult', 'child', 'baby')
+      },
       booking_id: DataTypes.UUID,
       seat_number: DataTypes.STRING,
       passenger_name: DataTypes.STRING,
