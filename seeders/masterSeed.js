@@ -11,6 +11,7 @@ const priceSeeder = require('./20240527104424-price')
 const passengerSeeder = require('./20240606155919-passenger')
 const bookingSeeder = require('./20240610121447-booking')
 const flightDataSeeder = require('./20240528033556-flightData');
+const notificationSeeder = require('./20240612132242-notification');
 require("dotenv").config();
 
 const sequelize = new Sequelize(
@@ -36,6 +37,7 @@ async function createSeed(queryInterface, Sequelize) {
         await seatSeeder.up(queryInterface, Sequelize);
         await bookingSeeder.up(queryInterface, Sequelize)
         await ticketSeeder.up(queryInterface, Sequelize);
+        await notificationSeeder.up(queryInterface, Sequelize)
         // await flightSeeder.up(queryInterface, Sequelize);
         console.log('seeder executed successfully.');
     } catch (error) {

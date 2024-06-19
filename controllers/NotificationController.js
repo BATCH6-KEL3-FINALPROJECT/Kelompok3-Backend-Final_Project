@@ -18,10 +18,12 @@ const createNotification = async (req, res, next) => {
     });
 
     res.status(201).json({
-      status: "Success",
+      is_succes: true,
+      code: 201,
       data: {
         newNotification,
       },
+      message: 'Notification created'
     });
   } catch (error) {
     next(new ApiError(error.message));
@@ -37,10 +39,12 @@ const getNotification = async (req, res, next) => {
     }
 
     res.status(201).json({
-      status: "Success",
+      is_sucsess: true,
+      code: 201,
       data: {
         notification,
       },
+      message: "GEt all notif success"
     });
   } catch (error) {
     next(new ApiError(error.message));
