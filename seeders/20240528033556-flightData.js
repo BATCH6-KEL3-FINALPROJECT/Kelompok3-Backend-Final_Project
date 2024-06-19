@@ -29,7 +29,7 @@ module.exports = {
       { name: "Airbus A220", totalSeats: 160 }
     ];
 
-    const planeDetails = JSON.stringify({
+    const planeDetails = {
       details: [
         {
           id: 1,
@@ -44,7 +44,7 @@ module.exports = {
           description: "ada hiburan di pesawat",
         },
       ],
-    })
+    }
     const airports = await Airport.findAll()
     const airlines = await Airline.findAll()
     console.log("length of airlines", airlines.length)

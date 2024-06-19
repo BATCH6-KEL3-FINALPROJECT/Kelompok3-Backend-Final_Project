@@ -27,6 +27,7 @@ router.use("/api/v1/ticket", Ticket);
 router.use("/api/v1/transaction", Transaction);
 router.use("/api/v1/seat", Seat);
 router.use("/api/v1/notification", Notification);
+router.use("/api/v1/booking", Booking);
 
 
 module.exports = router;

@@ -71,8 +71,30 @@ const createTransactionsWithFlight = async (req, res, next) => {
     let transaction = await sequelize.transaction();
 
     try {
-        const { totalAmount, departureFlightId, returnFlightId, passengerId, noOfPassenger, departureSeats, returnSeats } = req.body
-        const { user_id, name, email, phone_number } = req.user
+        const { fullName, familyName, phoneNumber, email, totalAmount, departureFlightId, returnFlightId, noOfPassenger, departureSeats, returnSeats } = req.body
+        const { user_id } = req.user
+        const { passengersData } = req.body
+
+        console.log('data passenger', req.body)
+
+        let passengerId = [];
+        const passengers = await Promise.all(passengersData.map(async passengerData => {
+            const passengerId = uuidv4();
+            const userId = user_id;
+
+            let newPassengerData = { ...passengerData, passenger_id: passengerId }
+            newPassengerData = { ...newPassengerData, user_id: userId }
+            const passenger = await Passenger.create(newPassengerData);
+            return passenger;
+            passengerId.push(passenger)
+        }));
+
+        res.status(201).json({
+            is_success: true,
+            code: 201,
+            data: passengerId,
+            message: 'Create payment success'
+        })
 
         const paymentId = uuidv4();
         const seatIdsDeparture = Object.values(departureSeats);
@@ -138,7 +160,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
                 "secure": true
             },
             "customer_details": {
-                "first_name": name,
+                "first_name": fullName,
                 "email": email,
                 "phone": phone_number
             }
