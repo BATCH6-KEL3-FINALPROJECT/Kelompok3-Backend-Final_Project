@@ -168,10 +168,12 @@ const getUserBooking = async (req, res, next) => {
 const getBookingById = async (req, res, next) => {
     try {
         const { user_id } = req.user;
+        const { id } = req.params;
 
-        const booking = await Booking.findAll({
+        console.log("Ini id", id);
+        const booking = await Booking.findOne({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
-            where: { user_id: user_id },
+            where: { booking_id: id },
             include: [{
                 model: Flight,
                 attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },

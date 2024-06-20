@@ -5,41 +5,39 @@ name: Deployment run and deploy
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
- push:
-    branches:
-      - main
+   push:
+      branches:
+         - main
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  deploy:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+   # This workflow contains a single job called "greet"
+   deploy:
+      # The type of runner that the job will run on
+      runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-        # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+         # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+         - name: Checkout Repository
+           uses: actions/checkout@v2
 
-      # Setup Node for Installing Dependencies
-    - name: Setup Node
-      uses: actions/setup-node@v3
-      with:
-         node-version: '16'
+           # Setup Node for Installing Dependencies
+         - name: Setup Node
+           uses: actions/setup-node@v3
+           with:
+              node-version: "16"
 
-    # Runs a single command using the runners shell
-    - name: Checkout Code
-      uses: actions/checkout@v2
-    - name: NPM install 
-      run: npm install
-    - name: SSH into VPS and deploy 
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-          host: ${{ secrets.VPS_HOSTNAME }}
-          username: ${{ secrets.VPS_USERNAME }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          port: ${{ secrets.VPS_PORT }}
-          script: export PATH=$PATH:/root/.nvm/versions/node/v18.17.1/bin pm2 restart finalprojectBE;
-          
-
+         # Runs a single command using the runners shell
+         - name: Checkout Code
+           uses: actions/checkout@v2
+         - name: NPM install
+           run: npm install
+         - name: SSH into VPS and deploy
+           uses: appleboy/ssh-action@v1.0.3
+           with:
+              host: ${{ secrets.VPS_HOSTNAME }}
+              username: ${{ secrets.VPS_USERNAME }}
+              password: ${{ secrets.VPS_PASSWORD }}
+              port: ${{ secrets.VPS_PORT }}
+              script: export PATH=$PATH:/root/.nvm/versions/node/v18.17.1/bin pm2 restart BE-finalproject;
