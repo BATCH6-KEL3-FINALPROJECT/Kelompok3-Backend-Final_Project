@@ -47,8 +47,6 @@ module.exports = {
     }
     const airports = await Airport.findAll()
     const airlines = await Airline.findAll()
-    console.log("length of airlines", airlines.length)
-    console.log("airline divide by 4", airlines.length / 4)
     const groups = [];
 
     for (let i = 0; i < airlines.length; i += 4) {

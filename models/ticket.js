@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("confirmed", "cancelled", "pending", "completed"),
         defaultValue: "pending",
       },
+      ticket_buyer: {
+        type: DataTypes.JSONB
+      }
     },
     {
       sequelize,

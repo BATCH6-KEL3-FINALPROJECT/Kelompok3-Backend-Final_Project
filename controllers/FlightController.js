@@ -205,6 +205,10 @@ const getFlightById = async (req, res, next) => {
                     model: Airline,
                     attributes: ["airline_name", "airline_code"]
                 },
+                {
+                    model: Price,
+                    attributes: { exclude: ['createdAt', 'updatedAt'] }, // Exclude createdAt and updatedAt fields
+                }
             ]
         });
 
