@@ -14,6 +14,8 @@ const Booking = require("./bookingRouter");
 const Seat = require("./seatRoutes");
 const Notification = require("./notificationRoutes");
 const Transaction = require("./transactionRouter");
+const SearchHistory = require("./searchHistoryRouter");
+
 router.use("/api-docs", swaggerUI.serve);
 router.use("/api-docs", swaggerUI.setup(swaggerDocument));
 
@@ -28,6 +30,7 @@ router.use("/api/v1/transaction", Transaction);
 router.use("/api/v1/seat", Seat);
 router.use("/api/v1/notification", Notification);
 router.use("/api/v1/booking", Booking);
+router.use("/api/v1/history", SearchHistory);
 
 
 module.exports = router;
