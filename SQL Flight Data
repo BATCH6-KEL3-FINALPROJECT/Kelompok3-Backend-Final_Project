@@ -44,3 +44,9 @@ WHERE
     AND aa.city = 'Tokyo' 
     AND p.seat_class = 'Economy'
 	 AND f.departure_date = '2024-06-12';
+
+
+UPDATE public."Flights"
+SET terminal = '{"departure_airport": "terminal 1", "destination_airport": "terminal 3"}'::jsonb
+WHERE departure_date = '2024-06-13';
+

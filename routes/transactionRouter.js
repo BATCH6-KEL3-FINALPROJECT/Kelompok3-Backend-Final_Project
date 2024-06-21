@@ -4,5 +4,6 @@ const router = require('express').Router();
 
 router.post('/create', transaction.createTransactions)
 router.post('/booking', authenticate, transaction.createTransactionsWithFlight)
+router.get('/booking/:id', transaction.getBookingData)
 
 module.exports = router;
