@@ -15,7 +15,7 @@ let snap = new midtransClient.Snap({
     isProduction: false,
     serverKey: process.env.MIDTRANS_SERVER_KEY
 });
-const createTransactions = async (req, res, next) => {
+const createTransakti = async (req, res, next) => {
     try {
         const { totalAmount, flightName, noOfItems } = req.body
         const paymentId = uuidv4();
@@ -165,26 +165,6 @@ const createTransactionsWithFlight = async (req, res, next) => {
             }
         };
         await transaction.commit();
-        // let transactionToken
-        // snap.createTransaction(parameter)
-        //     .then((transaction) => {
-        //         // transaction token
-        //         transactionToken = transaction.token;
-        //         console.log('transactionToken:', transactionToken);
-        //         const redirectUrl = transaction.redirect_url;
-        //         res.status(200).json({
-        //             is_success: true,
-        //             code: 201,
-        //             data: {
-        //                 paymentResult,
-        //                 token: transactionToken,
-        //                 url: redirectUrl,
-
-        //             },
-        //             message: 'Create payment success'
-        //         })
-        //     })
-
         res.status(201).json({
             is_success: true,
             code: 201,
@@ -195,7 +175,6 @@ const createTransactionsWithFlight = async (req, res, next) => {
     } catch (error) {
         if (transaction) await transaction.rollback(); // Rollback transaction if any step fails
         console.error(error);
-        // console.log(error)
         next(new apiError(error.message, 400));
     }
 }
@@ -313,29 +292,31 @@ async function createTicket(flightId, seatId, passengerId, bookingId, seatNumber
 const getBookingData = async (req, res, next) => {
     try {
         const paymentId = req.params.id;
-
         let bookingData = await Booking.findAll({ where: { payment_id: paymentId } })
-
-
         let totalPriceSum = 0;
         let flightData = []
+        let newBooking = bookingData.map(booking => ({ ...booking.dataValues }));
 
-        let newBooking = bookingData
-        for (let i = 0; i < bookingData.length; i++) {
-            totalPriceSum += parseInt(bookingData[i].total_price);
+        for (let i = 0; i < newBooking.length; i++) {
+            totalPriceSum += parseInt(newBooking[i].total_price);
 
-            // Fetch flight data for each booking asynchronously
-            newBooking[i].adult = "100"; // Or assign it based on some condition or calculation
+            const ticket = await Ticket.findAll({ where: { booking_id: newBooking[i].booking_id } })
+            ticket.forEach(type => {
+                if (type.passenger_type === 'adult') {
+                    newBooking[i].adult = newBooking[i].total_price / 2;
+                } else {
+                    newBooking[i].child = newBooking[i].total_price / 2;
+                }
+            });
             const flight = await Flight.findOne({
-                where: { flight_id: bookingData[i].flight_id },
+                where: { flight_id: newBooking[i].flight_id },
                 include: {
-                    model: Airline, // Assuming Airline is the name of your model for airlines
-                    attributes: { exclude: ['createdAt', 'updatedAt'] }, // Exclude createdAt and updatedAt fields
+                    model: Airline,
+                    attributes: { exclude: ['createdAt', 'updatedAt'] },
                 }
             });
             flightData.push(flight);
         }
-        console.log("Data booking:", newBooking)
         res.status(200).json({
             is_success: true,
             code: 201,
@@ -346,6 +327,25 @@ const getBookingData = async (req, res, next) => {
             },
             message: 'Create payment success'
         })
+
+    } catch (err) {
+
+    }
+
+}
+const createTransactions = async (req, res, next) => {
+    try {
+        const paymentId = req.params.id;
+        let bookingData = await Booking.findAll({ where: { payment_id: paymentId } })
+        let totalPriceSum = 0
+        let buyerData;
+        for (let i = 0; i < bookingData.length; i++) {
+            totalPriceSum += parseInt(bookingData[i].total_price);
+
+            const ticket = await Ticket.findAll({ where: { booking_id: bookingData[i].booking_id } })
+            buyerData = ticket[0].ticket_buyer
+        }
+
         let parameter = {
             "transaction_details": {
                 "order_id": paymentId,
@@ -355,38 +355,36 @@ const getBookingData = async (req, res, next) => {
                 "secure": true
             },
             "customer_details": {
-                "first_name": "budi",
-                "last_name": "pratama",
-                "email": "budi.pra@example.com",
-                "phone": "08111222333"
+                "first_name": buyerData.fullName,
+                "last_name": "" || buyerData.familyName,
+                "email": buyerData.email,
+                "phone": buyerData.phone
             }
         };
 
         let transactionToken
-        // snap.createTransaction(parameter)
-        //     .then((transaction) => {
-        //         // transaction token
-        //         transactionToken = transaction.token;
-        //         const redirectUrl = transaction.redirect_url;
-        //         res.status(200).json({
-        //             is_success: true,
-        //             code: 201,
-        //             data: {
-        //                 bayar,
-        //                 token: transactionToken,
-        //                 url: redirectUrl,
+        snap.createTransaction(parameter)
+            .then((transaction) => {
+                // transaction token
+                transactionToken = transaction.token;
+                const redirectUrl = transaction.redirect_url;
+                res.status(200).json({
+                    is_success: true,
+                    code: 201,
+                    data: {
+                        token: transactionToken,
+                        url: redirectUrl,
 
-        //             },
-        //             message: 'Create payment success'
-        //         })
-        //     })
+                    },
+                    message: 'Create payment success'
+                })
+            })
 
-    } catch (err) {
+    } catch (error) {
+        next(new apiError(error.message, 400));
 
     }
-
 }
-
 module.exports = {
     createTransactions,
     createTransactionsWithFlight,
