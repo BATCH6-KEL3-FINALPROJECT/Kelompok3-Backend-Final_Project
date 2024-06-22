@@ -1,7 +1,7 @@
 const apiError = require("../utils/apiError");
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
-const { Flight, User, Price, Booking, Payment, Seat, Ticket, Passenger, Airport, sequelize } = require('../models');
+const { Flight, User, Price, Booking, Payment, Seat, Ticket, Passenger, Airport, Airline, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
 const { UUIDV4 } = require("sequelize");
 const { object } = require("joi");
@@ -132,7 +132,7 @@ const getUserBooking = async (req, res, next) => {
             where: { user_id: user_id },
             include: [{
                 model: Flight,
-                attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['airline_id', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'updatedAt'] },
                 include: [{
                     model: Airport,
                     as: 'departingAirport', // Alias defined in Flight model association
@@ -141,6 +141,9 @@ const getUserBooking = async (req, res, next) => {
                     model: Airport,
                     as: 'arrivingAirport', // Alias defined in Flight model association
                     attributes: ['city'] // Specify the attributes you want to include from Airport model
+                },
+                {
+                    model: Airline,
                 }]
             },
             {
@@ -152,7 +155,7 @@ const getUserBooking = async (req, res, next) => {
                 },
                 {
                     model: Passenger,
-                    attributes: ['first_name', 'last_name']
+                    attributes: ['first_name', 'last_name', 'passenger_id']
                 }]
             }]
         });
@@ -176,11 +179,11 @@ const getBookingById = async (req, res, next) => {
 
         console.log("Ini id", id);
         const booking = await Booking.findOne({
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            attributes: { exclude: ['updatedAt'] },
             where: { booking_id: id },
             include: [{
                 model: Flight,
-                attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['airline_id', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
                 include: [{
                     model: Airport,
                     as: 'departingAirport', // Alias defined in Flight model association
@@ -189,6 +192,8 @@ const getBookingById = async (req, res, next) => {
                     model: Airport,
                     as: 'arrivingAirport', // Alias defined in Flight model association
                     attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }, {
+                    model: Airline,
                 }]
             },
             {
@@ -199,7 +204,7 @@ const getBookingById = async (req, res, next) => {
                     attributes: ['seat_class']
                 }, {
                     model: Passenger,
-                    attributes: ['first_name', 'last_name']
+                    attributes: ['first_name', 'last_name', 'passenger_id']
                 }]
             }]
         });
