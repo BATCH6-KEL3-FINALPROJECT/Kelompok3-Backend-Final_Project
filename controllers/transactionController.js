@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
 const { Flight, Price, Booking, payment, Seat, Ticket, Passenger, Airline, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
-const { UUIDV4 } = require("sequelize");
+const { UUIDV4, where } = require("sequelize");
 const { object, bool } = require("joi");
 const { Sequelize, QueryTypes } = require('sequelize');
 const ticket = require("../models/ticket");
@@ -329,9 +329,8 @@ const getBookingData = async (req, res, next) => {
         })
 
     } catch (err) {
-
+        next(new apiError(error.message, 400));
     }
-
 }
 const createTransactions = async (req, res, next) => {
     try {
@@ -339,13 +338,18 @@ const createTransactions = async (req, res, next) => {
         let bookingData = await Booking.findAll({ where: { payment_id: paymentId } })
         let totalPriceSum = 0
         let buyerData;
+        if (!bookingData) {
+            return next(new apiError("Error data booking tidak ditemukan", 400));
+        }
         for (let i = 0; i < bookingData.length; i++) {
             totalPriceSum += parseInt(bookingData[i].total_price);
 
             const ticket = await Ticket.findAll({ where: { booking_id: bookingData[i].booking_id } })
+
             buyerData = ticket[0].ticket_buyer
         }
 
+        console.log(buyerData)
         let parameter = {
             "transaction_details": {
                 "order_id": paymentId,
@@ -355,7 +359,7 @@ const createTransactions = async (req, res, next) => {
                 "secure": true
             },
             "customer_details": {
-                "first_name": buyerData.fullName,
+                "first_name": "" || buyerData.fullName,
                 "last_name": "" || buyerData.familyName,
                 "email": buyerData.email,
                 "phone": buyerData.phone
@@ -381,12 +385,41 @@ const createTransactions = async (req, res, next) => {
             })
 
     } catch (error) {
+        console.log(error)
         next(new apiError(error.message, 400));
+    }
+}
+const updatePaymentStatus = async (req, res, next) => {
+    let transaction = await sequelize.transaction();
+    try {
+        const { transaction_details, transaction_status, transaction_id, order_id } = req.body;
 
+        const paymentData = await payment.update({ payment_status: 'completed' }, { where: { payment_id: order_id } })
+        if (!paymentData) {
+            return next(new apiError("Data Payment not found", 404));
+        }
+        await Booking.update({ status: 'booked' }, { where: { payment_id: order_id } });
+        const newBookingData = await Booking.findOne({ where: { payment_id: order_id } });
+        const ticketData = await Ticket.update({ ticket_status: 'confirmed' }, { where: { booking_id: newBookingData.booking_id } })
+
+        await transaction.commit()
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: paymentData,
+            newBookingData,
+            ticketData,
+            message: 'Update successful'
+        })
+
+    } catch (error) {
+        if (transaction) await transaction.rollback(); // Rollback transaction if any step fails
+        next(new apiError(error.message, 400));
     }
 }
 module.exports = {
     createTransactions,
     createTransactionsWithFlight,
-    getBookingData
+    getBookingData,
+    updatePaymentStatus
 }

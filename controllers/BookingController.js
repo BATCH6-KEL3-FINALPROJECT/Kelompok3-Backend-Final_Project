@@ -149,6 +149,10 @@ const getUserBooking = async (req, res, next) => {
                 include: [{
                     model: Seat,
                     attributes: ['seat_class']
+                },
+                {
+                    model: Passenger,
+                    attributes: ['first_name', 'last_name']
                 }]
             }]
         });
