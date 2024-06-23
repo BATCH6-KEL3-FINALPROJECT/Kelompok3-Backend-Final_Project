@@ -1,14 +1,12 @@
 const apiError = require("../utils/apiError");
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
-const { Flight, Price, Booking, payment, Seat, Ticket, Passenger, Airline, sequelize } = require('../models');
+const { Flight, Price, Booking, payment, Seat, Ticket, Passenger, Airline, Airport, Notification, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
 const { UUIDV4, where } = require("sequelize");
 const { object, bool } = require("joi");
-const { Sequelize, QueryTypes } = require('sequelize');
 const ticket = require("../models/ticket");
 const generateCode = require("../utils/generateTicketCode");
-const { updateSeat } = require("./SeatController");
 
 let snap = new midtransClient.Snap({
     // Set to true if you want Production Environment (accept real transaction).
@@ -92,8 +90,10 @@ const createTransactionsWithFlight = async (req, res, next) => {
         const departureSeatData = await Seat.findOne({ where: { seat_id: seatIdsDeparture[0] } })
         if (!departureSeatData) return next(new apiError("Seat yang dipilih tidak ada", 400));
         const departureSeatPrice = await Price.findOne({ where: { flight_id: departureSeatData.flight_id, seat_class: departureSeatData.seat_class } })
-        let totalPrice = (noOfPassenger * departureSeatPrice.price);
-        let returnSeatData, returnSeatPrice, returnBookingResult;
+        let totalPrice = 0
+
+        let returnSeatData, returnSeatPrice, returnBookingResult = {};
+        let departureFlightPrice = 0, returnFlightPrice = 0
         let isRoundTrip = false;
         const allSeatIds = [...seatIdsDeparture];
 
@@ -101,10 +101,34 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (seatIdsReturn !== null && seatIdsReturn.length !== 0) {
             returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
             returnSeatPrice = await Price.findOne({ where: { flight_id: returnSeatData.flight_id, seat_class: returnSeatData.seat_class } });
-            totalPrice += noOfPassenger * returnSeatPrice.price;
             isRoundTrip = true
             allSeatIds.push(...seatIdsReturn)
+            for (let i = 0; i < passengersData.length; i++) {
+                if (passengersData[i].passenger_type === 'adult') {
+                    totalPrice = returnSeatPrice.price + totalPrice
+                    returnFlightPrice = returnSeatPrice.price + returnFlightPrice
+                } else if (passengersData[i].passenger_type === 'child') {
+                    totalPrice = returnSeatPrice.price_for_child + totalPrice
+                    returnFlightPrice = returnSeatPrice.price_for_child + returnFlightPrice
+                } else {
+                    totalPrice = returnSeatPrice.price_for_infant + totalPrice
+                    returnFlightPrice = returnSeatPrice.price_for_infant + returnFlightPrice
+                }
+            }
         }
+        for (let i = 0; i < passengersData.length; i++) {
+            if (passengersData[i].passenger_type === 'adult') {
+                totalPrice = departureSeatPrice.price + totalPrice
+                departureFlightPrice = departureSeatPrice.price + departureFlightPrice
+            } else if (passengersData[i].passenger_type === 'child') {
+                totalPrice = departureSeatPrice.price_for_child + totalPrice
+                departureFlightPrice = departureSeatPrice.price_for_child + departureFlightPrice
+            } else {
+                totalPrice = departureSeatPrice.price_for_infant + totalPrice
+                departureFlightPrice = departureSeatPrice.price_for_infant + departureFlightPrice
+            }
+        }
+
         let checkSeatStatus = await checkSeatAvailability(allSeatIds)
         const seatsIdSet = new Set(allSeatIds);
         if (checkSeatStatus.some(status => status === false)) {
@@ -125,7 +149,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
         // }
         // let passengerData = await getPassengerData(passengersId, seatIdsDeparture, seatIdsReturn)
         const paymentResult = await createPayment(transaction, paymentId, user_id, totalPrice);
-        const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger, isRoundTrip);
+        const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, departureFlightPrice, noOfPassenger, isRoundTrip);
         const updatedFlight = await updateFlightCapacity(departureFlightId, noOfPassenger, transaction)
         const updatedSeats = await updateSeatsAvailability(seatIdsDeparture, transaction)
 
@@ -133,26 +157,20 @@ const createTransactionsWithFlight = async (req, res, next) => {
         await Promise.all(seatIdsDeparture.map((seatId, index) => createTicket(departureFlightId, seatId, passengersId[index], bookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
         if (returnSeatData) {
-            returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, totalPrice, noOfPassenger, isRoundTrip);
+            returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, returnFlightPrice, noOfPassenger, isRoundTrip);
             const updatedFlightReturn = await updateFlightCapacity(returnFlightId, noOfPassenger, transaction)
             const updateSeatsReturn = await updateSeatsAvailability(seatIdsReturn, transaction)
             await Promise.all(seatIdsReturn.map((seatId, index) => createTicket(returnFlightId, seatId, passengersId[index], returnBookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
         }
-        let parameter = {
-            "transaction_details": {
-                "order_id": paymentId,
-                "gross_amount": totalPrice
-            },
-            "credit_card": {
-                "secure": true
-            },
-            "customer_details": {
-                "first_name": fullName,
-                "email": email,
-                // "phone": phone_number
-            }
-        };
+        await Notification.create({
+            notification_id: uuidv4(),
+            user_id: user_id,
+            booking_id: bookingResult.booking_id,
+            notification_type: 'booking_confirmation',
+            message: "Please Complete your booking for flight " + updatedFlight.flight_code,
+            is_read: false,
+        }, { transaction });
         await transaction.commit();
         res.status(201).json({
             is_success: true,
@@ -282,41 +300,56 @@ const getBookingData = async (req, res, next) => {
     try {
         const paymentId = req.params.id;
         let booking = await Booking.findAll({ where: { payment_id: paymentId } })
+
+        if (!booking || booking.length === 0) return next(new apiError("Booking tidak ditemukan", 404));
         let totalPriceSum = 0;
         let bookingData = booking.map(book => ({ ...book.dataValues }));
 
         for (let i = 0; i < bookingData.length; i++) {
             totalPriceSum += parseInt(bookingData[i].total_price);
-            let adultCount = 0;
-            let childCount = 0;
-            let babyCount = 0;
-
+            let adultCount = 0, childCount = 0, babyCount = 0, adultTotalPrice = 0, childTotalPrice = 0, infantTotalPrice = 0;
             const ticket = await Ticket.findAll({ where: { booking_id: bookingData[i].booking_id } })
-            ticket.forEach(type => {
-                if (type.passenger_type === 'adult') {
-                    bookingData[i].adultPrice = bookingData[i].total_price / 2;
-                    adultCount++;
-                } else if (type.passenger_type === 'child') {
-                    bookingData[i].childPrice = bookingData[i].total_price / 2;
-                    childCount++;
-                } else {
-                    bookingData[i].babyPRice = bookingData[i].total_price / 2;
-                    babyCount++;
-                }
-            });
+
             const flight = await Flight.findOne({
                 where: { flight_id: bookingData[i].flight_id },
-                include: {
+                include: [{
                     model: Airline,
                     attributes: { exclude: ['createdAt', 'updatedAt'] },
+                }, {
+                    model: Airport,
+                    as: 'departingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                }, {
+                    model: Airport,
+                    as: 'arrivingAirport', // Alias defined in Flight model association
+                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                },]
+            });
+            const seat = await Seat.findOne({ where: { seat_id: ticket[0].seat_id } })
+            let seatPrice = await Price.findOne({ where: { flight_id: booking[i].flight_id, seat_class: seat.seat_class } })
+
+            ticket.forEach(type => {
+                if (type.passenger_type === 'adult') {
+                    bookingData[i].adultPrice = seatPrice.price;
+                    adultCount++;
+                    adultTotalPrice += seatPrice.price;
+                } else if (type.passenger_type === 'child') {
+                    bookingData[i].childPrice = seatPrice.price_for_child;
+                    childCount++;
+                    childTotalPrice += seatPrice.price_for_child;
+                } else {
+                    bookingData[i].babyPrice = seatPrice.price_for_infant;
+                    babyCount++;
+                    infantTotalPrice += seatPrice.price_for_infant;
                 }
             });
-            console.log("Data seat", ticket[0].seat_id)
-            const seat = await Seat.findOne({ where: { seat_id: ticket[0].seat_id } })
             bookingData[i].seatClass = seat.seat_class
             bookingData[i].totalAdult = adultCount;
             bookingData[i].totalChild = childCount;
             bookingData[i].totalBaby = babyCount
+            bookingData[i].adultTotalPrice = adultTotalPrice;
+            bookingData[i].childTotalPrice = childTotalPrice;
+            bookingData[i].babyTotalPrice = infantTotalPrice;
             bookingData[i].flightData = flight
         }
         res.status(200).json({
@@ -326,7 +359,7 @@ const getBookingData = async (req, res, next) => {
                 bookingData,
                 totalPrice: totalPriceSum
             },
-            message: 'Create payment success'
+            message: 'Get Booking data success'
         })
 
     } catch (error) {

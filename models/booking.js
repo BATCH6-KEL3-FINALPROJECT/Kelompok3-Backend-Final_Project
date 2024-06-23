@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     is_round_trip: DataTypes.BOOLEAN,
     no_of_ticket: DataTypes.INTEGER,
     status: {
-      type: DataTypes.ENUM("booked", "pending", "canceled", "completed"),
+      type: DataTypes.ENUM("booked", "pending", "cancelled", "completed"),
       defaultValue: "pending" // Add default value
     },
     total_price: DataTypes.STRING,

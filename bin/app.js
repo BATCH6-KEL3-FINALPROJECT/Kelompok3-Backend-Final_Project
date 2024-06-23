@@ -25,6 +25,7 @@ app.use(router);
 app.use('/masuk', (req, res) => {
     res.status(200).send("App successful")
 })
+
 app.use(apiErr.onLost);
 app.use(apiErr.onError);
 

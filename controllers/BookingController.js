@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
 const { Flight, User, Price, Booking, Payment, Seat, Ticket, Passenger, Airport, Airline, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
-const { UUIDV4 } = require("sequelize");
+const { UUIDV4, where } = require("sequelize");
 const { object } = require("joi");
 const { Sequelize, QueryTypes } = require('sequelize');
 const ticket = require("../models/ticket");
@@ -127,7 +127,7 @@ const getUserBooking = async (req, res, next) => {
     try {
         const { user_id } = req.user;
 
-        const bookings = await Booking.findAll({
+        let bookingData = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: { user_id: user_id },
             include: [{
@@ -155,11 +155,34 @@ const getUserBooking = async (req, res, next) => {
                 },
                 {
                     model: Passenger,
-                    attributes: ['first_name', 'last_name', 'passenger_id']
+                    attributes: ['first_name', 'last_name', 'passenger_id', 'passenger_type']
                 }]
             }]
         });
-        console.log(bookings);
+        let bookings = bookingData.map(book => ({ ...book.dataValues }));
+
+        for (let i = 0; i < bookings.length; i++) {
+            let seatClass, totalAdult = 0, totalChild = 0, totalBaby = 0
+            let tickets = bookings[i].Tickets;
+            for (let j = 0; j < tickets.length; j++) {
+                seatClass = tickets[j].Seat.seat_class;
+                let passengerType = tickets[j].Passenger.passenger_type
+                const price = await Price.findOne({ where: { flight_id: bookings[i].flight_id, seat_class: seatClass } })
+                if (passengerType === 'adult') {
+                    bookings[i].adultPrice = price.price;
+                    totalAdult++
+                } else if (passengerType === 'child') {
+                    bookings[i].childPrice = price.price_for_child;
+                    totalChild++
+                } else if (passengerType === 'baby') {
+                    bookings[i].babyPrice = price.price_for_infant;
+                    totalBaby++
+                }
+                bookings[i].totalAdult = totalAdult
+                bookings[i].totalChild = totalChild
+                bookings[i].totalBaby = totalBaby
+            }
+        }
         res.status(200).json({
             is_success: true,
             code: 200,
@@ -177,8 +200,7 @@ const getBookingById = async (req, res, next) => {
         const { user_id } = req.user;
         const { id } = req.params;
 
-        console.log("Ini id", id);
-        const booking = await Booking.findOne({
+        const bookingData = await Booking.findOne({
             attributes: { exclude: ['updatedAt'] },
             where: { booking_id: id },
             include: [{
@@ -186,12 +208,12 @@ const getBookingById = async (req, res, next) => {
                 attributes: { exclude: ['airline_id', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
                 include: [{
                     model: Airport,
-                    as: 'departingAirport', // Alias defined in Flight model association
-                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                    as: 'departingAirport',
+                    attributes: ['city']
                 }, {
                     model: Airport,
-                    as: 'arrivingAirport', // Alias defined in Flight model association
-                    attributes: ['city'] // Specify the attributes you want to include from Airport model
+                    as: 'arrivingAirport',
+                    attributes: ['city']
                 }, {
                     model: Airline,
                 }]
@@ -204,10 +226,31 @@ const getBookingById = async (req, res, next) => {
                     attributes: ['seat_class']
                 }, {
                     model: Passenger,
-                    attributes: ['first_name', 'last_name', 'passenger_id']
+                    attributes: ['first_name', 'last_name', 'passenger_id', 'passenger_type']
                 }]
             }]
         });
+        let totalAdult = 0, totalChild = 0, totalBaby = 0
+        const priceData = await Price.findOne({ where: { flight_id: bookingData.flight_id, seat_class: bookingData.Tickets[0].Seat.seat_class } })
+        let booking = {
+            ...bookingData.dataValues
+        }
+        console.log("priceData", priceData)
+        for (let i = 0; i < booking.Tickets.length; i++) {
+            if (booking.Tickets[i].Passenger.passenger_type === 'adult') {
+                booking.adultPrice = priceData.price
+                totalAdult++
+            } else if (booking.Tickets[i].Passenger.passenger_type === 'child') {
+                booking.childPrice = priceData.price_for_child
+                totalChild++
+            } else if (booking.Tickets[i].Passenger.passenger_type === 'child') {
+                booking.babyPrice = priceData.price_for_infant
+                totalChild++
+            }
+        }
+        booking.totalAdult = totalAdult
+        booking.totalChild = totalChild
+        booking.totalBaby = totalBaby
         //if booking doesnt exist
         if (!booking) {
             return next(new apiError(`Booking with ID: ${req.params.id} not found`, 404));
@@ -216,9 +259,7 @@ const getBookingById = async (req, res, next) => {
         res.status(200).json({
             is_success: true,
             code: 200,
-            data: {
-                booking,
-            },
+            data: booking,
         });
     } catch (err) {
         next(new apiError(err.message, 400));

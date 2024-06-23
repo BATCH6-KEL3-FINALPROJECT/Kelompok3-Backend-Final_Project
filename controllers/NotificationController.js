@@ -32,7 +32,9 @@ const createNotification = async (req, res, next) => {
 
 const getNotification = async (req, res, next) => {
   try {
-    const notification = await Notification.findAll();
+    const { user_id } = req.user
+
+    const notification = await Notification.findAll({ where: { user_id: user_id } });
 
     if (!notification) {
       return next(new ApiError("Notification is Empty"));
