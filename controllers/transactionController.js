@@ -1,14 +1,12 @@
 const apiError = require("../utils/apiError");
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
-const { Flight, Price, Booking, payment, Seat, Ticket, Passenger, Airline, Airport, sequelize } = require('../models');
+const { Flight, Price, Booking, payment, Seat, Ticket, Passenger, Airline, Airport, Notification, sequelize } = require('../models');
 const midtransClient = require('midtrans-client');
 const { UUIDV4, where } = require("sequelize");
 const { object, bool } = require("joi");
-const { Sequelize, QueryTypes } = require('sequelize');
 const ticket = require("../models/ticket");
 const generateCode = require("../utils/generateTicketCode");
-const { updateSeat } = require("./SeatController");
 
 let snap = new midtransClient.Snap({
     // Set to true if you want Production Environment (accept real transaction).
@@ -165,20 +163,14 @@ const createTransactionsWithFlight = async (req, res, next) => {
             await Promise.all(seatIdsReturn.map((seatId, index) => createTicket(returnFlightId, seatId, passengersId[index], returnBookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
         }
-        let parameter = {
-            "transaction_details": {
-                "order_id": paymentId,
-                "gross_amount": totalPrice
-            },
-            "credit_card": {
-                "secure": true
-            },
-            "customer_details": {
-                "first_name": fullName,
-                "email": email,
-                // "phone": phone_number
-            }
-        };
+        await Notification.create({
+            notification_id: uuidv4(),
+            user_id: user_id,
+            booking_id: bookingResult.booking_id,
+            notification_type: 'booking_confirmation',
+            message: "Please Complete your booking for flight " + updatedFlight.flight_code,
+            is_read: false,
+        }, { transaction });
         await transaction.commit();
         res.status(201).json({
             is_success: true,
