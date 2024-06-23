@@ -78,22 +78,16 @@ const createTransactionsWithFlight = async (req, res, next) => {
         let seatIdsDeparture = []
         let seatIdsReturn = [];
 
-        const passengers = await Promise.all(passengersData.map(async passengerData => {
+        const passengers = passengersData.map(passengerData => {
             const passengerId = uuidv4();
-            const userId = user_id;
+            const newPassengerData = { ...passengerData, passenger_id: passengerId, user_id: user_id };
+            passengersId.push(passengerId);
+            seatIdsDeparture.push(passengerData.departureSeats);
+            if (passengerData.returnSeats) seatIdsReturn.push(passengerData.returnSeats);
+            return newPassengerData;
+        });
 
-            let newPassengerData = { ...passengerData, passenger_id: passengerId }
-            newPassengerData = { ...newPassengerData, user_id: userId }
-            const passenger = await Passenger.create(newPassengerData);
-            if (passengerData.returnSeats !== "" || passengerData.returnSeats) {
-                seatIdsReturn.push(passengerData.returnSeats)
-            } else {
-                seatIdsReturn = null;
-            }
-            passengersId.push(passengerId)
-            seatIdsDeparture.push(passengerData.departureSeats)
-        }));
-
+        await Passenger.bulkCreate(passengers, { transaction });
         const paymentId = uuidv4();
         const departureSeatData = await Seat.findOne({ where: { seat_id: seatIdsDeparture[0] } })
         if (!departureSeatData) return next(new apiError("Seat yang dipilih tidak ada", 400));
@@ -103,17 +97,15 @@ const createTransactionsWithFlight = async (req, res, next) => {
         let isRoundTrip = false;
         const allSeatIds = [...seatIdsDeparture];
 
-        let checkSeatStatus = await checkSeatAvailability(seatIdsDeparture)
 
-        console.log("Checking availability seats", seatIdsDeparture, seatIdsReturn)
         if (seatIdsReturn !== null && seatIdsReturn.length !== 0) {
-            checkSeatStatus = checkSeatStatus.concat(await checkSeatAvailability(seatIdsReturn));
             returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
             returnSeatPrice = await Price.findOne({ where: { flight_id: returnSeatData.flight_id, seat_class: returnSeatData.seat_class } });
             totalPrice += noOfPassenger * returnSeatPrice.price;
             isRoundTrip = true
             allSeatIds.push(...seatIdsReturn)
         }
+        let checkSeatStatus = await checkSeatAvailability(allSeatIds)
         const seatsIdSet = new Set(allSeatIds);
         if (checkSeatStatus.some(status => status === false)) {
             return next(new apiError("Seat yang dipilih tidak tersedia", 400));
@@ -124,32 +116,29 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (noOfPassenger !== seatIdsDeparture.length || seatIdsReturn && noOfPassenger !== seatIdsReturn.length) {
             return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
         }
-        if (departureFlightId !== departureSeatData.flight_id) {
+        if (departureFlightId !== departureSeatData.flight_id || seatIdsReturn && returnFlightId !== returnSeatData.flight_id) {
             return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
 
         // if (totalAmount !== totalPrice) {
         //     return next(new apiError("Total Harga dengan harga Kursi tidak cocok", 400));
         // }
-        let passengerData = await getPassengerData(passengersId, seatIdsDeparture, seatIdsReturn)
+        // let passengerData = await getPassengerData(passengersId, seatIdsDeparture, seatIdsReturn)
         const paymentResult = await createPayment(transaction, paymentId, user_id, totalPrice);
         const bookingResult = await createBooking(transaction, user_id, paymentId, departureFlightId, totalPrice, noOfPassenger, isRoundTrip);
         const updatedFlight = await updateFlightCapacity(departureFlightId, noOfPassenger, transaction)
         const updatedSeats = await updateSeatsAvailability(seatIdsDeparture, transaction)
 
         let terminal = JSON.stringify(updatedFlight.terminal);
-        for (let i = 0; i < seatIdsDeparture.length; i++) {
-            const ticketData = await createTicket(departureFlightId, seatIdsDeparture[i], passengerData[i].passenger.passenger_id, bookingResult.booking_id, passengerData[i].departureSeat.seat_number, passengerData[i].first_name, terminal, req.body.buyerData, passengersData[i].passenger_type, transaction)
-        }
+        await Promise.all(seatIdsDeparture.map((seatId, index) => createTicket(departureFlightId, seatId, passengersId[index], bookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
+
         if (returnSeatData) {
             returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, totalPrice, noOfPassenger, isRoundTrip);
             const updatedFlightReturn = await updateFlightCapacity(returnFlightId, noOfPassenger, transaction)
             const updateSeatsReturn = await updateSeatsAvailability(seatIdsReturn, transaction)
-            for (let i = 0; i < seatIdsReturn.length; i++) {
-                const ticketData = await createTicket(returnFlightId, seatIdsReturn[i], passengerData[i].passenger.passenger_id, returnBookingResult.booking_id, passengerData[i].returnSeat.seat_number, passengerData[i].first_name, terminal, req.body.buyerData, passengersData[i].passenger_type, transaction)
-            }
-        }
+            await Promise.all(seatIdsReturn.map((seatId, index) => createTicket(returnFlightId, seatId, passengersId[index], returnBookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
+        }
         let parameter = {
             "transaction_details": {
                 "order_id": paymentId,
@@ -248,7 +237,7 @@ async function createPayment(transaction, paymentId, user_id, totalPrice) {
         payment_id: paymentId,
         user_id: user_id,
         total_amount: totalPrice,
-        payment_method: 'gopay',
+        payment_method: '',
         payment_date: Date.now(),
         payment_status: 'pending',
     }, { transaction });
