@@ -113,10 +113,10 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (allSeatIds.length !== seatsIdSet.size) {
             return next(new apiError("Seat yang dipilih tidak bisa sama", 400));
         }
-        if (noOfPassenger !== seatIdsDeparture.length || seatIdsReturn && noOfPassenger !== seatIdsReturn.length) {
+        if (noOfPassenger !== seatIdsDeparture.length) {
             return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
         }
-        if (departureFlightId !== departureSeatData.flight_id || seatIdsReturn && returnFlightId !== returnSeatData.flight_id) {
+        if (departureFlightId !== departureSeatData.flight_id) {
             return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
 
