@@ -99,7 +99,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
         const departureSeatPrice = await Price.findOne({ where: { flight_id: departureFlightId, seat_class: seatClassDeparture } })
         let totalPrice = 0
 
-        let returnSeatData, returnSeatPrice, returnBookingResult = {};
+        let seatClassReturn, returnSeatPrice, returnBookingResult = {};
         let departureFlightPrice = 0, returnFlightPrice = 0
         let isRoundTrip = false;
         const allSeatIds = [...seatIdsDeparture];
@@ -108,7 +108,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (seatIdsReturn !== null && seatIdsReturn.length !== 0) {
             // returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
             parts = passengersData[0].returnSeats.split('-');
-            let seatClassReturn = parts[5]
+            seatClassReturn = parts[5]
             returnSeatPrice = await Price.findOne({ where: { flight_id: returnFlightId, seat_class: seatClassReturn } });
             isRoundTrip = true
             allSeatIds.push(...seatIdsReturn)
@@ -162,7 +162,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
         let terminal = JSON.stringify(updatedFlight.terminal);
         await Promise.all(seatIdsDeparture.map((seatId, index) => createTicket(departureFlightId, seatId, passengersId[index], bookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
-        if (returnSeatData) {
+        if (seatClassReturn) {
             returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, returnFlightPrice, noOfPassenger, isRoundTrip);
             const updatedFlightReturn = await updateFlightCapacity(returnFlightId, noOfPassenger, transaction)
             const updateSeatsReturn = await updateSeatsAvailability(seatIdsReturn, transaction)
