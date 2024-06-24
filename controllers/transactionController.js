@@ -87,9 +87,16 @@ const createTransactionsWithFlight = async (req, res, next) => {
 
         await Passenger.bulkCreate(passengers, { transaction });
         const paymentId = uuidv4();
-        const departureSeatData = await Seat.findOne({ where: { seat_id: seatIdsDeparture[0] } })
-        if (!departureSeatData) return next(new apiError("Seat yang dipilih tidak ada", 400));
-        const departureSeatPrice = await Price.findOne({ where: { flight_id: departureSeatData.flight_id, seat_class: departureSeatData.seat_class } })
+        // const departureSeatData = await Seat.findOne({ where: { seat_id: seatIdsDeparture[0] } })
+        // if (!departureSeatData) return next(new apiError("Seat yang dipilih tidak ada", 400));
+        let parts = passengersData[0].departureSeats.split('-');
+        let seatClassDeparture = parts[5];
+        let flightDepartureId = parts.slice(0, 3).join('-');
+        if (departureFlightId !== departureFlightId) {
+            return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
+        }
+        // The third part (index 2) onwards until the last part (index parts.length - 2) contains the class information
+        const departureSeatPrice = await Price.findOne({ where: { flight_id: departureFlightId, seat_class: seatClassDeparture } })
         let totalPrice = 0
 
         let returnSeatData, returnSeatPrice, returnBookingResult = {};
@@ -99,8 +106,10 @@ const createTransactionsWithFlight = async (req, res, next) => {
 
 
         if (seatIdsReturn !== null && seatIdsReturn.length !== 0) {
-            returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
-            returnSeatPrice = await Price.findOne({ where: { flight_id: returnSeatData.flight_id, seat_class: returnSeatData.seat_class } });
+            // returnSeatData = await Seat.findOne({ where: { seat_id: seatIdsReturn[0] } })
+            parts = passengersData[0].returnSeats.split('-');
+            let seatClassReturn = parts[5]
+            returnSeatPrice = await Price.findOne({ where: { flight_id: returnFlightId, seat_class: seatClassReturn } });
             isRoundTrip = true
             allSeatIds.push(...seatIdsReturn)
             for (let i = 0; i < passengersData.length; i++) {
@@ -139,9 +148,6 @@ const createTransactionsWithFlight = async (req, res, next) => {
         }
         if (noOfPassenger !== seatIdsDeparture.length) {
             return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
-        }
-        if (departureFlightId !== departureSeatData.flight_id) {
-            return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
 
         // if (totalAmount !== totalPrice) {
