@@ -2,7 +2,6 @@ const ApiError = require("../utils/apiError");
 const uuid = require("uuid");
 const { Notification } = require("../models");
 
-// Unchecked controller wait for booking id
 
 const createNotification = async (req, res, next) => {
   const { user_id, flight_id, booking_id, promotion_id, notification_type, message, is_read } = req.body;
@@ -40,13 +39,13 @@ const getNotification = async (req, res, next) => {
       return next(new ApiError("Notification is Empty"));
     }
 
-    res.status(201).json({
+    res.status(200).json({
       is_sucsess: true,
-      code: 201,
+      code: 200,
       data: {
         notification,
       },
-      message: "GEt all notif success"
+      message: "Get all notif success"
     });
   } catch (error) {
     next(new ApiError(error.message));
@@ -58,22 +57,53 @@ const getNotificationById = async (req, res, next) => {
     const notification = await Notification.findByPk(req.params.id);
 
     if (!notification) {
-      return next(new ApiError("Promotion not found", 404));
+      return next(new ApiError("Notification not found", 404));
     }
 
     res.status(200).json({
-      status: "Success",
+      is_sucsess: true,
+      code: 200,
       data: {
         notification,
       },
+       message: "Get notification success"
     });
   } catch (error) {
     next(new ApiError(error.message));
   }
 };
 
+const updateNotificationStatus = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const notification = await Notification.findByPk(id);
+
+    if(!notification) {
+      return next(new ApiError("Notification not found", 404));
+    }
+
+
+    notification.is_read = true;
+    await notification.save();
+    
+    res.status(200).json({
+      is_sucsess: true,
+      code: 200,
+      data: {
+        notification,
+      },
+       message: "Update notification success"
+    })
+
+  }catch (error) {
+    next(new ApiError(error.message)) 
+  }
+
+}
+
 module.exports = {
   createNotification,
   getNotification,
-  getNotificationById
+  getNotificationById,
+  updateNotificationStatus,
 };
