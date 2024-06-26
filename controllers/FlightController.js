@@ -5,6 +5,7 @@ const { Op } = require('sequelize');
 const { Flight, Airport, Airline, Price } = require('../models');
 const { query } = require("express");
 const { Sequelize, QueryTypes } = require('sequelize');
+const airport = require("../models/airport");
 require("dotenv").config();
 
 const sequelize = new Sequelize(
@@ -356,6 +357,107 @@ const updateFlight = async (req, res, next) => {
     }
 };
 
+const favoriteDestination = async (req, res, next) => {
+    try {
+        let favoriteDestination = [
+            {
+                isRoundTrip: true, //set aja true
+                from: 'Jakarta', //city
+                to: 'Singapore', //city
+                continent: 'Asia',
+                departureDate: '2024-06-04', //tanggal kedatangan
+                returnDate: '2024-06-04', //tanggal kepulangan
+                passengersTotal: 3,
+                passengersAdult: 3,
+                passengersBaby: 0,
+                passengersChild: 0,
+                seatClass: 'economy', //kelas penumpang
+                discount: '50%', //(bebas mau set berapa, ga juga gapapa.Bisa juga lu set jadi limited statusnya)
+                price: 999999,
+                imageUrl: 'https://smansasingaraja.sch.id/wp-content/uploads/2021/09/singapore-1-960x600-1.jpg',
+                airline: 'Lion air'
+            },
+            {
+                isRoundTrip: true, //set aja true
+                from: 'Jakarta', //city
+                to: 'Medina', //city
+                continent: 'Asia',
+                departureDate: '2024-06-05', //tanggal kedatangan
+                returnDate: '2024-06-05', //tanggal kepulangan
+                passengersTotal: 3,
+                passengersAdult: 3,
+                passengersBaby: 0,
+                passengersChild: 0,
+                seatClass: 'economy', //kelas penumpang
+                discount: '50%', //(bebas mau set berapa, ga juga gapapa.Bisa juga lu set jadi limited statusnya)
+                price: 1500000,
+                imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Madeena_masjid_nabavi_12122008230.jpg/800px-Madeena_masjid_nabavi_12122008230.jpg',
+                airline: 'Saudia'
+            },
+            {
+                isRoundTrip: true, //set aja true
+                from: 'Bali', //city
+                to: 'Lisbon', //city
+                continent: 'Europe',
+                departureDate: '2024-06-06', //tanggal kedatangan
+                returnDate: '2024-06-06', //tanggal kepulangan
+                passengersTotal: 3,
+                passengersAdult: 3,
+                passengersBaby: 0,
+                passengersChild: 0,
+                seatClass: 'economy', //kelas penumpang
+                discount: '10%', //(bebas mau set berapa, ga juga gapapa.Bisa juga lu set jadi limited statusnya)
+                price: 1300000,
+                imageUrl: 'https://www.oliverstravels.com/blog/wp-content/uploads/2019/05/Sintra-Coast-V2.jpg',
+                airline: 'Garuda Indonesia'
+            },
+            {
+                isRoundTrip: true, //set aja true
+                from: 'Jakarta', //city
+                to: 'Tokyo', //city
+                continent: 'Asia',
+                departureDate: '2024-06-07', //tanggal kedatangan
+                returnDate: '2024-06-07', //tanggal kepulangan
+                passengersTotal: 3,
+                passengersAdult: 3,
+                passengersBaby: 0,
+                passengersChild: 0,
+                seatClass: 'economy', //kelas penumpang
+                discount: '5%', //(bebas mau set berapa, ga juga gapapa.Bisa juga lu set jadi limited statusnya)
+                price: 1400000,
+                imageUrl: 'https://www.planetware.com/wpimages/2020/06/japan-tokyo-to-mt-fuji-best-ways-to-get-there-by-group-tour.jpg',
+                airline: 'Japan Airlines'
+            },
+            {
+                isRoundTrip: true, //set aja true
+                from: 'Jakarta', //city
+                to: 'Los angeles', //city
+                continent: 'America',
+                departureDate: '2024-06-09', //tanggal kedatangan
+                returnDate: '2024-06-09', //tanggal kepulangan
+                passengersTotal: 3,
+                passengersAdult: 3,
+                passengersBaby: 0,
+                passengersChild: 0,
+                seatClass: 'economy', //kelas penumpang
+                discount: '1%', //(bebas mau set berapa, ga juga gapapa.Bisa juga lu set jadi limited statusnya)
+                price: 2000000,
+                imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/LA_Downtown_View_%28cropped%29.jpg/800px-LA_Downtown_View_%28cropped%29.jpg',
+                airline: 'China Eastern Airlines'
+            },
+        ]
+
+        res.status(200).json({
+            is_success: true,
+            code: 200,
+            data: favoriteDestination,
+            message: "Favorite destination"
+        });
+    } catch (error) {
+        console.log(error)
+        next(new ApiError(error.message, 500))
+    }
+}
 
 //code sementara otw refactor 
 const validateQueryParams = (params) => {
@@ -378,5 +480,6 @@ module.exports = {
     getAllFlights,
     getFlightById,
     deleteFlight,
-    updateFlight
+    updateFlight,
+    favoriteDestination
 };
