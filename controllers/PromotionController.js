@@ -16,10 +16,12 @@ const createPromotion = async (req, res, next) => {
     });
 
     res.status(201).json({
-      status: "Success",
+      is_succes: true,
+      code: 201,
       data: {
         newPromotion,
       },
+      message: "Promotion created",
     });
   } catch (error) {
     next(new ApiError(error.message, 500));
@@ -32,10 +34,12 @@ const getPromotion = async (req, res, next) => {
     const promotion = await Promotion.findAll();
 
     res.status(200).json({
-      status: "Success",
+      is_succes: true,
+      code: 201,
       data: {
         promotion,
       },
+      message: "Get all promotion success",
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
@@ -51,10 +55,12 @@ const getPromotionById = async (req, res, next) => {
     }
 
     res.status(200).json({
-      status: "Success",
+      is_succes: true,
+      code: 200,
       data: {
         promotion,
       },
+      message: "Get promotion success",
     });
   } catch (error) {
     next(new ApiError(error.message, 500));
@@ -65,7 +71,6 @@ const deletePromotion = async (req, res, next) => {
   try {
     const promotion = await Promotion.findByPk(req.params.id);
 
-    //if flight doesnt exist
     if (!promotion) {
       next(new ApiError(`Promotion with this ID : ${req.params.id} not found`, 404));
     }
@@ -77,8 +82,12 @@ const deletePromotion = async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: "Success",
-      message: "successfully deleted Promotion",
+      is_succes: true,
+      code: 200,
+      data: {
+        promotion,
+      },
+      message: "Promotion deleted success",
     });
   } catch (err) {
     next(new ApiError(err.message, 400));
