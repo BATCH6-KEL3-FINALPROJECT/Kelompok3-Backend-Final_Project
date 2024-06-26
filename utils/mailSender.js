@@ -28,11 +28,12 @@ const mailSender = async (email, title, body) => {
     }
 }
 
-const printTicket = async (email, title, body) => {
+const printTicket = async (email, title, body, fileLocations) => {
     try {
         const fs = require('fs');
         const path = require('path');
-        const filePath = path.join(__dirname, 'E_Ticket.pdf'); // Assuming E_Ticket.pdf is in the same directory as this script
+        // const filePath = path.join(__dirname, 'E_Ticket.pdf'); // Assuming E_Ticket.pdf is in the same directory as this script
+        const filePath = path.join(fileLocations); // Assuming E_Ticket.pdf is in the same directory as this script
 
         // Check if the file exists
         if (!fs.existsSync(filePath)) {
@@ -63,7 +64,6 @@ const printTicket = async (email, title, body) => {
                 }
             ]
         });
-
         console.log('Email sent:', info.messageId);
         return info;
 
