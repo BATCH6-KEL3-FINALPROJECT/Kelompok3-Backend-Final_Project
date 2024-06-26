@@ -68,7 +68,7 @@ const createTransakti = async (req, res, next) => {
 const createTransactionsWithFlight = async (req, res, next) => {
     let transaction = await sequelize.transaction();
     try {
-        const { fullName, familyName, phoneNumber, email, totalAmount, departureFlightId, returnFlightId, noOfPassenger, departureSeats, returnSeats } = req.body
+        const { totalAmount, departureFlightId, returnFlightId, noOfPassenger, } = req.body
         const { user_id } = req.user
         const { passengersData } = req.body
 
@@ -95,7 +95,6 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (departureFlightId !== departureFlightId) {
             return next(new apiError("Flight Data dengan Data Seats yang dikirim tidak cocok", 400));
         }
-        // The third part (index 2) onwards until the last part (index parts.length - 2) contains the class information
         const departureSeatPrice = await Price.findOne({ where: { flight_id: departureFlightId, seat_class: seatClassDeparture } })
         let totalPrice = 0
 
@@ -137,6 +136,7 @@ const createTransactionsWithFlight = async (req, res, next) => {
                 departureFlightPrice = departureSeatPrice.price_for_infant + departureFlightPrice
             }
         }
+        let passengersName = passengersData[0].first_name + passengersData[0].last_name
 
         let checkSeatStatus = await checkSeatAvailability(allSeatIds)
         const seatsIdSet = new Set(allSeatIds);
@@ -146,7 +146,9 @@ const createTransactionsWithFlight = async (req, res, next) => {
         if (allSeatIds.length !== seatsIdSet.size) {
             return next(new apiError("Seat yang dipilih tidak bisa sama", 400));
         }
-        if (noOfPassenger !== seatIdsDeparture.length) {
+        console.log(`jumlah passenger ${noOfPassenger} jumlah seat Id ${passengersData.length}`)
+        console.log("Type dari", typeof noOfPassenger, typeof passengersData.length)
+        if (noOfPassenger !== passengersData.length) {
             return next(new apiError("Jumlah Passenger dengan Data yang dikirim tidak sama", 400));
         }
 
@@ -160,7 +162,8 @@ const createTransactionsWithFlight = async (req, res, next) => {
         const updatedSeats = await updateSeatsAvailability(seatIdsDeparture, transaction)
 
         let terminal = JSON.stringify(updatedFlight.terminal);
-        await Promise.all(seatIdsDeparture.map((seatId, index) => createTicket(departureFlightId, seatId, passengersId[index], bookingResult.booking_id, "", passengersData[index].first_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
+
+        await Promise.all(seatIdsDeparture.map((seatId, index) => createTicket(departureFlightId, seatId, passengersId[index], bookingResult.booking_id, "", passengersData[index].first_name + passengersData[index].last_name, terminal, req.body.buyerData, passengersData[index].passenger_type, transaction)));
 
         if (seatClassReturn) {
             returnBookingResult = await createBooking(transaction, user_id, paymentId, returnFlightId, returnFlightPrice, noOfPassenger, isRoundTrip);
@@ -286,6 +289,8 @@ async function createBooking(transaction, user_id, paymentId, flightId, totalPri
 async function createTicket(flightId, seatId, passengerId, bookingId, seatNumber, passengerName, terminal, buyerData, passengerType, transaction) {
     const airline = await Flight.findOne({ where: { flight_id: flightId } })
     const ticketCode = await generateCode(airline.airline_id)
+    console.log("Nama tiket penumppang", passengerName)
+
     return await Ticket.create({
         ticket_id: uuidv4(),
         ticket_code: ticketCode,
@@ -294,7 +299,7 @@ async function createTicket(flightId, seatId, passengerId, bookingId, seatNumber
         passenger_id: passengerId,
         booking_id: bookingId,
         seat_number: seatNumber,
-        passsenger_name: passengerName,
+        passenger_name: passengerName,
         passenger_type: passengerType,
         TERMINAL: terminal,
         ticket_buyer: buyerData,

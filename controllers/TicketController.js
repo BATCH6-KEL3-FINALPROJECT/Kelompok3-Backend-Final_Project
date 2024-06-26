@@ -3,6 +3,9 @@ const ApiError = require("../utils/apiError");
 const { v4: uuidv4 } = require("uuid");
 const fs = require('fs');
 const path = require('path');
+const puppeteer = require('puppeteer');
+const htmlPdf = require('html-pdf');
+const { Model } = require("sequelize");
 
 const createTicket = async (req, res, next) => {
   try {
@@ -181,6 +184,33 @@ const deleteTicket = async (req, res, next) => {
   }
 };
 
+const generateTicket = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const { id } = req.params;
+
+    console.log("booking_id", id);
+    const bookingData = await Booking.findOne({
+      where: { booking_id: id },
+      include: {
+        model: Ticket,
+        attributes: ['seat_number', 'ticket_code', 'passenger_name', 'ticket_status'],
+      }
+    });
+    console.log(bookingData)
+
+    res.status(200).json({
+      is_success: true,
+      code: 200,
+      data: bookingData,
+      message: "Successfully get ticket",
+    });
+
+  } catch (error) {
+    next(new ApiError(error.message, 400));
+
+  }
+}
 const downloadTicket = async (req, res, next) => {
   try {
     console.log("Downloading Ticket");
@@ -210,5 +240,6 @@ module.exports = {
   getTicketById,
   updateTicket,
   deleteTicket,
-  downloadTicket
+  downloadTicket,
+  generateTicket
 };
