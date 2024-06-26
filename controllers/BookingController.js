@@ -165,7 +165,7 @@ const getUserBooking = async (req, res, next) => {
             },
             {
                 model: Ticket,
-                attributes: ['seat_number'],
+                attributes: ['ticket_id', 'ticket_status', 'seat_number'],
                 include: [{
                     model: Seat,
                     attributes: ['seat_class']
