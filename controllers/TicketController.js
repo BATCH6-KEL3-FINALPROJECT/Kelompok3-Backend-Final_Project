@@ -1,12 +1,10 @@
-const { Ticket, Booking, Flight, Airport, Airline, Passenger, Seat } = require("../models"); // Adjust the path to your models folder
+const { Ticket, Booking, Flight, Airport, Airline, Passenger, Seat, User } = require("../models"); // Adjust the path to your models folder
 const ApiError = require("../utils/apiError");
 const { v4: uuidv4 } = require("uuid");
 const fs = require('fs');
 const playwright = require('playwright');
 const path = require('path');
-const puppeteer = require('puppeteer');
-const htmlPdf = require('html-pdf');
-const { Model } = require("sequelize");
+const { mailSender, printTicket } = require("../utils/mailSender");
 
 const createTicket = async (req, res, next) => {
   try {
@@ -185,10 +183,45 @@ const deleteTicket = async (req, res, next) => {
   }
 };
 
-const generateTicket = async (req, res, next) => {
+const sentTicket = async (req, res, next) => {
   try {
-    const { email } = req.body;
+    let { email } = req.body;
     const { id } = req.params;
+    const { user_id } = req.user;
+
+    const user = await User.findOne({ where: { user_id: user_id } })
+    if (!email) {
+      email = user.email
+    }
+    const path = await generateTicket(id, email, next)
+    const mailResponse = await printTicket(
+      email,
+      "Your Ticket ",
+      `<div style="font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; padding: 20px;">
+          <img src="https://ik.imagekit.io/ib9lfahbz/finalProject/logo%20skypass%202.png?updatedAt=1717246290829" alt="Logo" style="max-width: 40%; height: auto; margin-bottom: 20px;">
+          <h1 style="color: #333; font-size: 2rem; margin-bottom: 20px;">Halo</h1>
+          <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 20px;">Ini adalah Tiket anda untuk penerbangan {nanti diisi} untuk akun dengan email ${email}.</h2>
+          <h2 style="color: #333; font-size: 1.rem; margin-bottom: 20px;">Jika anda tidak merasa melakukan request ini mohon abaikan email ini.</h2>
+        </div>
+        `, path
+    );
+    res.status(200).json({
+      is_success: true,
+      code: 200,
+      data: {},
+      message: "Ticket sent successfully, please check your email",
+
+    });
+  } catch (error) {
+    console.log(error.message);
+    // await transaction.rollback(); 
+    return next(new ApiError("failed to sent OTP", 400));
+  }
+};
+const generateTicket = async (id, email, next) => {
+  try {
+    // const { email } = req.body;
+    // const { id } = req.params;
 
     const bookingData = await Booking.findOne({
       attributes: { exclude: ['updatedAt'] },
@@ -232,6 +265,7 @@ const generateTicket = async (req, res, next) => {
 
     const formattedDuration = `${hours} hours ${minutes} minutes`;
 
+    let ticketsHtml;
     bookingData.Tickets.forEach((ticket, index) => {
       // Generate HTML for each ticket
       ticketsHtml += `
@@ -305,7 +339,7 @@ const generateTicket = async (req, res, next) => {
       
       <div class="flex-1">
         <h5 class="text-lg font-bold">${bookingData.Flight.departingAirport.iata_code} ${bookingData.Flight.departure_time.slice(0, 5)} </h5>
-        <p class="text-gray-600">${reversedDate}</p>
+        <p class="text-gray-600">${dayName} ${reversedDate}</p>
         <p class="text-gray-600">${bookingData.Flight.departure_airport} </p>
         <p class="text-gray-600">Terminal 1</p>
       </div>
@@ -320,59 +354,12 @@ const generateTicket = async (req, res, next) => {
       
       <div class="flex-1">
         <h5 class="text-lg font-bold">${bookingData.Flight.departingAirport.iata_code} ${bookingData.Flight.arrival_time.slice(0, 5)}</h5>
-        <p class="text-gray-600">${bookingData.Flight.arrival_date} </p>
+        <p class="text-gray-600">${dayName} ${bookingData.Flight.arrival_date} </p>
         <p class="text-gray-600">${bookingData.Flight.arrival_airport}</p>
       </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md p-12 mt-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-        <div class="flex justify-center items-center rounded-lg  p-4 ">
-          <p class="text-gray-600"><span class="font-bold">#1</span></p>
-        </div>
-
-        <div class="bg-white rounded-lg  p-4">
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-gray-600"><span class="font-bold">Traveller</span></p>
-            <p class="text-gray-600">${bookingData.Tickets[0].passenger_name}</p>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-lg p-4">
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-gray-600"><span class="font-bold">Ticket</span></p>
-            <p class="text-gray-600">${bookingData.Tickets[0].ticket_code}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white rounded-lg shadow-md p-12 mt-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="flex justify-center items-center rounded-lg  p-4 ">
-          <p class="text-gray-600"><span class="font-bold">#2</span></p>
-        </div>
-
-        <div class="bg-white rounded-lg  p-4">
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-gray-600"><span class="font-bold">Traveller</span></p>
-            <p class="text-gray-600">P bang</p>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-lg  p-4">
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-gray-600"><span class="font-bold">PNR</span></p>
-            <p class="text-gray-600">YHUJGX</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg p-4">
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-gray-600"><span class="font-bold">Ticket</span></p>
-            <p class="text-gray-600">YHUJGX</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    ${ticketsHtml}
     <div class="container mx-auto p-4">
       <h1 class="text-2xl font-bold text-gray-800 mb-6 mt-6">Baggage Policy : </h1>
       <table class="w-full border-collapse rounded-lg overflow-hidden shadow-md">
@@ -406,55 +393,18 @@ const generateTicket = async (req, res, next) => {
     const fileName = `ticket-${bookingData.booking_code}`
     const path = `tickets/user/${bookingData.user_id}/${fileName}.pdf`
     await page.pdf({ path: path });
-    console.log('PDF generated successfully');
     await browser.close();
 
-    res.status(200).json({
-      is_success: true,
-      code: 200,
-      data: bookingData,
-      message: "Successfully get ticket",
-    });
+    return path;
 
   } catch (error) {
     console.log(error);
     next(new ApiError(error.message, 400));
-
   }
 }
-const cobaTicket = async (req, res, next) => {
 
-  const htmlContent = `
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <title>Generated PDF</title>
-  </head>
-  <body>
-    <h1>Hello, this is your PDF content!</h1>
-    <p>This is a sample PDF generated using Playwright.</p>
-  </body>
-  </html>
-`;
-
-
-  const browser = await playwright.chromium.launch();
-  const page = await browser.newPage();
-  await page.setContent(htmlContent);
-  await page.pdf({ path: 'tickets/user/ini.pdf' });
-  console.log('PDF generated successfully');
-  await browser.close();
-
-  res.status(200).json({
-    is_success: true,
-    code: 200,
-    data: "",
-    message: "Successfully ikin ticket",
-  });
-}
 const downloadTicket = async (req, res, next) => {
   try {
-    console.log("Downloading Ticket");
     const filePath = path.join(__dirname, '..', 'E_Ticket.pdf');
 
     fs.access(filePath, fs.constants.F_OK, (err) => {
@@ -483,5 +433,5 @@ module.exports = {
   deleteTicket,
   downloadTicket,
   generateTicket,
-  cobaTicket
+  sentTicket
 };
