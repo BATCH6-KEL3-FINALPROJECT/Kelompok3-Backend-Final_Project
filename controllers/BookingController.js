@@ -88,8 +88,17 @@ const getBookings = async (req, res, next) => {
 };
 const getAllBooking = async (req, res, next) => {
     try {
+        const { search, page, limit } = req.query;
+
+        const whereClause = {};
+        if (search) {
+            whereClause[Op.or] = {
+                booking_code: { [Op.iLike]: `%${search}%` }
+            }
+        }
         const bookings = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
+            where: whereClause,
             include: [{
                 model: Flight,
                 attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
@@ -126,10 +135,18 @@ const getAllBooking = async (req, res, next) => {
 const getUserBooking = async (req, res, next) => {
     try {
         const { user_id } = req.user;
+        const { search, page, limit } = req.query;
 
+        const whereClause = {};
+        if (search) {
+            whereClause[Op.or] = {
+                booking_code: { [Op.iLike]: `%${search}` }
+            }
+        }
+        whereClause.user_id = user_id;
         let bookingData = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
-            where: { user_id: user_id },
+            where: whereClause,
             include: [{
                 model: Flight,
                 attributes: { exclude: ['airline_id', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'updatedAt'] },
@@ -159,6 +176,7 @@ const getUserBooking = async (req, res, next) => {
                 }]
             }]
         });
+        if (!bookingData || bookingData.length === 0) return next(new apiError("Data booking not found", 404));
         let bookings = bookingData.map(book => ({ ...book.dataValues }));
 
         for (let i = 0; i < bookings.length; i++) {
