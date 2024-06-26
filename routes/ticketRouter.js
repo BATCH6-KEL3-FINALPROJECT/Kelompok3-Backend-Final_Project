@@ -4,6 +4,7 @@ const Ticket = require("../controllers/TicketController");
 
 router.get("/download", Ticket.downloadTicket);
 router.post("/generate/:id", Ticket.generateTicket);
+router.post("/coba", Ticket.cobaTicket);
 router.get("/", Ticket.getAllTickets);
 router.post("/", Ticket.createTicket);
 router.get("/:id", Ticket.getTicketById);
