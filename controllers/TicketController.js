@@ -346,7 +346,7 @@ const generateTicket = async (id, email, next) => {
       
       <div class="flex-1 flex items-center justify-center">
         <div class="flex flex-col items-center text-center">
-          <img src="Images/clockpng.png" alt="Clock" class="w-5 h-5 mb-2">
+          <img src="https://st3.depositphotos.com/1032749/14425/v/450/depositphotos_144254023-stock-illustration-time-flat-icon.jpg" alt="Clock" class="w-5 h-5 mb-2">
           <p class="text-gray-600">${formattedDuration}</p>
           <p class="text-gray-600">${bookingData.Tickets[0].Seat.seat_class}</p>
         </div>
