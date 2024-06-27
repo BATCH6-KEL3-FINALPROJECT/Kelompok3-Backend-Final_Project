@@ -97,16 +97,13 @@ const getAllFlights = async (req, res, next) => {
             departure_city,
             arrival_city,
             departure_date,
-            arrival_date,
             departure_time,
             arrival_time,
             seat_class,
-            flight_duration,
             departure_airport,
             arrival_airport,
             seats_available,
-            departure_continent,
-            arrival_continent,
+            price,
             page,
             limit } = req.query;
 
@@ -134,14 +131,23 @@ const getAllFlights = async (req, res, next) => {
         if (arrival_airport) sqlQuery += ` AND f.arrival_airport = '${arrival_airport}'`;
         // if (arrival_date) sqlQuery += ` AND f.arrival_date = '${arrival_date}'`;
         if (airline_id) sqlQuery += ` AND f.airline_id = '${airline_id}'`;
-        if (departure_time) sqlQuery += ` AND f.departure_time = '${departure_time}'`;
         if (arrival_time) sqlQuery += ` AND f.arrival_time = '${arrival_time}'`;
         // if (flight_duration) sqlQuery += ` AND f.flight_duration = '${flight_duration}'`;
         // if (seats_available) sqlQuery += ` AND f.seats_available >= ${seats_available}`;
         if (seatClassLower) sqlQuery += ` AND p.seat_class = '${seatClassLower}'`;
         if (departure_city) sqlQuery += ` AND da.city = '${departure_city}'`;
         if (arrival_city) sqlQuery += ` AND aa.city = '${arrival_city}'`;
-
+        console.log("Departre time", departure_time)
+        if (departure_time === 'early') {
+            sqlQuery += ` ORDER BY f.departure_time ASC`;
+        } else if (departure_time === 'late') {
+            sqlQuery += ` ORDER BY f.departure_time DESC`;
+        }
+        if (price === 'lowest') {
+            sqlQuery += ` ORDER BY p.price ASC`;
+        } else if (price === 'highest') {
+            sqlQuery += ` ORDER BY p.price DESC`;
+        }
         // Execute the raw SQL query
         const flights = await sequelize.query(sqlQuery, { type: QueryTypes.SELECT });
         flights.forEach(flight => {
