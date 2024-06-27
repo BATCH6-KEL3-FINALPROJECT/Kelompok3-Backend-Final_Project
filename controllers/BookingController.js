@@ -135,10 +135,10 @@ const getAllBooking = async (req, res, next) => {
 const getUserBooking = async (req, res, next) => {
     try {
         const { user_id } = req.user;
-        const { search, page, limit, date } = req.query;
+        let { search, page, limit, date, until } = req.query;
 
+        if (!until) until = date
         const whereClause = {};
-        console.log('date', date)
         if (search) {
             whereClause[Op.or] = {
                 booking_code: { [Op.iLike]: `%${search}%` },
@@ -149,7 +149,7 @@ const getUserBooking = async (req, res, next) => {
             whereClause.booking_date = {
                 [Op.between]: [
                     new Date(date + 'T00:00:00.000Z'),
-                    new Date(date + 'T23:59:59.999Z')
+                    new Date(until + 'T23:59:59.999Z')
                 ]
             };
         }
