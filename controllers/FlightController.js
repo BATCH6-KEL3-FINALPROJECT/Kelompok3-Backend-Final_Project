@@ -371,8 +371,8 @@ const favoriteDestination = async (req, res, next) => {
                 from: 'Jakarta', //city
                 to: 'Singapore', //city
                 continent: 'Asia',
-                departureDate: '2024-06-04', //tanggal kedatangan
-                returnDate: '2024-06-04', //tanggal kepulangan
+                departureDate: '2024-06-30', //tanggal kedatangan
+                returnDate: '2024-06-01', //tanggal kepulangan
                 passengersTotal: 3,
                 passengersAdult: 3,
                 passengersBaby: 0,
@@ -388,8 +388,8 @@ const favoriteDestination = async (req, res, next) => {
                 from: 'Jakarta', //city
                 to: 'Medina', //city
                 continent: 'Asia',
-                departureDate: '2024-06-05', //tanggal kedatangan
-                returnDate: '2024-06-05', //tanggal kepulangan
+                departureDate: '2024-06-29', //tanggal kedatangan
+                returnDate: '2024-07-01', //tanggal kepulangan
                 passengersTotal: 3,
                 passengersAdult: 3,
                 passengersBaby: 0,
@@ -406,7 +406,7 @@ const favoriteDestination = async (req, res, next) => {
                 to: 'Lisbon', //city
                 continent: 'Europe',
                 departureDate: '2024-06-06', //tanggal kedatangan
-                returnDate: '2024-06-06', //tanggal kepulangan
+                returnDate: '2024-06-09', //tanggal kepulangan
                 passengersTotal: 3,
                 passengersAdult: 3,
                 passengersBaby: 0,
@@ -423,7 +423,7 @@ const favoriteDestination = async (req, res, next) => {
                 to: 'Tokyo', //city
                 continent: 'Asia',
                 departureDate: '2024-06-07', //tanggal kedatangan
-                returnDate: '2024-06-07', //tanggal kepulangan
+                returnDate: '2024-06-10', //tanggal kepulangan
                 passengersTotal: 3,
                 passengersAdult: 3,
                 passengersBaby: 0,
@@ -439,8 +439,8 @@ const favoriteDestination = async (req, res, next) => {
                 from: 'Jakarta', //city
                 to: 'Los angeles', //city
                 continent: 'America',
-                departureDate: '2024-06-09', //tanggal kedatangan
-                returnDate: '2024-06-09', //tanggal kepulangan
+                departureDate: '2024-06-05', //tanggal kedatangan
+                returnDate: '2024-06-08', //tanggal kepulangan
                 passengersTotal: 3,
                 passengersAdult: 3,
                 passengersBaby: 0,
