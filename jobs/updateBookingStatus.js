@@ -16,14 +16,16 @@ const updateUnpaidBooking = () => {
                 const pendingBooking = await Booking.findAll({ where: { payment_id: payment.payment_id } });
                 Booking.update({ status: 'cancelled' }, { where: { payment_id: payment.payment_id } })
                 pendingBooking.forEach(async (booking) => {
+                    const cancelledTicket = Ticket.update({ ticket_status: 'cancelled' }, { where: { booking_id: booking.booking_id } })
+                    let updateSeats = updateSeats + 1;
                     Ticket.update({ ticket_status: 'cancelled' }, { where: { booking_id: booking.booking_id } })
+                    Seat.update({ is_available: true }, { where: { seat_id: cancelledTicket.seat_id } })
+                    Flight.update({ seats_available: updateSeats }, { where: { flight_id: cancelledTicket.flight_id } })
                 })
-
             })
         } catch (error) {
             console.log("Cron job Error: " + error)
         }
-
     })
 }
 module.exports = updateUnpaidBooking;

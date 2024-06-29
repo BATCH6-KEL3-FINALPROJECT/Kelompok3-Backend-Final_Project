@@ -153,6 +153,10 @@ const getUserBooking = async (req, res, next) => {
                 ]
             };
         }
+        const pageNum = parseInt(page) || 1;
+        const limitData = parseInt(limit) || 10;
+        const offset = (pageNum - 1) * limitData;
+
         whereClause.user_id = user_id;
         let bookingData = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -184,7 +188,9 @@ const getUserBooking = async (req, res, next) => {
                     model: Passenger,
                     attributes: ['first_name', 'last_name', 'passenger_id', 'passenger_type']
                 }]
-            }]
+            }],
+            offset,
+            limit: limitData,
         });
         if (!bookingData || bookingData.length === 0) return next(new apiError("Data booking not found", 404));
         let bookings = bookingData.map(book => ({ ...book.dataValues }));
@@ -263,7 +269,6 @@ const getBookingById = async (req, res, next) => {
         let booking = {
             ...bookingData.dataValues
         }
-        console.log("priceData", priceData)
         for (let i = 0; i < booking.Tickets.length; i++) {
             if (booking.Tickets[i].Passenger.passenger_type === 'adult') {
                 booking.adultPrice = priceData.price
