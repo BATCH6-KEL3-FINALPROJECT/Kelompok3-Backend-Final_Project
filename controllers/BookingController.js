@@ -232,14 +232,14 @@ const getUserBooking = async (req, res, next) => {
                 bookings[i].totalBaby = totalBaby
             }
         }
-        const totalPages = Math.ceil(count / limitData);
+        const totalPages = Math.floor((count / 2) / limitData);
 
         res.status(200).json({
             is_success: true,
             code: 200,
             data: bookings,
             pagination: {
-                totalData: bookingData.length,
+                totalData: Math.floor(count / 2),
                 totalPages,
                 pageNum,
                 limitData,
