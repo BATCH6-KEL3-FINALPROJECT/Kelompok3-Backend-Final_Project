@@ -159,15 +159,16 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const { user_id } = req.user
+    const user = await User.findByPk(user_id);
 
     if (!user) {
-      next(new ApiError(`User with ID ${req.params.id} not found`, 404));
+      next(new ApiError(`User with ID ${user_id} not found`, 404));
     }
 
     await User.destroy({
       where: {
-        user_id: req.params.id,
+        user_id: user_id,
       },
     });
 

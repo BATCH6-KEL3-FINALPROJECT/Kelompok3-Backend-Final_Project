@@ -10,7 +10,7 @@ router.post('/create', authenticate, upload.array('images'), register);
 router.get("/", Users.findUsers);
 router.get("/:id", Users.findUserById);
 router.patch('/:id', authenticate, upload.array('images'), Users.updateUser);
-router.delete("/:id", Users.deleteUser);
+router.delete("/", authenticate, Users.deleteUser);
 
 
 module.exports = router;
