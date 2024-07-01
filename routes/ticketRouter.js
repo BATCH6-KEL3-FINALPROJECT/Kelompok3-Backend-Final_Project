@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Ticket = require("../controllers/TicketController");
 const authenticate = require("../middlewares/authenticate");
 
-router.get("/download", Ticket.downloadTicket);
+router.get("/download/:id", authenticate, Ticket.downloadTicket);
 router.post("/generate/:id", authenticate, Ticket.sentTicket);
 router.get("/", Ticket.getAllTickets);
 router.post("/", Ticket.createTicket);
