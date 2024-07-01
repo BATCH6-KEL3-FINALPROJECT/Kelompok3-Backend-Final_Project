@@ -96,7 +96,12 @@ const getAllBooking = async (req, res, next) => {
                 booking_code: { [Op.iLike]: `%${search}%` }
             }
         }
-        const bookings = await Booking.findAll({
+        const pageNum = parseInt(page) || 1;
+        const limitData = parseInt(limit) || 10;
+        const offset = (pageNum - 1) * limitData;
+
+
+        const { count, rows: bookings } = await Booking.findAndCountAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: whereClause,
             order: ['booking_date', 'ASC'],
@@ -120,13 +125,21 @@ const getAllBooking = async (req, res, next) => {
                     model: Seat,
                     attributes: ['seat_class']
                 }]
-            }]
+            }],
+            offset,
+            limit: limitData
         });
 
         res.status(200).json({
             is_success: true,
             code: 200,
             bookings,
+            pagination: {
+                totalData: count,
+                totalPages,
+                pageNum,
+                limitData,
+            },
             message: 'get All Bookings success'
         });
     } catch (err) {
@@ -193,6 +206,7 @@ const getUserBooking = async (req, res, next) => {
             offset,
             limit: limitData,
         });
+        console.log("Jumlah data booking", bookingData.length)
         if (!bookingData || bookingData.length === 0) return next(new apiError("Data booking not found", 404));
         let bookings = bookingData.map(book => ({ ...book.dataValues }));
 
@@ -225,7 +239,7 @@ const getUserBooking = async (req, res, next) => {
             code: 200,
             data: bookings,
             pagination: {
-                totalData: count,
+                totalData: bookingData.length,
                 totalPages,
                 pageNum,
                 limitData,
