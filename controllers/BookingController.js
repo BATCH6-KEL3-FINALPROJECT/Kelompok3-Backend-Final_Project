@@ -99,6 +99,7 @@ const getAllBooking = async (req, res, next) => {
         const bookings = await Booking.findAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: whereClause,
+            order: ['booking_date', 'ASC'],
             include: [{
                 model: Flight,
                 attributes: { exclude: ['flight_code', 'airline_id', 'flight_description', 'plane_type', 'seats_available', 'is_promo', 'is_available', 'createdAt', 'updatedAt'] },
