@@ -41,7 +41,7 @@ const createTransakti = async (req, res, next) => {
             }
         };
 
-        let transactionToken
+        let transactionToken8
         snap.createTransaction(parameter)
             .then((transaction) => {
                 // transaction token

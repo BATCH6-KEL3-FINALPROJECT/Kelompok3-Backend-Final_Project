@@ -281,7 +281,7 @@ const generateTicket = async (id, email, next) => {
           include: [
             {
               model: Seat,
-              attributes: ["seat_class"],
+              attributes: ["seat_class", 'seat_number'],
             },
             {
               model: Passenger,
@@ -345,7 +345,7 @@ const generateTicket = async (id, email, next) => {
         <div class="bg-white rounded-lg p-4">
           <div class="flex flex-col justify-center items-center">
             <p class="text-gray-600"><span class="font-bold mb-4">Seat</span></p>
-              <div class="mt-6 "> <p class="text-gray-600">${ticket.seat_number}</p></div>
+              <div class="mt-6 "> <p class="text-gray-600">${ticket.Seat.seat_number}</p></div>
           </div>
         </div>
 
@@ -439,8 +439,8 @@ const generateTicket = async (id, email, next) => {
           </p>
           <p class="text-sm text-gray-600">
             Date: <span class="font-semibold">${formatDate(
-              bookingData.booking_date
-            )}</span>
+      bookingData.booking_date
+    )}</span>
           </p>
         </div>
       </div>
@@ -482,13 +482,12 @@ const generateTicket = async (id, email, next) => {
             ${bookingData.Flight.departure_time.slice(0, 5)}
           </h5>
           <h5 class="text-lg font-bold">
-           ${bookingData.Flight.departingAirport.city} (${
-      bookingData.Flight.departingAirport.iata_code
-    })
+           ${bookingData.Flight.departingAirport.city} (${bookingData.Flight.departingAirport.iata_code
+      })
           </h5>
           <p class="text-gray-600">${formatDate(
-            bookingData.Flight.departure_date
-          )}</p>
+        bookingData.Flight.departure_date
+      )}</p>
           <p class="text-gray-600">${bookingData.Flight.departure_airport}</p>
         </div>
 
@@ -511,9 +510,8 @@ const generateTicket = async (id, email, next) => {
             ${bookingData.Flight.arrival_time.slice(0, 5)}
           </h5>
           <h5 class="text-lg font-bold">
-            ${bookingData.Flight.arrivingAirport.city} (${
-      bookingData.Flight.arrivingAirport.iata_code
-    })
+            ${bookingData.Flight.arrivingAirport.city} (${bookingData.Flight.arrivingAirport.iata_code
+      })
           </h5>
           <p class="text-gray-600">
             ${formatDate(bookingData.Flight.arrival_date)}
@@ -565,22 +563,54 @@ const generateTicket = async (id, email, next) => {
     next(new ApiError(error.message, 400));
   }
 };
-
 const downloadTicket = async (req, res, next) => {
   try {
     const filePath = path.join(__dirname, "..", "E_Ticket.pdf");
+    let { email } = req.body;
+    const { id } = req.params;
+    const { user_id } = req.user;
 
-    fs.access(filePath, fs.constants.F_OK, (err) => {
+    const user = await User.findOne({ where: { user_id: user_id } });
+    if (!email) {
+      email = user.email;
+    }
+
+    // Generate the ticket and get the file path
+    const ticketFilePath = await generateTicket(id, email, next);
+
+    // Send email with ticket details
+    const mailResponse = await printTicket(
+      email,
+      "Your Ticket",
+      `<div style="font-family: Arial, sans-serif; color: #333; background-color: #f7f7f7; padding: 20px;">
+          <img src="https://ik.imagekit.io/ib9lfahbz/finalProject/logo%20skypass%202.png?updatedAt=1717246290829" alt="Logo" style="max-width: 40%; height: auto; margin-bottom: 20px;">
+          <h1 style="color: #333; font-size: 2rem; margin-bottom: 20px;">Halo</h1>
+          <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 20px;">Ini adalah Tiket anda untuk penerbangan {nanti diisi} untuk akun dengan email ${email}.</h2>
+          <h2 style="color: #333; font-size: 1.rem; margin-bottom: 20px;">Jika anda tidak merasa melakukan request ini mohon abaikan email ini.</h2>
+        </div>
+        `,
+      ticketFilePath
+    );
+
+    // Check if the file exists
+    fs.access(ticketFilePath, fs.constants.F_OK, (err) => {
       if (err) {
         console.error("File not found:", err);
         return res.status(404).send("File not found.");
       }
 
-      res.download(filePath, "E_Ticket.pdf", (err) => {
+      // Download the file
+      res.download(ticketFilePath, "E_Ticket.pdf", (err) => {
         if (err) {
           console.error("Error downloading file:", err);
           return res.status(500).send("Error downloading file.");
         }
+
+        // Optionally, delete the file after download if needed
+        // fs.unlink(ticketFilePath, (err) => {
+        //   if (err) console.error("Error deleting file:", err);
+        //   else console.log("File deleted successfully");
+        // });
       });
     });
   } catch (err) {
@@ -588,6 +618,7 @@ const downloadTicket = async (req, res, next) => {
     return res.status(500).send("Internal server error.");
   }
 };
+
 module.exports = {
   createTicket,
   getAllTickets,

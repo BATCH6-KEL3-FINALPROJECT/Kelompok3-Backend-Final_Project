@@ -158,7 +158,7 @@ const getUserBooking = async (req, res, next) => {
         const offset = (pageNum - 1) * limitData;
 
         whereClause.user_id = user_id;
-        let bookingData = await Booking.findAll({
+        let { count, rows: bookingData } = await Booking.findAndCountAll({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: whereClause,
             include: [{
@@ -217,10 +217,19 @@ const getUserBooking = async (req, res, next) => {
                 bookings[i].totalBaby = totalBaby
             }
         }
+        const totalPages = Math.ceil(count / limitData);
+
         res.status(200).json({
             is_success: true,
             code: 200,
             data: bookings,
+            pagination: {
+                totalData: count,
+                totalPages,
+                pageNum,
+                limitData,
+            },
+
             message: "data booking"
         });
     } catch (error) {
