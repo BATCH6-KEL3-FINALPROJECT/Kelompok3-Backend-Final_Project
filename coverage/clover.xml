@@ -1,112 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719891437619" clover="3.2.0">
-  <project timestamp="1719891437619" name="All files">
-    <metrics statements="1534" coveredstatements="513" conditionals="432" coveredconditionals="13" methods="146" coveredmethods="37" elements="2112" coveredelements="563" complexity="0" loc="1534" ncloc="1534" packages="8" files="55" classes="55"/>
+<coverage generated="1719937280954" clover="3.2.0">
+  <project timestamp="1719937280954" name="All files">
+    <metrics statements="1534" coveredstatements="548" conditionals="432" coveredconditionals="22" methods="146" coveredmethods="43" elements="2112" coveredelements="613" complexity="0" loc="1534" ncloc="1534" packages="8" files="55" classes="55"/>
     <package name="bin">
       <metrics statements="22" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="app.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\bin\app.js">
+      <file name="app.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\bin\app.js">
         <metrics statements="22" coveredstatements="21" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
       </file>
     </package>
     <package name="config">
       <metrics statements="3" coveredstatements="3" conditionals="8" coveredconditionals="4" methods="0" coveredmethods="0"/>
-      <file name="database.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\config\database.js">
+      <file name="database.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\config\database.js">
         <metrics statements="3" coveredstatements="3" conditionals="8" coveredconditionals="4" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
       </file>
     </package>
     <package name="controllers">
-      <metrics statements="1142" coveredstatements="194" conditionals="398" coveredconditionals="2" methods="102" coveredmethods="4"/>
-      <file name="AirlineController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\AirlineController.js">
-        <metrics statements="16" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
-      </file>
-      <file name="AirpotController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\AirpotController.js">
-        <metrics statements="25" coveredstatements="7" conditionals="6" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
-        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="58" count="0" type="stmt"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="87" count="2" type="stmt"/>
-      </file>
-      <file name="AuthController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\AuthController.js">
-        <metrics statements="133" coveredstatements="26" conditionals="38" coveredconditionals="0" methods="9" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+      <metrics statements="1142" coveredstatements="224" conditionals="398" coveredconditionals="9" methods="102" coveredmethods="9"/>
+      <file name="AirlineController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\AirlineController.js">
+        <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="53" count="4" type="stmt"/>
+      </file>
+      <file name="AirpotController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\AirpotController.js">
+        <metrics statements="25" coveredstatements="25" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="17" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="42" count="3" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="45" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="46" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="3" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+        <line num="50" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+      </file>
+      <file name="AuthController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\AuthController.js">
+        <metrics statements="133" coveredstatements="26" conditionals="38" coveredconditionals="0" methods="9" coveredmethods="0"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
@@ -124,7 +124,7 @@
         <line num="73" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
-        <line num="89" count="2" type="stmt"/>
+        <line num="89" count="4" type="stmt"/>
         <line num="90" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
@@ -146,7 +146,7 @@
         <line num="135" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="136" count="0" type="stmt"/>
         <line num="138" count="0" type="stmt"/>
-        <line num="143" count="2" type="stmt"/>
+        <line num="143" count="4" type="stmt"/>
         <line num="144" count="0" type="stmt"/>
         <line num="145" count="0" type="stmt"/>
         <line num="147" count="0" type="stmt"/>
@@ -158,11 +158,11 @@
         <line num="185" count="0" type="stmt"/>
         <line num="195" count="0" type="stmt"/>
         <line num="198" count="0" type="stmt"/>
-        <line num="202" count="2" type="stmt"/>
+        <line num="202" count="4" type="stmt"/>
         <line num="203" count="0" type="stmt"/>
         <line num="204" count="0" type="stmt"/>
         <line num="206" count="0" type="stmt"/>
-        <line num="210" count="2" type="stmt"/>
+        <line num="210" count="4" type="stmt"/>
         <line num="211" count="0" type="stmt"/>
         <line num="212" count="0" type="stmt"/>
         <line num="214" count="0" type="stmt"/>
@@ -177,11 +177,11 @@
         <line num="244" count="0" type="stmt"/>
         <line num="250" count="0" type="stmt"/>
         <line num="257" count="0" type="stmt"/>
-        <line num="261" count="2" type="stmt"/>
+        <line num="261" count="4" type="stmt"/>
         <line num="262" count="0" type="stmt"/>
         <line num="263" count="0" type="stmt"/>
         <line num="270" count="0" type="stmt"/>
-        <line num="274" count="2" type="stmt"/>
+        <line num="274" count="4" type="stmt"/>
         <line num="275" count="0" type="stmt"/>
         <line num="276" count="0" type="stmt"/>
         <line num="277" count="0" type="stmt"/>
@@ -194,7 +194,7 @@
         <line num="292" count="0" type="stmt"/>
         <line num="294" count="0" type="stmt"/>
         <line num="303" count="0" type="stmt"/>
-        <line num="307" count="2" type="stmt"/>
+        <line num="307" count="4" type="stmt"/>
         <line num="308" count="0" type="stmt"/>
         <line num="309" count="0" type="stmt"/>
         <line num="311" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -206,7 +206,7 @@
         <line num="321" count="0" type="stmt"/>
         <line num="323" count="0" type="stmt"/>
         <line num="330" count="0" type="stmt"/>
-        <line num="334" count="2" type="stmt"/>
+        <line num="334" count="4" type="stmt"/>
         <line num="335" count="0" type="stmt"/>
         <line num="336" count="0" type="stmt"/>
         <line num="337" count="0" type="stmt"/>
@@ -222,22 +222,22 @@
         <line num="353" count="0" type="stmt"/>
         <line num="359" count="0" type="stmt"/>
         <line num="366" count="0" type="stmt"/>
-        <line num="370" count="2" type="stmt"/>
+        <line num="370" count="4" type="stmt"/>
       </file>
-      <file name="BookingController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\BookingController.js">
+      <file name="BookingController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\BookingController.js">
         <metrics statements="147" coveredstatements="19" conditionals="68" coveredconditionals="0" methods="8" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
         <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -260,7 +260,7 @@
         <line num="71" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="86" count="0" type="stmt"/>
-        <line num="89" count="2" type="stmt"/>
+        <line num="89" count="4" type="stmt"/>
         <line num="90" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
@@ -272,7 +272,7 @@
         <line num="104" count="0" type="stmt"/>
         <line num="133" count="0" type="stmt"/>
         <line num="146" count="0" type="stmt"/>
-        <line num="149" count="2" type="stmt"/>
+        <line num="149" count="4" type="stmt"/>
         <line num="150" count="0" type="stmt"/>
         <line num="151" count="0" type="stmt"/>
         <line num="152" count="0" type="stmt"/>
@@ -313,7 +313,7 @@
         <line num="237" count="0" type="stmt"/>
         <line num="251" count="0" type="stmt"/>
         <line num="252" count="0" type="stmt"/>
-        <line num="256" count="2" type="stmt"/>
+        <line num="256" count="4" type="stmt"/>
         <line num="257" count="0" type="stmt"/>
         <line num="258" count="0" type="stmt"/>
         <line num="259" count="0" type="stmt"/>
@@ -338,7 +338,7 @@
         <line num="313" count="0" type="stmt"/>
         <line num="316" count="0" type="stmt"/>
         <line num="322" count="0" type="stmt"/>
-        <line num="326" count="2" type="stmt"/>
+        <line num="326" count="4" type="stmt"/>
         <line num="327" count="0" type="stmt"/>
         <line num="328" count="0" type="stmt"/>
         <line num="330" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -346,7 +346,7 @@
         <line num="334" count="0" type="stmt"/>
         <line num="340" count="0" type="stmt"/>
         <line num="347" count="0" type="stmt"/>
-        <line num="351" count="2" type="stmt"/>
+        <line num="351" count="4" type="stmt"/>
         <line num="361" count="0" type="stmt"/>
         <line num="363" count="0" type="stmt"/>
         <line num="366" count="0" type="stmt"/>
@@ -359,7 +359,7 @@
         <line num="384" count="0" type="stmt"/>
         <line num="398" count="0" type="stmt"/>
         <line num="406" count="0" type="stmt"/>
-        <line num="410" count="2" type="stmt"/>
+        <line num="410" count="4" type="stmt"/>
         <line num="421" count="0" type="stmt"/>
         <line num="423" count="0" type="stmt"/>
         <line num="426" count="0" type="stmt"/>
@@ -372,20 +372,20 @@
         <line num="463" count="0" type="stmt"/>
         <line num="465" count="0" type="stmt"/>
         <line num="472" count="0" type="stmt"/>
-        <line num="475" count="2" type="stmt"/>
+        <line num="475" count="4" type="stmt"/>
       </file>
-      <file name="FlightController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\FlightController.js">
+      <file name="FlightController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\FlightController.js">
         <metrics statements="109" coveredstatements="17" conditionals="68" coveredconditionals="0" methods="9" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
@@ -401,7 +401,7 @@
         <line num="62" count="0" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
         <line num="90" count="0" type="stmt"/>
-        <line num="94" count="2" type="stmt"/>
+        <line num="94" count="4" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
         <line num="108" count="0" type="stmt"/>
         <line num="111" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -437,14 +437,14 @@
         <line num="176" count="0" type="stmt"/>
         <line num="191" count="0" type="stmt"/>
         <line num="192" count="0" type="stmt"/>
-        <line num="197" count="2" type="stmt"/>
+        <line num="197" count="4" type="stmt"/>
         <line num="198" count="0" type="stmt"/>
         <line num="199" count="0" type="stmt"/>
         <line num="223" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="224" count="0" type="stmt"/>
         <line num="227" count="0" type="stmt"/>
         <line num="236" count="0" type="stmt"/>
-        <line num="240" count="2" type="stmt"/>
+        <line num="240" count="4" type="stmt"/>
         <line num="241" count="0" type="stmt"/>
         <line num="242" count="0" type="stmt"/>
         <line num="245" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -452,7 +452,7 @@
         <line num="249" count="0" type="stmt"/>
         <line num="255" count="0" type="stmt"/>
         <line num="264" count="0" type="stmt"/>
-        <line num="268" count="2" type="stmt"/>
+        <line num="268" count="4" type="stmt"/>
         <line num="283" count="0" type="stmt"/>
         <line num="285" count="0" type="stmt"/>
         <line num="286" count="0" type="stmt"/>
@@ -471,34 +471,34 @@
         <line num="334" count="0" type="stmt"/>
         <line num="355" count="0" type="stmt"/>
         <line num="362" count="0" type="stmt"/>
-        <line num="366" count="2" type="stmt"/>
+        <line num="366" count="4" type="stmt"/>
         <line num="367" count="0" type="stmt"/>
         <line num="368" count="0" type="stmt"/>
         <line num="456" count="0" type="stmt"/>
         <line num="463" count="0" type="stmt"/>
         <line num="464" count="0" type="stmt"/>
-        <line num="469" count="2" type="stmt"/>
+        <line num="469" count="4" type="stmt"/>
         <line num="476" count="0" type="stmt"/>
         <line num="478" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="479" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="480" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="481" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="482" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="484" count="2" type="stmt"/>
+        <line num="484" count="4" type="stmt"/>
       </file>
-      <file name="NotificationController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\NotificationController.js">
-        <metrics statements="36" coveredstatements="24" conditionals="6" coveredconditionals="2" methods="4" coveredmethods="3"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
+      <file name="NotificationController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\NotificationController.js">
+        <metrics statements="36" coveredstatements="22" conditionals="6" coveredconditionals="2" methods="4" coveredmethods="3"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
         <line num="10" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
@@ -506,34 +506,34 @@
         <line num="41" count="0" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
         <line num="53" count="0" type="stmt"/>
-        <line num="57" count="2" type="stmt"/>
+        <line num="57" count="4" type="stmt"/>
         <line num="58" count="1" type="stmt"/>
         <line num="59" count="1" type="stmt"/>
         <line num="61" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="62" count="0" type="stmt"/>
-        <line num="65" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
-        <line num="78" count="2" type="stmt"/>
+        <line num="78" count="4" type="stmt"/>
         <line num="79" count="1" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
         <line num="83" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="84" count="0" type="stmt"/>
-        <line num="88" count="1" type="stmt"/>
-        <line num="89" count="1" type="stmt"/>
-        <line num="91" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
         <line num="101" count="0" type="stmt"/>
-        <line num="106" count="2" type="stmt"/>
+        <line num="106" count="4" type="stmt"/>
       </file>
-      <file name="OTPController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\OTPController.js">
+      <file name="OTPController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\OTPController.js">
         <metrics statements="53" coveredstatements="12" conditionals="6" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
@@ -543,7 +543,7 @@
         <line num="37" count="0" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
+        <line num="44" count="4" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
@@ -560,9 +560,9 @@
         <line num="73" count="0" type="stmt"/>
         <line num="87" count="0" type="stmt"/>
         <line num="95" count="0" type="stmt"/>
-        <line num="98" count="2" type="stmt"/>
+        <line num="98" count="4" type="stmt"/>
         <line num="100" count="0" type="stmt"/>
-        <line num="102" count="2" type="stmt"/>
+        <line num="102" count="4" type="stmt"/>
         <line num="104" count="0" type="stmt"/>
         <line num="105" count="0" type="stmt"/>
         <line num="107" count="0" type="stmt"/>
@@ -572,22 +572,22 @@
         <line num="131" count="0" type="stmt"/>
         <line num="134" count="0" type="stmt"/>
         <line num="136" count="0" type="stmt"/>
-        <line num="139" count="2" type="stmt"/>
+        <line num="139" count="4" type="stmt"/>
         <line num="140" count="0" type="stmt"/>
         <line num="141" count="0" type="stmt"/>
         <line num="143" count="0" type="stmt"/>
         <line num="155" count="0" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
         <line num="165" count="0" type="stmt"/>
-        <line num="168" count="2" type="stmt"/>
+        <line num="168" count="4" type="stmt"/>
       </file>
-      <file name="PassengerController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\PassengerController.js">
+      <file name="PassengerController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\PassengerController.js">
         <metrics statements="72" coveredstatements="10" conditionals="34" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -613,14 +613,14 @@
         <line num="61" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
-        <line num="82" count="2" type="stmt"/>
+        <line num="82" count="4" type="stmt"/>
         <line num="83" count="0" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="86" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="87" count="0" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
         <line num="101" count="0" type="stmt"/>
-        <line num="105" count="2" type="stmt"/>
+        <line num="105" count="4" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
         <line num="107" count="0" type="stmt"/>
         <line num="110" count="0" type="stmt"/>
@@ -632,7 +632,7 @@
         <line num="117" count="0" type="stmt"/>
         <line num="121" count="0" type="stmt"/>
         <line num="129" count="0" type="stmt"/>
-        <line num="133" count="2" type="stmt"/>
+        <line num="133" count="4" type="stmt"/>
         <line num="144" count="0" type="stmt"/>
         <line num="145" count="0" type="stmt"/>
         <line num="146" count="0" type="stmt"/>
@@ -644,7 +644,7 @@
         <line num="178" count="0" type="stmt"/>
         <line num="180" count="0" type="stmt"/>
         <line num="189" count="0" type="stmt"/>
-        <line num="193" count="2" type="stmt"/>
+        <line num="193" count="4" type="stmt"/>
         <line num="194" count="0" type="stmt"/>
         <line num="195" count="0" type="stmt"/>
         <line num="197" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -654,33 +654,33 @@
         <line num="207" count="0" type="stmt"/>
         <line num="213" count="0" type="stmt"/>
         <line num="220" count="0" type="stmt"/>
-        <line num="224" count="2" type="stmt"/>
+        <line num="224" count="4" type="stmt"/>
       </file>
-      <file name="PromotionController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\PromotionController.js">
+      <file name="PromotionController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\PromotionController.js">
         <metrics statements="31" coveredstatements="11" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="1"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="28" count="0" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="45" count="0" type="stmt"/>
-        <line num="49" count="2" type="stmt"/>
+        <line num="49" count="4" type="stmt"/>
         <line num="50" count="0" type="stmt"/>
         <line num="51" count="0" type="stmt"/>
         <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="54" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
         <line num="66" count="0" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
+        <line num="70" count="4" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
         <line num="72" count="0" type="stmt"/>
         <line num="74" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -688,15 +688,15 @@
         <line num="78" count="0" type="stmt"/>
         <line num="84" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
-        <line num="97" count="2" type="stmt"/>
+        <line num="97" count="4" type="stmt"/>
       </file>
-      <file name="SeatController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\SeatController.js">
+      <file name="SeatController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\SeatController.js">
         <metrics statements="82" coveredstatements="10" conditionals="40" coveredconditionals="0" methods="7" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="17" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -720,14 +720,14 @@
         <line num="54" count="0" type="stmt"/>
         <line num="68" count="0" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
-        <line num="73" count="2" type="stmt"/>
+        <line num="73" count="4" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
         <line num="78" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="79" count="0" type="stmt"/>
         <line num="82" count="0" type="stmt"/>
         <line num="90" count="0" type="stmt"/>
-        <line num="94" count="2" type="stmt"/>
+        <line num="94" count="4" type="stmt"/>
         <line num="100" count="0" type="stmt"/>
         <line num="102" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
@@ -746,7 +746,7 @@
         <line num="149" count="0" type="stmt"/>
         <line num="151" count="0" type="stmt"/>
         <line num="158" count="0" type="stmt"/>
-        <line num="162" count="2" type="stmt"/>
+        <line num="162" count="4" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
         <line num="164" count="0" type="stmt"/>
         <line num="166" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -754,7 +754,7 @@
         <line num="170" count="0" type="stmt"/>
         <line num="176" count="0" type="stmt"/>
         <line num="183" count="0" type="stmt"/>
-        <line num="187" count="2" type="stmt"/>
+        <line num="187" count="4" type="stmt"/>
         <line num="192" count="0" type="stmt"/>
         <line num="194" count="0" type="stmt"/>
         <line num="197" count="0" type="stmt"/>
@@ -773,30 +773,30 @@
         <line num="238" count="0" type="stmt"/>
         <line num="247" count="0" type="stmt"/>
         <line num="255" count="0" type="stmt"/>
-        <line num="260" count="2" type="stmt"/>
+        <line num="260" count="4" type="stmt"/>
       </file>
-      <file name="TicketController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\TicketController.js">
+      <file name="TicketController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\TicketController.js">
         <metrics statements="114" coveredstatements="17" conditionals="16" coveredconditionals="0" methods="14" coveredmethods="0"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
         <line num="54" count="0" type="stmt"/>
-        <line num="58" count="2" type="stmt"/>
+        <line num="58" count="4" type="stmt"/>
         <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
-        <line num="73" count="2" type="stmt"/>
+        <line num="73" count="4" type="stmt"/>
         <line num="74" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
         <line num="77" count="0" type="stmt"/>
@@ -805,7 +805,7 @@
         <line num="83" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
-        <line num="96" count="2" type="stmt"/>
+        <line num="96" count="4" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
         <line num="98" count="0" type="stmt"/>
         <line num="99" count="0" type="stmt"/>
@@ -813,7 +813,7 @@
         <line num="102" count="0" type="stmt"/>
         <line num="107" count="0" type="stmt"/>
         <line num="116" count="0" type="stmt"/>
-        <line num="120" count="2" type="stmt"/>
+        <line num="120" count="4" type="stmt"/>
         <line num="131" count="0" type="stmt"/>
         <line num="133" count="0" type="stmt"/>
         <line num="134" count="0" type="stmt"/>
@@ -823,7 +823,7 @@
         <line num="161" count="0" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
         <line num="170" count="0" type="stmt"/>
-        <line num="174" count="2" type="stmt"/>
+        <line num="174" count="4" type="stmt"/>
         <line num="175" count="0" type="stmt"/>
         <line num="176" count="0" type="stmt"/>
         <line num="178" count="0" type="stmt"/>
@@ -832,7 +832,7 @@
         <line num="184" count="0" type="stmt"/>
         <line num="186" count="0" type="stmt"/>
         <line num="193" count="0" type="stmt"/>
-        <line num="197" count="2" type="stmt"/>
+        <line num="197" count="4" type="stmt"/>
         <line num="198" count="0" type="stmt"/>
         <line num="199" count="0" type="stmt"/>
         <line num="200" count="0" type="stmt"/>
@@ -845,7 +845,7 @@
         <line num="220" count="0" type="stmt"/>
         <line num="227" count="0" type="stmt"/>
         <line num="229" count="0" type="stmt"/>
-        <line num="232" count="2" type="stmt"/>
+        <line num="232" count="4" type="stmt"/>
         <line num="233" count="0" type="stmt"/>
         <line num="237" count="0" type="stmt"/>
         <line num="315" count="0" type="stmt"/>
@@ -869,7 +869,7 @@
         <line num="560" count="0" type="stmt"/>
         <line num="562" count="0" type="stmt"/>
         <line num="563" count="0" type="stmt"/>
-        <line num="566" count="2" type="stmt"/>
+        <line num="566" count="4" type="stmt"/>
         <line num="567" count="0" type="stmt"/>
         <line num="568" count="0" type="stmt"/>
         <line num="569" count="0" type="stmt"/>
@@ -890,16 +890,16 @@
         <line num="606" count="0" type="stmt"/>
         <line num="617" count="0" type="stmt"/>
         <line num="618" count="0" type="stmt"/>
-        <line num="622" count="2" type="stmt"/>
+        <line num="622" count="4" type="stmt"/>
       </file>
-      <file name="UserController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\UserController.js">
+      <file name="UserController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\UserController.js">
         <metrics statements="66" coveredstatements="10" conditionals="38" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -925,14 +925,14 @@
         <line num="63" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
         <line num="81" count="0" type="stmt"/>
-        <line num="85" count="2" type="stmt"/>
+        <line num="85" count="4" type="stmt"/>
         <line num="86" count="0" type="stmt"/>
         <line num="87" count="0" type="stmt"/>
         <line num="91" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="92" count="0" type="stmt"/>
         <line num="97" count="0" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
-        <line num="110" count="2" type="stmt"/>
+        <line num="110" count="4" type="stmt"/>
         <line num="111" count="0" type="stmt"/>
         <line num="112" count="0" type="stmt"/>
         <line num="113" count="0" type="stmt"/>
@@ -950,7 +950,7 @@
         <line num="147" count="0" type="stmt"/>
         <line num="155" count="0" type="stmt"/>
         <line num="156" count="0" type="stmt"/>
-        <line num="160" count="2" type="stmt"/>
+        <line num="160" count="4" type="stmt"/>
         <line num="161" count="0" type="stmt"/>
         <line num="162" count="0" type="stmt"/>
         <line num="163" count="0" type="stmt"/>
@@ -959,24 +959,24 @@
         <line num="169" count="0" type="stmt"/>
         <line num="175" count="0" type="stmt"/>
         <line num="182" count="0" type="stmt"/>
-        <line num="186" count="2" type="stmt"/>
+        <line num="186" count="4" type="stmt"/>
       </file>
-      <file name="errorController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\errorController.js">
-        <metrics statements="7" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
+      <file name="errorController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\errorController.js">
+        <metrics statements="7" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="1"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
       </file>
-      <file name="searchHistory.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\searchHistory.js">
+      <file name="searchHistory.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\searchHistory.js">
         <metrics statements="42" coveredstatements="7" conditionals="14" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
@@ -992,7 +992,7 @@
         <line num="42" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
-        <line num="60" count="2" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
         <line num="61" count="0" type="stmt"/>
         <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="64" count="0" type="stmt"/>
@@ -1002,7 +1002,7 @@
         <line num="74" count="0" type="stmt"/>
         <line num="77" count="0" type="stmt"/>
         <line num="87" count="0" type="stmt"/>
-        <line num="91" count="2" type="stmt"/>
+        <line num="91" count="4" type="stmt"/>
         <line num="92" count="0" type="stmt"/>
         <line num="93" count="0" type="stmt"/>
         <line num="95" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1014,21 +1014,21 @@
         <line num="112" count="0" type="stmt"/>
         <line num="114" count="0" type="stmt"/>
         <line num="120" count="0" type="stmt"/>
-        <line num="125" count="2" type="stmt"/>
+        <line num="125" count="4" type="stmt"/>
       </file>
-      <file name="transactionController.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\controllers\transactionController.js">
+      <file name="transactionController.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\controllers\transactionController.js">
         <metrics statements="209" coveredstatements="16" conditionals="58" coveredconditionals="0" methods="23" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
@@ -1040,7 +1040,7 @@
         <line num="50" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
-        <line num="68" count="2" type="stmt"/>
+        <line num="68" count="4" type="stmt"/>
         <line num="69" count="0" type="stmt"/>
         <line num="70" count="0" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
@@ -1156,7 +1156,7 @@
         <line num="291" count="0" type="stmt"/>
         <line num="292" count="0" type="stmt"/>
         <line num="294" count="0" type="stmt"/>
-        <line num="310" count="2" type="stmt"/>
+        <line num="310" count="4" type="stmt"/>
         <line num="311" count="0" type="stmt"/>
         <line num="312" count="0" type="stmt"/>
         <line num="313" count="0" type="stmt"/>
@@ -1193,7 +1193,7 @@
         <line num="366" count="0" type="stmt"/>
         <line num="377" count="0" type="stmt"/>
         <line num="378" count="0" type="stmt"/>
-        <line num="381" count="2" type="stmt"/>
+        <line num="381" count="4" type="stmt"/>
         <line num="382" count="0" type="stmt"/>
         <line num="383" count="0" type="stmt"/>
         <line num="384" count="0" type="stmt"/>
@@ -1212,7 +1212,7 @@
         <line num="421" count="0" type="stmt"/>
         <line num="434" count="0" type="stmt"/>
         <line num="435" count="0" type="stmt"/>
-        <line num="438" count="2" type="stmt"/>
+        <line num="438" count="4" type="stmt"/>
         <line num="439" count="0" type="stmt"/>
         <line num="440" count="0" type="stmt"/>
         <line num="441" count="0" type="stmt"/>
@@ -1226,26 +1226,26 @@
         <line num="452" count="0" type="stmt"/>
         <line num="462" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="463" count="0" type="stmt"/>
-        <line num="466" count="2" type="stmt"/>
+        <line num="466" count="4" type="stmt"/>
       </file>
     </package>
     <package name="lib">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="imagekit.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\lib\imagekit.js">
+      <file name="imagekit.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\lib\imagekit.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
       </file>
     </package>
     <package name="middlewares">
       <metrics statements="37" coveredstatements="13" conditionals="10" coveredconditionals="0" methods="3" coveredmethods="0"/>
-      <file name="authenticate.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\middlewares\authenticate.js">
+      <file name="authenticate.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\middlewares\authenticate.js">
         <metrics statements="21" coveredstatements="4" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1264,408 +1264,408 @@
         <line num="34" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
       </file>
-      <file name="checkUser.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\middlewares\checkUser.js">
+      <file name="checkUser.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\middlewares\checkUser.js">
         <metrics statements="8" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="7" count="0" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
-      <file name="uploader.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\middlewares\uploader.js">
+      <file name="uploader.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\middlewares\uploader.js">
         <metrics statements="8" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
         <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="8" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
       </file>
     </package>
     <package name="models">
       <metrics statements="124" coveredstatements="123" conditionals="10" coveredconditionals="7" methods="33" coveredmethods="33"/>
-      <file name="airline.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\airline.js">
+      <file name="airline.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\airline.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
       </file>
-      <file name="airport.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\airport.js">
+      <file name="airport.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\airport.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
       </file>
-      <file name="booking.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\booking.js">
+      <file name="booking.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\booking.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="44" count="4" type="stmt"/>
       </file>
-      <file name="flight.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\flight.js">
+      <file name="flight.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\flight.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="61" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
       </file>
-      <file name="index.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\index.js">
+      <file name="index.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\index.js">
         <metrics statements="21" coveredstatements="20" conditionals="10" coveredconditionals="7" methods="3" coveredmethods="3"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="13" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="13" count="4" type="cond" truecount="1" falsecount="1"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="22" count="32" type="stmt"/>
-        <line num="30" count="30" type="stmt"/>
-        <line num="31" count="30" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
-        <line num="35" count="30" type="cond" truecount="1" falsecount="1"/>
-        <line num="36" count="30" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
-        <line num="41" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="22" count="64" type="stmt"/>
+        <line num="30" count="60" type="stmt"/>
+        <line num="31" count="60" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="35" count="60" type="cond" truecount="1" falsecount="1"/>
+        <line num="36" count="60" type="stmt"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="41" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
       </file>
-      <file name="notification.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\notification.js">
+      <file name="notification.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\notification.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
       </file>
-      <file name="otp.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\otp.js">
+      <file name="otp.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\otp.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
       </file>
-      <file name="passenger.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\passenger.js">
+      <file name="passenger.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\passenger.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="42" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="42" count="4" type="stmt"/>
       </file>
-      <file name="payment.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\payment.js">
+      <file name="payment.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\payment.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="53" count="4" type="stmt"/>
       </file>
-      <file name="price.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\price.js">
+      <file name="price.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\price.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
       </file>
-      <file name="promotion.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\promotion.js">
+      <file name="promotion.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\promotion.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="36" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
       </file>
-      <file name="reset_password_token.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\reset_password_token.js">
+      <file name="reset_password_token.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\reset_password_token.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
       </file>
-      <file name="search_history.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\search_history.js">
+      <file name="search_history.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\search_history.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="40" count="4" type="stmt"/>
       </file>
-      <file name="seat.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\seat.js">
+      <file name="seat.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\seat.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="43" count="4" type="stmt"/>
       </file>
-      <file name="ticket.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\ticket.js">
+      <file name="ticket.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\ticket.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="48" count="2" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="48" count="4" type="stmt"/>
       </file>
-      <file name="user.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\models\user.js">
+      <file name="user.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\models\user.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="59" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
       </file>
     </package>
     <package name="routes">
       <metrics statements="145" coveredstatements="145" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <file name="airlineRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\airlineRouter.js">
+      <file name="airlineRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\airlineRouter.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
       </file>
-      <file name="airportRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\airportRouter.js">
+      <file name="airportRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\airportRouter.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
       </file>
-      <file name="authRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\authRouter.js">
+      <file name="authRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\authRouter.js">
         <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="19" count="4" type="stmt"/>
       </file>
-      <file name="bookingRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\bookingRouter.js">
+      <file name="bookingRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\bookingRouter.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
       </file>
-      <file name="flightRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\flightRouter.js">
+      <file name="flightRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\flightRouter.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
-      <file name="index.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\index.js">
+      <file name="index.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\index.js">
         <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="17" count="2" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="24" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="32" count="2" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
-        <line num="34" count="2" type="stmt"/>
-        <line num="35" count="2" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="20" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+        <line num="26" count="4" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="29" count="4" type="stmt"/>
+        <line num="30" count="4" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="35" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
       </file>
-      <file name="notificationRoutes.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\notificationRoutes.js">
+      <file name="notificationRoutes.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\notificationRoutes.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
       </file>
-      <file name="passengerRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\passengerRouter.js">
+      <file name="passengerRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\passengerRouter.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
-      <file name="promotionRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\promotionRouter.js">
+      <file name="promotionRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\promotionRouter.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
-      <file name="searchHistoryRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\searchHistoryRouter.js">
+      <file name="searchHistoryRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\searchHistoryRouter.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
       </file>
-      <file name="seatRoutes.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\seatRoutes.js">
+      <file name="seatRoutes.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\seatRoutes.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
       </file>
-      <file name="ticketRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\ticketRouter.js">
+      <file name="ticketRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\ticketRouter.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="14" count="4" type="stmt"/>
       </file>
-      <file name="transactionRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\transactionRouter.js">
+      <file name="transactionRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\transactionRouter.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="8" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
       </file>
-      <file name="userRouter.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\routes\userRouter.js">
+      <file name="userRouter.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\routes\userRouter.js">
         <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="3" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="12" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="16" count="4" type="stmt"/>
       </file>
     </package>
     <package name="utils">
-      <metrics statements="58" coveredstatements="11" conditionals="6" coveredconditionals="0" methods="7" coveredmethods="0"/>
-      <file name="apiError.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\utils\apiError.js">
-        <metrics statements="6" coveredstatements="1" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="3" count="0" type="stmt"/>
-        <line num="5" count="0" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
+      <metrics statements="58" coveredstatements="16" conditionals="6" coveredconditionals="2" methods="7" coveredmethods="1"/>
+      <file name="apiError.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\utils\apiError.js">
+        <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
       </file>
-      <file name="generateTicketCode.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\utils\generateTicketCode.js">
+      <file name="generateTicketCode.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\utils\generateTicketCode.js">
         <metrics statements="11" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="cond" truecount="0" falsecount="2"/>
@@ -1675,12 +1675,12 @@
         <line num="11" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="18" count="2" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
       </file>
-      <file name="handleUpload.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\utils\handleUpload.js">
+      <file name="handleUpload.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\utils\handleUpload.js">
         <metrics statements="12" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
@@ -1690,20 +1690,20 @@
         <line num="19" count="0" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
+        <line num="27" count="4" type="stmt"/>
       </file>
-      <file name="mailSender.js" path="D:\KULIAH\KITCHEN\Kelompok3-Backend-Final_Project\utils\mailSender.js">
+      <file name="mailSender.js" path="C:\Users\mhdri\OneDrive\Documents\Latihan\Binar\Final\Backend\utils\mailSender.js">
         <metrics statements="29" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="2" count="4" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
         <line num="32" count="0" type="stmt"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
@@ -1722,7 +1722,7 @@
         <line num="86" count="0" type="stmt"/>
         <line num="88" count="0" type="stmt"/>
         <line num="89" count="0" type="stmt"/>
-        <line num="92" count="2" type="stmt"/>
+        <line num="92" count="4" type="stmt"/>
       </file>
     </package>
   </project>
