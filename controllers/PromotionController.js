@@ -34,7 +34,7 @@ const getPromotion = async (req, res, next) => {
     const promotion = await Promotion.findAll();
 
     res.status(200).json({
-      is_succes: true,
+      is_success: true,
       code: 201,
       data: {
         promotion,
