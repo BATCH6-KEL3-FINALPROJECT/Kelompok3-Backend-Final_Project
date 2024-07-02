@@ -287,8 +287,8 @@ const resetPassword = async (req, res, next) => {
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
     // const link = `https://skypass.azkazk11.my.id/reset-password?rpkey=${token}`;
-    const link = `https://kelompok3-frontend-final-project-mauve.vercel.app/reset-password?rpkey=${token}`;
-    console.log(link);
+    // const link = `https://kelompok3-frontend-final-project-mauve.vercel.app/reset-password?rpkey=${token}`;
+    const link = `https://kelompok3-frontend-final-project.vercel.app/reset-password?rpkey=${token}`;
     const sendingOTP = await sentResetPassword(link, email, token, existingUser.user_id, next);
 
     res.status(201).json({
