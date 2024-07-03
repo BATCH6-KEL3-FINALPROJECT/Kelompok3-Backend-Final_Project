@@ -5,8 +5,10 @@ const { Notification } = require("../models");
 
 const createNotification = async (req, res, next) => {
   const { user_id, flight_id, booking_id, promotion_id, notification_type, message, is_read } = req.body;
+  const notification_id = uuid.v4();
   try {
     const newNotification = await Notification.create({
+      notification_id,
       user_id,
       flight_id,
       booking_id,
@@ -31,7 +33,7 @@ const createNotification = async (req, res, next) => {
 
 const getNotification = async (req, res, next) => {
   try {
-    const { user_id } = req.user
+    const { user_id } = req.user //login user
 
     const notification = await Notification.findAll({ where: { user_id: user_id } });
 
